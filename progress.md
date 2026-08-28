@@ -26,5 +26,12 @@ Format per entry:
 - `npm run build` verified clean
 - Files touched: package.json, package-lock.json, tsconfig.json, eslint.config.mjs, next.config.ts, next-env.d.ts, public/*, src/app/*, src/lib/shopify.ts, .env.local.example, .gitignore (minor)
 - Deviations: none
-- Still pending (user side, plan.md sec 5-6): create Shopify store, custom app + Storefront API scopes, install app, get token → fill in `.env.local`
 - Next up: once store domain + Storefront token are in hand, verify live connection (test query per plan.md sec 6 step 6), then start Phase 2 (data layer — product/collection queries + codegen)
+
+## 2026-08-28 — Phase 1 complete: Shopify store + live connection verified
+- User created Shopify store (`eakhun-ed.myshopify.com`), custom app, Storefront API token — creds in `.env` (gitignored)
+- Verified live connection: test query (`{ shop { name primaryDomain { url } } }`) against `https://eakhun-ed.myshopify.com/api/2026-01/graphql.json` returned valid response
+- Files touched: none (`.env` gitignored, not committed)
+- Deviations: creds placed in `.env` instead of `.env.local` — both gitignored and loaded by Next.js, no functional difference
+- **Phase 1 (Setup) done.**
+- Next up: Phase 2 — data layer: product/collection GraphQL queries, TypeScript types via codegen
