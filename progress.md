@@ -35,3 +35,13 @@ Format per entry:
 - Deviations: creds placed in `.env` instead of `.env.local` — both gitignored and loaded by Next.js, no functional difference
 - **Phase 1 (Setup) done.**
 - Next up: Phase 2 — data layer: product/collection GraphQL queries, TypeScript types via codegen
+
+## 2026-08-28 — Phase 2: data layer (product/collection queries + codegen)
+- Installed `@graphql-codegen/cli`, `typescript`, `typescript-operations`, `add` plugins + `dotenv`
+- `codegen.ts` — introspects live Storefront API schema (2026-01), generates types to `src/lib/generated/storefront-types.ts` (base schema) + `src/lib/generated/storefront.ts` (operation types, importing base via `Types` namespace)
+- Split into two generated files as a workaround: combining `typescript` + `typescript-operations` plugins into a single output caused `CurrencyCode` to be emitted twice (`TS2300: Duplicate identifier`) — apparent codegen bug specific to that enum, not reproducible with plugins split
+- `src/lib/products.ts` — typed fetch functions: `getProducts`, `getProductByHandle`, `getCollections`, `getCollectionByHandle`, each with inline `gql` queries (products/collections list + fragments) and generated TS types for params/returns
+- `npm run codegen` script added; verified `npm run build` + live query against real store (`toblerone-dark-chocolate-bar` etc. returned)
+- Files touched: `codegen.ts`, `package.json`, `package-lock.json`, `src/lib/products.ts`, `src/lib/generated/storefront-types.ts`, `src/lib/generated/storefront.ts`
+- Deviations: none from plan.md scope; the two-file codegen split is an implementation detail, not a spec deviation
+- Next up: Phase 3 — core pages (Home, PLP, PDP, static pages) using `src/lib/products.ts` fetchers. Open Decision to resolve before Phase 3: design system / component library approach

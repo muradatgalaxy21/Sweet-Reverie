@@ -9,5 +9,7 @@ out/
 .DS_Store
 Thumbs.db
 
+
 PRODUCT_IMAGES/
 WEBSITE-DESIGN-IMGS/
+*.tsbuildinfo
