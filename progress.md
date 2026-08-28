@@ -45,3 +45,17 @@ Format per entry:
 - Files touched: `codegen.ts`, `package.json`, `package-lock.json`, `src/lib/products.ts`, `src/lib/generated/storefront-types.ts`, `src/lib/generated/storefront.ts`
 - Deviations: none from plan.md scope; the two-file codegen split is an implementation detail, not a spec deviation
 - Next up: Phase 3 — core pages (Home, PLP, PDP, static pages) using `src/lib/products.ts` fetchers. Open Decision to resolve before Phase 3: design system / component library approach
+
+## 2026-08-28 — Phase 3 (partial): Homepage, header/footer, category pages
+- Design system decided: Tailwind + shadcn/ui, minimal navy/blue + amber theme inspired by (not copied from) the client's existing single-page site (see `WEBSITE-DESIGN-IMGS/`, `PRODUCT_IMAGES/` category banners) — resolves the open decision from plan.md §9
+- `npx shadcn init` — added `components.json`, `src/lib/utils.ts`, `src/components/ui/{button,badge,carousel}.tsx`; deps: embla-carousel-react, lucide-react, class-variance-authority, clsx, tailwind-merge
+- Retheme in `src/app/globals.css`: primary=indigo/navy, accent=amber, larger `--radius`; fixed a pre-existing `--font-sans: var(--font-sans)` self-reference bug from the shadcn init (now points at the Geist variable)
+- Homepage (`src/app/page.tsx`): hero carousel (placeholder gradient slides, autoplay + dots — real banner images to swap in later) → Featured Products (4) → Popular Right Now (4, both currently just the first 8 products from the catalog, no dedicated Shopify collection yet — per user: manual for now, revisit once there's real sales data) → one section per category (pill-style header + "View all" link + up to 4 product cards)
+- New: `src/components/{site-header,site-footer,hero-carousel,product-card,category-section}.tsx`, `src/lib/{categories,format}.ts`, `src/app/collections/[handle]/page.tsx` (category/PLP page, reuses `getCollectionByHandle`)
+- `next.config.ts`: added `cdn.shopify.com` to `images.remotePatterns` (needed for `next/image` with Storefront API image URLs)
+- Verified: `tsc --noEmit`, `next build`, and `next dev` + Playwright screenshot of the real homepage (live Shopify data rendered correctly)
+- Deviations (both discussed with user first):
+  - Categories: client's list was chocolate/jelly/candy/crisps/chips/biscuits/noodles/coffee/drinks (9), but the store only has 8 real collections — coffee & drinks are one combined `coffee-drinks` collection, not two. Homepage uses the 8 real collections (`src/lib/categories.ts`) instead of inventing a split that doesn't exist in Shopify.
+  - Catalog is thin right now (2-3 products in most collections, several missing images) — category sections render whatever's actually there (down to 0, section just hides) rather than padding to a fixed 4.
+- Not done yet (still open for a future session): product detail page (`/products/[handle]` is linked but not built), cart/checkout, real hero banner images, search bar, delivery-location bar from the reference design (client didn't ask for it — flagged as maybe-out-of-scope-v1).
+- Next up: product detail page (PDP), then cart (Shopify-hosted checkout redirect per plan.md).

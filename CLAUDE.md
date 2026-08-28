@@ -30,3 +30,14 @@ Update this file with actual build/lint/test/dev commands and real architecture 
 - **progress.md**: update at the end of every session, or immediately after completing a feature — whichever comes first. Log what shipped, files touched, any deviations from plan.md, and what's next. See `progress.md` for format.
 - **Git**: `git add` + commit automatically after each session/feature, no need to ask. Never push to GitHub without asking first, every time — a prior push approval does not carry to the next one.
 - **plan.md is the spec.** Follow it as-is. If something needs a tweak or deviation, stop and get explicit user approval + a short plan for the change before implementing — don't silently improvise around it. Log approved deviations in `progress.md`.
+- **Ask, don't guess.** For UI/design/UX work especially: if anything is ambiguous (layout, category set, content source, ordering, styling, copy), ask the user before building. Don't silently pick a default for design decisions.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
