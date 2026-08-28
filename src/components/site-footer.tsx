@@ -6,7 +6,7 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 sm:flex-row sm:justify-between sm:px-6">
         <div>
           <p className="text-xl font-extrabold tracking-tight text-primary">
-            Candyshop
+            MAW-Choco-Shop
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
             Snacks, sweets &amp; drinks delivered.
@@ -45,7 +45,7 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t px-4 py-4 text-center text-xs text-muted-foreground sm:px-6">
-        &copy; {new Date().getFullYear()} Candyshop. All rights reserved.
+        &copy; {new Date().getFullYear()} MAW-Choco-Shop. All rights reserved.
       </div>
     </footer>
   );

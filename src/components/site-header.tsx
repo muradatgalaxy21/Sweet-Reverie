@@ -10,10 +10,16 @@ export function SiteHeader() {
           href="/"
           className="text-xl font-extrabold tracking-tight text-primary"
         >
-          Candyshop
+          MAW-Choco-Shop
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-1 overflow-x-auto lg:flex">
+          <Link
+            href="/"
+            className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground"
+          >
+            Home
+          </Link>
           {CATEGORIES.map((category) => (
             <Link
               key={category.handle}
@@ -35,6 +41,12 @@ export function SiteHeader() {
       </div>
 
       <nav className="flex items-center gap-1 overflow-x-auto border-t px-4 py-2 sm:px-6 lg:hidden">
+        <Link
+          href="/"
+          className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium text-foreground/70 hover:bg-secondary hover:text-foreground"
+        >
+          Home
+        </Link>
         {CATEGORIES.map((category) => (
           <Link
             key={category.handle}

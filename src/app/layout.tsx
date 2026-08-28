@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Candyshop",
+  title: "MAW-Choco-Shop",
   description: "Chocolates, candy, snacks & drinks delivered.",
 };
 
