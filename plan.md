@@ -20,15 +20,15 @@ Shopify hosted checkout (payment processing)
 ## 2. Functional Requirements
 
 ### 2.1 Storefront
-- [ ] Home page — hero, featured collections, featured products
-- [ ] Product Listing Page (PLP) — per collection, with filtering (price, tags/type) and sorting (price, newest, best-selling)
-- [ ] Product Detail Page (PDP) — images, variants (size/flavor/etc.), price, description, add-to-cart, stock status
+- [x] Home page — hero, featured collections, featured products
+- [ ] Product Listing Page (PLP) — per collection, built; filtering (price, tags/type) and sorting (price, newest, best-selling) not yet added
+- [x] Product Detail Page (PDP) — images, variants (size/flavor/etc.), price, description, add-to-cart, stock status
 - [ ] Search — product search across catalog
 - [ ] Cart — drawer or page, add/update/remove line items, persists across sessions (cookie/localStorage cart ID)
 - [ ] Checkout handoff — redirect to Shopify-hosted checkout via `cart.checkoutUrl`
 - [ ] Customer accounts — login/signup, order history, saved addresses (via Shopify Customer Account API or hosted flow)
 - [ ] Static pages — About, Contact, Shipping/Returns policy, FAQ
-- [ ] Collections/category navigation
+- [x] Collections/category navigation
 
 ### 2.2 Backend (Shopify-managed, no custom build needed)
 - [ ] Product catalog + variants
@@ -153,6 +153,6 @@ A successful response confirms the token and domain are correctly wired.
 
 ## 9. Open Decisions (resolve before Phase 3)
 
-- [ ] Design system / component library approach
+- [x] Design system / component library approach — Tailwind + shadcn/ui, navy/blue + amber theme (see progress.md 2026-08-28)
 - [ ] Multi-location inventory — single warehouse only, or multiple?
 - [ ] Whether the future spreadsheet-inventory-sync workflow feeds in during or after launch
