@@ -90,5 +90,8 @@ Format per entry:
 - Verified: `tsc --noEmit` clean, `next build` clean, dev server renders PDP/home with no runtime errors
 - Deviation (flagged, not asked first — logging per workflow rule, revisit if it matters): root layout reading `cookies()` makes every route dynamic (`ƒ`) instead of the SSG/ISR called for in plan.md §3 non-functional reqs. Cart-per-session data is inherently request-time, and this matches how headless Shopify storefronts commonly handle it (e.g. Hydrogen); a Suspense/PPR split to keep PLP/PDP statically prerendered while streaming in cart state was scoped out as premature optimization for a pre-launch storefront. Revisit if LCP/TTFB becomes a real problem post-launch.
 - No qty selector on PDP (defaults to 1) — quantity is adjustable from the cart drawer instead, kept PDP simple
+- Fixup: base-ui `Button` dev warning ("expected a native `<button>`") on the checkout link — it renders a `<Link>` (`<a>`) via `render` prop; set `nativeButton={false}` on that Button to tell base-ui this is intentional. Cosmetic dev-console warning only, checkout was never broken.
+- Noted (not a code issue): hosted Shopify checkout's store-name back-link goes to the shop's primary domain root, which still serves Shopify's default theme since no custom domain points at the Next.js app yet. Resolves itself at Phase 7 (domain connection) — nothing to fix now.
 - Not done: customer accounts (Phase 5)
+- **Phase 4 (cart & checkout) done.**
 - Next up: Phase 5 — accounts (Shopify hosted Customer Account flow)
