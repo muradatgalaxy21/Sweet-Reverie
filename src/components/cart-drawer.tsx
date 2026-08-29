@@ -133,6 +133,7 @@ export function CartDrawer() {
             </div>
             <Button
               render={<Link href={(cart?.checkoutUrl as string) ?? "#"} />}
+              nativeButton={false}
               size="lg"
               className="w-full"
               disabled={isPending}
