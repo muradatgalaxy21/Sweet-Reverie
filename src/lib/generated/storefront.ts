@@ -348,7 +348,7 @@ export type GetProductByHandleQueryVariables = Exact<{
 }>;
 
 
-export type GetProductByHandleQuery = { product: { id: string, handle: string, title: string, description: string, descriptionHtml: unknown, featuredImage: { url: unknown, altText: string | null, width: number | null, height: number | null } | null, images: { edges: Array<{ node: { url: unknown, altText: string | null, width: number | null, height: number | null } }> }, priceRange: { minVariantPrice: { amount: unknown, currencyCode: Types.CurrencyCode } }, variants: { edges: Array<{ node: { id: string, title: string, availableForSale: boolean, quantityAvailable: number | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, selectedOptions: Array<{ name: string, value: string }> } }> } } | null };
+export type GetProductByHandleQuery = { product: { id: string, handle: string, title: string, description: string, descriptionHtml: unknown, featuredImage: { url: unknown, altText: string | null, width: number | null, height: number | null } | null, images: { edges: Array<{ node: { url: unknown, altText: string | null, width: number | null, height: number | null } }> }, priceRange: { minVariantPrice: { amount: unknown, currencyCode: Types.CurrencyCode } }, variants: { edges: Array<{ node: { id: string, title: string, availableForSale: boolean, price: { amount: unknown, currencyCode: Types.CurrencyCode }, selectedOptions: Array<{ name: string, value: string }> } }> } } | null };
 
 export type GetCollectionsQueryVariables = Exact<{
   first?: number | null | undefined;

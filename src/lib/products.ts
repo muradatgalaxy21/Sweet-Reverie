@@ -85,7 +85,6 @@ const GET_PRODUCT_BY_HANDLE = gql`
             id
             title
             availableForSale
-            quantityAvailable
             price {
               amount
               currencyCode

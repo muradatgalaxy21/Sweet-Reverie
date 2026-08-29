@@ -59,3 +59,14 @@ Format per entry:
   - Catalog is thin right now (2-3 products in most collections, several missing images) — category sections render whatever's actually there (down to 0, section just hides) rather than padding to a fixed 4.
 - Not done yet (still open for a future session): product detail page (`/products/[handle]` is linked but not built), cart/checkout, real hero banner images, search bar, delivery-location bar from the reference design (client didn't ask for it — flagged as maybe-out-of-scope-v1).
 - Next up: product detail page (PDP), then cart (Shopify-hosted checkout redirect per plan.md).
+
+## 2026-08-29 — Phase 3: Product detail page (PDP)
+- User direction: logo not finalized, so hero carousel/collection banner imagery + color theme stay parked — build all other functionality regardless.
+- `src/app/products/[handle]/page.tsx` — PDP route using existing `getProductByHandle`
+- `src/components/product-detail.tsx` — image gallery (thumbnail strip + main image), per-option variant picker (derives option names/values from `variants`, resolves `selectedVariant` from selection), live price update on variant change, in/out-of-stock badge, "Add to cart" button (disabled when out of stock — inert placeholder, real cart logic is phase 4), `descriptionHtml` render
+- Fixed a live bug hit during verification: `quantityAvailable` field errored with `Access denied ... unauthenticated_read_product_inventory access scope` (token doesn't have that scope) — removed the field from `GET_PRODUCT_BY_HANDLE` since only `availableForSale` is used for stock status; reran codegen
+- Verified: `tsc --noEmit`, `next build`, live `GET /products/toblerone-dark-chocolate-bar` returns 200 against real store data
+- Files touched: `src/app/products/[handle]/page.tsx`, `src/components/product-detail.tsx`, `src/lib/products.ts`, `src/lib/generated/storefront-types.ts`, `src/lib/generated/storefront.ts`
+- Deviations: none from plan.md scope
+- **Phase 3 (core pages) now functionally complete** — banners/hero images/theme intentionally deferred per user, not a gap in build.
+- Next up: Phase 4 — cart (mutations, cart UI, `cart.checkoutUrl` redirect)
