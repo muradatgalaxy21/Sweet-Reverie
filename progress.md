@@ -70,3 +70,11 @@ Format per entry:
 - Deviations: none from plan.md scope
 - **Phase 3 (core pages) now functionally complete** — banners/hero images/theme intentionally deferred per user, not a gap in build.
 - Next up: Phase 4 — cart (mutations, cart UI, `cart.checkoutUrl` redirect)
+
+## 2026-08-29 — Color theme applied
+- Client gave final palette: background `#FFFFFF`, primary `#2C1810` (espresso brown), accent `#E8622C` (burnt orange, CTAs), secondary `#EDE4D3` (warm off-white, cards/sections), support `#2F4F4C` (deep teal, sparing use — footer/accent line)
+- `src/app/globals.css` `:root` — swapped old navy/amber oklch values for the hex palette (primary/accent/secondary/muted/border/ring), added `--support` token (`--color-support` in `@theme inline`) for the teal
+- `.dark` block left untouched — site has no dark-mode toggle, unused
+- Verified: `tsc --noEmit`, `next build` clean
+- Files touched: `src/app/globals.css`
+- Next up: apply `--color-support` (teal) somewhere sparing (footer accent line) when footer gets revisited; Phase 4 — cart
