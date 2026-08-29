@@ -19,7 +19,10 @@ export function SiteHeader() {
           MAW-Choco-Shop
         </Link>
 
-        <nav className="hidden flex-1 items-center justify-center gap-1 overflow-x-auto lg:flex">
+        <nav
+          aria-label="Primary"
+          className="hidden flex-1 items-center justify-center gap-1 overflow-x-auto lg:flex"
+        >
           <Link
             href="/"
             className="whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-secondary hover:text-foreground"
@@ -52,7 +55,10 @@ export function SiteHeader() {
         </button>
       </div>
 
-      <nav className="flex items-center gap-1 overflow-x-auto border-t px-4 py-2 sm:px-6 lg:hidden">
+      <nav
+        aria-label="Primary"
+        className="flex items-center gap-1 overflow-x-auto border-t px-4 py-2 sm:px-6 lg:hidden"
+      >
         <Link
           href="/"
           className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium text-foreground/70 hover:bg-secondary hover:text-foreground"

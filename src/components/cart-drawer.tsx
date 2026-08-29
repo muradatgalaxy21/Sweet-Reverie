@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { X, Minus, Plus, Loader2 } from "lucide-react";
@@ -13,6 +14,15 @@ export function CartDrawer() {
 
   const lines = cart?.lines.edges.map((e) => e.node) ?? [];
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeCart();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen, closeCart]);
+
   return (
     <>
       <div
@@ -20,14 +30,21 @@ export function CartDrawer() {
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={closeCart}
+        aria-hidden="true"
       />
       <aside
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cart-drawer-title"
+        aria-hidden={!isOpen}
         className={`fixed right-0 top-0 z-50 flex h-full w-full max-w-sm flex-col bg-background shadow-xl transition-transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between border-b px-4 py-3">
-          <h2 className="text-lg font-semibold">Your cart</h2>
+          <h2 id="cart-drawer-title" className="text-lg font-semibold">
+            Your cart
+          </h2>
           <button
             type="button"
             aria-label="Close cart"

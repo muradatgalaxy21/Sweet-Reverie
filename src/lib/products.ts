@@ -57,6 +57,10 @@ const GET_PRODUCT_BY_HANDLE = gql`
       title
       description
       descriptionHtml
+      seo {
+        title
+        description
+      }
       featuredImage {
         url
         altText
@@ -129,6 +133,16 @@ const GET_COLLECTION_BY_HANDLE = gql`
       handle
       title
       description
+      seo {
+        title
+        description
+      }
+      image {
+        url
+        altText
+        width
+        height
+      }
       products(first: $first, after: $after) {
         edges {
           cursor

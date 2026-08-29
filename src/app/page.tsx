@@ -10,7 +10,7 @@ export default async function Home() {
   const popular = edges.slice(4, 8);
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 py-6 sm:px-6">
+    <main id="main-content" className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 py-6 sm:px-6">
       <HeroCarousel />
 
       {featured.length > 0 && (

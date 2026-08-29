@@ -11,7 +11,7 @@ export function ProductCard({ product }: { product: ProductCardFragment }) {
       href={`/products/${product.handle}`}
       className="group flex flex-col overflow-hidden rounded-2xl border bg-card transition-shadow hover:shadow-md"
     >
-      <div className="relative aspect-square w-full bg-muted">
+      <div className="relative aspect-square w-full bg-white">
         {product.featuredImage ? (
           <Image
             src={product.featuredImage.url as string}

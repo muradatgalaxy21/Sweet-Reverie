@@ -99,3 +99,16 @@ Format per entry:
 ## 2026-08-29 — Phase 5 skipped for now
 - User decision: Shopify checkout supports guest checkout, so accounts aren't required to purchase. Skipping Phase 5 (hosted Customer Account flow) for now — revisit post-launch if repeat-customer demand shows up.
 - No files touched.
+
+## 2026-08-29 — Phase 6: SEO metadata + accessibility pass
+- `src/lib/products.ts` — added `seo { title description }` to product/collection queries, `image` to collection query; reran codegen (`src/lib/generated/storefront.ts`)
+- `src/lib/site.ts` — `SITE_URL` from `NEXT_PUBLIC_SITE_URL` (fallback `localhost:3000`); added to `.env.local.example`
+- `src/app/layout.tsx` — `metadataBase`, title template (`%s | MAW-Choco-Shop`), default OG/Twitter card metadata; added a "Skip to content" link
+- `src/app/products/[handle]/page.tsx` + `src/app/collections/[handle]/page.tsx` — `generateMetadata` per page (Shopify `seo` fields, falls back to title/description, OG image); PDP also emits `Product` JSON-LD (`AggregateOffer`, availability)
+- `src/app/sitemap.ts`, `src/app/robots.ts` — new App Router routes, pull live products/collections for sitemap URLs
+- Accessibility: cart drawer now `role="dialog"`/`aria-modal`/`aria-labelledby`, closes on Escape; both header `<nav>` landmarks labeled `aria-label="Primary"` (were duplicate unlabeled landmarks); `id="main-content"` added to each page's `<main>` for the skip link target
+- Verified: `tsc --noEmit` clean, `next build` clean (sitemap.xml/robots.txt generate as static routes), live dev server check — PDP JSON-LD and `<title>` render correctly, sitemap/robots serve real collection/product URLs
+- Also carried over two small pending style tweaks (uncommitted from a prior session): `globals.css` background `#FCF8F1` (was pure white), `product-card.tsx` image tile background `bg-white` (was `bg-muted`)
+- Not done: performance pass (Lighthouse/bundle audit) — no production domain yet to test against realistically, revisit at/after Phase 7 launch
+- **Phase 6 (SEO + accessibility) done**, performance sub-item deferred to launch.
+- Next up: Phase 7 — domain connection, DNS, go-live checklist

@@ -471,7 +471,7 @@ export type GetProductByHandleQueryVariables = Exact<{
 }>;
 
 
-export type GetProductByHandleQuery = { product: { id: string, handle: string, title: string, description: string, descriptionHtml: unknown, featuredImage: { url: unknown, altText: string | null, width: number | null, height: number | null } | null, images: { edges: Array<{ node: { url: unknown, altText: string | null, width: number | null, height: number | null } }> }, priceRange: { minVariantPrice: { amount: unknown, currencyCode: Types.CurrencyCode } }, variants: { edges: Array<{ node: { id: string, title: string, availableForSale: boolean, price: { amount: unknown, currencyCode: Types.CurrencyCode }, selectedOptions: Array<{ name: string, value: string }> } }> } } | null };
+export type GetProductByHandleQuery = { product: { id: string, handle: string, title: string, description: string, descriptionHtml: unknown, seo: { title: string | null, description: string | null }, featuredImage: { url: unknown, altText: string | null, width: number | null, height: number | null } | null, images: { edges: Array<{ node: { url: unknown, altText: string | null, width: number | null, height: number | null } }> }, priceRange: { minVariantPrice: { amount: unknown, currencyCode: Types.CurrencyCode } }, variants: { edges: Array<{ node: { id: string, title: string, availableForSale: boolean, price: { amount: unknown, currencyCode: Types.CurrencyCode }, selectedOptions: Array<{ name: string, value: string }> } }> } } | null };
 
 export type GetCollectionsQueryVariables = Exact<{
   first?: number | null | undefined;
@@ -487,4 +487,4 @@ export type GetCollectionByHandleQueryVariables = Exact<{
 }>;
 
 
-export type GetCollectionByHandleQuery = { collection: { id: string, handle: string, title: string, description: string, products: { edges: Array<{ cursor: string, node: { id: string, handle: string, title: string, featuredImage: { url: unknown, altText: string | null, width: number | null, height: number | null } | null, priceRange: { minVariantPrice: { amount: unknown, currencyCode: Types.CurrencyCode } } } }>, pageInfo: { hasNextPage: boolean, endCursor: string | null } } } | null };
+export type GetCollectionByHandleQuery = { collection: { id: string, handle: string, title: string, description: string, seo: { title: string | null, description: string | null }, image: { url: unknown, altText: string | null, width: number | null, height: number | null } | null, products: { edges: Array<{ cursor: string, node: { id: string, handle: string, title: string, featuredImage: { url: unknown, altText: string | null, width: number | null, height: number | null } | null, priceRange: { minVariantPrice: { amount: unknown, currencyCode: Types.CurrencyCode } } } }>, pageInfo: { hasNextPage: boolean, endCursor: string | null } } } | null };
