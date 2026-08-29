@@ -94,4 +94,8 @@ Format per entry:
 - Noted (not a code issue): hosted Shopify checkout's store-name back-link goes to the shop's primary domain root, which still serves Shopify's default theme since no custom domain points at the Next.js app yet. Resolves itself at Phase 7 (domain connection) — nothing to fix now.
 - Not done: customer accounts (Phase 5)
 - **Phase 4 (cart & checkout) done.**
-- Next up: Phase 5 — accounts (Shopify hosted Customer Account flow)
+- Next up: Phase 6 — polish (SEO metadata, performance pass, accessibility audit)
+
+## 2026-08-29 — Phase 5 skipped for now
+- User decision: Shopify checkout supports guest checkout, so accounts aren't required to purchase. Skipping Phase 5 (hosted Customer Account flow) for now — revisit post-launch if repeat-customer demand shows up.
+- No files touched.
