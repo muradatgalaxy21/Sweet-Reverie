@@ -4,6 +4,71 @@ type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import type * as Types from './storefront-types';
 /**
+ * A custom key-value pair that stores additional information on a [cart](https://shopify.dev/docs/api/storefront/current/objects/Cart) or [cart line](https://shopify.dev/docs/api/storefront/current/objects/CartLine). Attributes capture additional information like gift messages, special instructions, or custom order details. Learn more about [managing carts with the Storefront API](https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/cart/manage).
+ *
+ */
+export type AttributeInput = {
+  /** Key or name of the attribute. */
+  key: string;
+  /** Value of the attribute. */
+  value: string;
+};
+
+/**
+ * The input fields for adding a merchandise line to a cart. Each line represents a [`ProductVariant`](https://shopify.dev/docs/api/storefront/current/objects/ProductVariant) the buyer intends to purchase, along with the quantity and optional [`SellingPlan`](https://shopify.dev/docs/api/storefront/current/objects/SellingPlan) for subscriptions.
+ *
+ * Used by the [`cartCreate`](https://shopify.dev/docs/api/storefront/current/mutations/cartCreate) mutation when creating a cart with initial items, and the [`cartLinesAdd`](https://shopify.dev/docs/api/storefront/current/mutations/cartLinesAdd) mutation when adding items to an existing cart.
+ *
+ */
+export type CartLineInput = {
+  /**
+   * An array of key-value pairs that contains additional information about the merchandise line.
+   *
+   * The input must not contain more than `250` values.
+   */
+  attributes?: Array<AttributeInput> | null | undefined;
+  /** The ID of the merchandise that the buyer intends to purchase. */
+  merchandiseId: string | number;
+  /** The parent line item of the cart line. */
+  parent?: CartLineParentInput | null | undefined;
+  /** The quantity of the merchandise. */
+  quantity?: number | null | undefined;
+  /** The ID of the selling plan that the merchandise is being purchased with. */
+  sellingPlanId?: string | number | null | undefined;
+};
+
+/** The parent line item of the cart line. */
+export type CartLineParentInput = {
+  /** The id of the parent line item. */
+  lineId?: string | number | null | undefined;
+  /** The ID of the parent line merchandise. */
+  merchandiseId?: string | number | null | undefined;
+};
+
+/**
+ * The input fields for updating a merchandise line in a cart. Used by the [`cartLinesUpdate`](https://shopify.dev/docs/api/storefront/current/mutations/cartLinesUpdate) mutation.
+ *
+ * Specify the line item's [`id`](https://shopify.dev/docs/api/storefront/current/input-objects/CartLineUpdateInput#fields-id) along with any fields to modify. You can change the quantity, swap the merchandise, update custom attributes, or associate a different selling plan.
+ *
+ */
+export type CartLineUpdateInput = {
+  /**
+   * An array of key-value pairs that contains additional information about the merchandise line.
+   *
+   * The input must not contain more than `250` values.
+   */
+  attributes?: Array<AttributeInput> | null | undefined;
+  /** The ID of the merchandise line. */
+  id: string | number;
+  /** The ID of the merchandise for the line item. */
+  merchandiseId?: string | number | null | undefined;
+  /** The quantity of the line item. */
+  quantity?: number | null | undefined;
+  /** The ID of the selling plan that the merchandise is being purchased with. */
+  sellingPlanId?: string | number | null | undefined;
+};
+
+/**
  * The three-letter currency codes that represent the world currencies used in
  * stores. These include standard ISO 4217 codes, legacy codes,
  * and non-standard codes.
@@ -332,6 +397,64 @@ export type CurrencyCode =
   | 'ZAR'
   /** Zambian Kwacha (ZMW). */
   | 'ZMW';
+
+export type CartFragment = { id: string, checkoutUrl: unknown, totalQuantity: number, cost: { subtotalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, lines: { edges: Array<{ node:
+        | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+        | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+       }> } };
+
+export type GetCartQueryVariables = Exact<{
+  id: string | number;
+}>;
+
+
+export type GetCartQuery = { cart: { id: string, checkoutUrl: unknown, totalQuantity: number, cost: { subtotalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, lines: { edges: Array<{ node:
+          | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+          | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+         }> } } | null };
+
+export type CartCreateMutationVariables = Exact<{
+  lines?: Array<Types.CartLineInput> | Types.CartLineInput | null | undefined;
+}>;
+
+
+export type CartCreateMutation = { cartCreate: { cart: { id: string, checkoutUrl: unknown, totalQuantity: number, cost: { subtotalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, lines: { edges: Array<{ node:
+            | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+            | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+           }> } } | null, userErrors: Array<{ field: Array<string> | null, message: string }> } | null };
+
+export type CartLinesAddMutationVariables = Exact<{
+  cartId: string | number;
+  lines: Array<Types.CartLineInput> | Types.CartLineInput;
+}>;
+
+
+export type CartLinesAddMutation = { cartLinesAdd: { cart: { id: string, checkoutUrl: unknown, totalQuantity: number, cost: { subtotalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, lines: { edges: Array<{ node:
+            | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+            | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+           }> } } | null, userErrors: Array<{ field: Array<string> | null, message: string }> } | null };
+
+export type CartLinesUpdateMutationVariables = Exact<{
+  cartId: string | number;
+  lines: Array<Types.CartLineUpdateInput> | Types.CartLineUpdateInput;
+}>;
+
+
+export type CartLinesUpdateMutation = { cartLinesUpdate: { cart: { id: string, checkoutUrl: unknown, totalQuantity: number, cost: { subtotalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, lines: { edges: Array<{ node:
+            | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+            | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+           }> } } | null, userErrors: Array<{ field: Array<string> | null, message: string }> } | null };
+
+export type CartLinesRemoveMutationVariables = Exact<{
+  cartId: string | number;
+  lineIds: Array<string | number> | string | number;
+}>;
+
+
+export type CartLinesRemoveMutation = { cartLinesRemove: { cart: { id: string, checkoutUrl: unknown, totalQuantity: number, cost: { subtotalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, lines: { edges: Array<{ node:
+            | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+            | { id: string, quantity: number, cost: { totalAmount: { amount: unknown, currencyCode: Types.CurrencyCode } }, merchandise: { id: string, title: string, image: { url: unknown, altText: string | null } | null, price: { amount: unknown, currencyCode: Types.CurrencyCode }, product: { handle: string, title: string } } }
+           }> } } | null, userErrors: Array<{ field: Array<string> | null, message: string }> } | null };
 
 export type ProductCardFragment = { id: string, handle: string, title: string, featuredImage: { url: unknown, altText: string | null, width: number | null, height: number | null } | null, priceRange: { minVariantPrice: { amount: unknown, currencyCode: Types.CurrencyCode } } };
 

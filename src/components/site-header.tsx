@@ -1,8 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { CATEGORIES } from "@/lib/categories";
+import { useCart } from "@/components/cart-provider";
 
 export function SiteHeader() {
+  const { cart, openCart } = useCart();
+  const itemCount = cart?.totalQuantity ?? 0;
+
   return (
     <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
@@ -34,9 +40,15 @@ export function SiteHeader() {
         <button
           type="button"
           aria-label="Cart"
+          onClick={openCart}
           className="relative flex h-10 w-10 items-center justify-center rounded-full text-foreground/70 hover:bg-secondary hover:text-foreground"
         >
           <ShoppingCart className="h-5 w-5" />
+          {itemCount > 0 && (
+            <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-semibold text-accent-foreground">
+              {itemCount}
+            </span>
+          )}
         </button>
       </div>
 

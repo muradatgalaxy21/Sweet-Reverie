@@ -5,6 +5,7 @@ import Image from "next/image";
 import { formatMoney } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/components/cart-provider";
 import type { GetProductByHandleQuery } from "@/lib/generated/storefront";
 
 type Product = NonNullable<GetProductByHandleQuery["product"]>;
@@ -25,6 +26,7 @@ export function ProductDetail({ product }: { product: Product }) {
     );
   });
   const [activeImage, setActiveImage] = useState(0);
+  const { addItem, isPending } = useCart();
 
   const selectedVariant: Variant | undefined = variants.find((v) =>
     v.selectedOptions.every((o) => selected[o.name] === o.value)
@@ -121,7 +123,12 @@ export function ProductDetail({ product }: { product: Product }) {
           );
         })}
 
-        <Button size="lg" disabled={!inStock} className="mt-2 w-full sm:w-auto">
+        <Button
+          size="lg"
+          disabled={!inStock || !selectedVariant || isPending}
+          onClick={() => selectedVariant && addItem(selectedVariant.id, 1)}
+          className="mt-2 w-full sm:w-auto"
+        >
           {inStock ? "Add to cart" : "Out of stock"}
         </Button>
 

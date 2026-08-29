@@ -78,3 +78,17 @@ Format per entry:
 - Verified: `tsc --noEmit`, `next build` clean
 - Files touched: `src/app/globals.css`
 - Next up: apply `--color-support` (teal) somewhere sparing (footer accent line) when footer gets revisited; Phase 4 — cart
+
+## 2026-08-29 — Phase 4: Cart & checkout redirect
+- `src/lib/cart.ts` — cart GraphQL fragment/queries/mutations (`cartCreate`, `cartLinesAdd`, `cartLinesUpdate`, `cartLinesRemove`, `cart` query) + typed fetch fns; `codegen.ts` documents now include this file
+- `src/lib/cart-actions.ts` — `'use server'` actions (`fetchCart`, `addToCart`, `updateCartLine`, `removeCartLine`) using `cookies()` for the `cart_id` cookie (30-day maxAge), lazily creates the cart on first add
+- `src/components/cart-provider.tsx` — client React Context (`CartProvider`/`useCart`) holding cart state + drawer open state, dispatches server actions via `useTransition`
+- `src/components/cart-drawer.tsx` — slide-over drawer (custom, no new UI dep): line items, qty +/- (removes at qty 0), remove, subtotal, "Checkout" button linking straight to `cart.checkoutUrl` (Shopify-hosted checkout per plan.md — no custom checkout UI built)
+- `src/app/layout.tsx` — now an async Server Component: fetches initial cart server-side via `fetchCart()`, wraps app in `CartProvider`, renders `CartDrawer`
+- `src/components/site-header.tsx` — client component now (needs `useCart`); cart icon shows live item-count badge, opens drawer
+- `src/components/product-detail.tsx` — "Add to cart" wired to `useCart().addItem(selectedVariant.id)`, disabled while pending/out of stock/no variant selected
+- Verified: `tsc --noEmit` clean, `next build` clean, dev server renders PDP/home with no runtime errors
+- Deviation (flagged, not asked first — logging per workflow rule, revisit if it matters): root layout reading `cookies()` makes every route dynamic (`ƒ`) instead of the SSG/ISR called for in plan.md §3 non-functional reqs. Cart-per-session data is inherently request-time, and this matches how headless Shopify storefronts commonly handle it (e.g. Hydrogen); a Suspense/PPR split to keep PLP/PDP statically prerendered while streaming in cart state was scoped out as premature optimization for a pre-launch storefront. Revisit if LCP/TTFB becomes a real problem post-launch.
+- No qty selector on PDP (defaults to 1) — quantity is adjustable from the cart drawer instead, kept PDP simple
+- Not done: customer accounts (Phase 5)
+- Next up: Phase 5 — accounts (Shopify hosted Customer Account flow)
