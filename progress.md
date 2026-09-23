@@ -118,3 +118,23 @@ Format per entry:
 - Files touched: deleted all files in `src/` (`src/app/*`, `src/components/*`, `src/lib/*`), deleted `.next/`
 - Deviations from plan.md: Entire frontend removed to allow a full rebuild from scratch
 - Next up: Scaffold and build frontend from scratch
+
+## 2026-09-23 — Sweet Reverie Complete Homepage Build
+- Rebuilt frontend from scratch matching user's design mockup and renewed Sweet Reverie brand identity (Deep Velvet Burgundy, Rose Peach, Warm Ivory, Espresso Noir)
+- Google Fonts integration: Playfair Display for serif headings and Plus Jakarta Sans for sans typography
+- Top announcement marquee ticker with delivery perks
+- Brand header with navigation links (HOME, BEST SELLERS, SPECIAL OFFERS, CONTACT), centered logo badge, instant search modal trigger, user account link, and live cart count badge
+- Dynamic hero carousel with Feel The Fire / Confectionery explosion slides, autoplay, controls, and CTA buttons
+- "SHOP BY BRAND" section with notched ribbon banner and 18 brand logos from assets
+- "NEW ARRIVALS" 5-column product grid with corner badges (Sale/New), dual pricing, and Quick Add to cart
+- "SHOP BY CATEGORY" 5-column responsive grid with all 17 confectionery categories and double-border cards
+- "SPECIAL OFFERS" luxury dark split banner with gold typography (Special Offers, Shop Now, upto 40% off) and product montage
+- "OUR BEST SELLERS" 5-column product grid
+- "JOIN OUR EMAIL LIST" newsletter subscription strip with integrated submit arrow button
+- 4-column luxury dark footer with Sweet Reverie story, menu, policies, physical store address, and payment badges
+- Slide-over interactive Cart Drawer with real-time quantity modifiers (+ / -), item removal, and subtotal calculation
+- Floating green WhatsApp direct support button
+- Verified clean build (`npm run build`), TypeScript checks (`npx tsc --noEmit`), and end-to-end browser screenshots
+- Files touched: `src/app/*`, `src/components/*`, `src/lib/*`, `public/*`, `progress.md`
+- Next up: Swap in final transparent logo from user and proceed with collection/PDP pages
+
