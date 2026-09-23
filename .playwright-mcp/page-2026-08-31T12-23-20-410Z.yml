@@ -1,0 +1,487 @@
+- generic [active] [ref=f1e1]:
+  - link "Skip to content" [ref=f1e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=f1e3]:
+    - generic [ref=f1e4]:
+      - link "MAW-Choco-Shop" [ref=f1e5] [cursor=pointer]:
+        - /url: /
+      - navigation "Primary" [ref=f1e6]:
+        - link "Home" [ref=f1e7] [cursor=pointer]:
+          - /url: /
+        - link "Chocolate" [ref=f1e8] [cursor=pointer]:
+          - /url: /collections/chocolate
+        - link "Jelly" [ref=f1e9] [cursor=pointer]:
+          - /url: /collections/jelly
+        - link "Candy" [ref=f1e10] [cursor=pointer]:
+          - /url: /collections/candy
+        - link "Crisps" [ref=f1e11] [cursor=pointer]:
+          - /url: /collections/crisps
+        - link "Chips" [ref=f1e12] [cursor=pointer]:
+          - /url: /collections/chips
+        - link "Biscuits" [ref=f1e13] [cursor=pointer]:
+          - /url: /collections/biscuits
+        - link "Noodles" [ref=f1e14] [cursor=pointer]:
+          - /url: /collections/noodles
+        - link "Coffee & Drinks" [ref=f1e15] [cursor=pointer]:
+          - /url: /collections/coffee-drinks
+      - button "Cart" [ref=f1e16]
+  - main [ref=f1e21]:
+    - generic [ref=f1e22]:
+      - region [ref=f1e23]:
+        - generic [ref=f1e25]:
+          - group [ref=f1e26]:
+            - generic [ref=f1e27]:
+              - heading "Sweet Deals, Fast Delivery" [level=2] [ref=f1e28]
+              - paragraph [ref=f1e29]: Shop chocolates, candy & snacks — delivered to your door
+          - group [ref=f1e30]:
+            - generic [ref=f1e31]:
+              - heading "New Arrivals Every Week" [level=2] [ref=f1e32]
+              - paragraph [ref=f1e33]: Fresh drops across chocolate, jelly, chips & more
+          - group [ref=f1e34]:
+            - generic [ref=f1e35]:
+              - heading "Free Delivery on Orders Over Rs. 1500" [level=2] [ref=f1e36]
+              - paragraph [ref=f1e37]: More treats, less delivery fee
+        - button "Previous slide" [disabled]
+        - button "Next slide" [disabled]
+      - generic [ref=f1e38]:
+        - button "Go to slide 1" [ref=f1e39]
+        - button "Go to slide 2" [ref=f1e40]
+        - button "Go to slide 3" [ref=f1e41]
+    - generic [ref=f1e42]:
+      - heading "Featured Products" [level=2] [ref=f1e43]
+      - generic [ref=f1e44]:
+        - generic [ref=f1e45]:
+          - link [ref=f1e46] [cursor=pointer]:
+            - /url: /products/toblerone-dark-chocolate-bar
+            - img "Toblerone Dark Chocolate Bar" [ref=f1e48]
+          - generic [ref=f1e49]:
+            - link [ref=f1e50] [cursor=pointer]:
+              - /url: /products/toblerone-dark-chocolate-bar
+              - heading "Toblerone Dark Chocolate Bar" [level=3] [ref=f1e51]
+            - paragraph [ref=f1e52]: Rs 1,200
+            - button "Add to cart" [ref=f1e53]
+        - generic [ref=f1e54]:
+          - link [ref=f1e55] [cursor=pointer]:
+            - /url: /products/cadbury-dairy-milk-roast-almond-bar
+            - img "Cadbury Dairy Milk Roast Almond Bar" [ref=f1e57]
+          - generic [ref=f1e58]:
+            - link [ref=f1e59] [cursor=pointer]:
+              - /url: /products/cadbury-dairy-milk-roast-almond-bar
+              - heading "Cadbury Dairy Milk Roast Almond Bar" [level=3] [ref=f1e60]
+            - paragraph [ref=f1e61]: Rs 230
+            - button "Add to cart" [ref=f1e62]
+        - generic [ref=f1e63]:
+          - link [ref=f1e64] [cursor=pointer]:
+            - /url: /products/dairy-milk-roasted-almond
+            - img "Dairy Milk Roasted Almond" [ref=f1e66]
+          - generic [ref=f1e67]:
+            - link [ref=f1e68] [cursor=pointer]:
+              - /url: /products/dairy-milk-roasted-almond
+              - heading "Dairy Milk Roasted Almond" [level=3] [ref=f1e69]
+            - paragraph [ref=f1e70]: Rs 1,290
+            - button "Add to cart" [ref=f1e71]
+        - generic [ref=f1e72]:
+          - link [ref=f1e73] [cursor=pointer]:
+            - /url: /products/yupi-korean-bbq-jelly
+            - img "Yupi Korean BBQ Jelly" [ref=f1e75]
+          - generic [ref=f1e76]:
+            - link [ref=f1e77] [cursor=pointer]:
+              - /url: /products/yupi-korean-bbq-jelly
+              - heading "Yupi Korean BBQ Jelly" [level=3] [ref=f1e78]
+            - paragraph [ref=f1e79]: Rs 120
+            - button "Add to cart" [ref=f1e80]
+    - generic [ref=f1e81]:
+      - heading "Popular Right Now" [level=2] [ref=f1e82]
+      - generic [ref=f1e83]:
+        - generic [ref=f1e84]:
+          - link [ref=f1e85] [cursor=pointer]:
+            - /url: /products/yupi-fruit-cocktails-jelly
+            - img "Yupi Fruit Cocktails Jelly" [ref=f1e87]
+          - generic [ref=f1e88]:
+            - link [ref=f1e89] [cursor=pointer]:
+              - /url: /products/yupi-fruit-cocktails-jelly
+              - heading "Yupi Fruit Cocktails Jelly" [level=3] [ref=f1e90]
+            - paragraph [ref=f1e91]: Rs 90
+            - button "Add to cart" [ref=f1e92]
+        - generic [ref=f1e93]:
+          - link [ref=f1e94] [cursor=pointer]:
+            - /url: /products/relkon-yammiez-sour-hot-dogs-jelly
+            - img "Relkon Yammiez Sour Hot Dogs Jelly" [ref=f1e96]
+          - generic [ref=f1e97]:
+            - link [ref=f1e98] [cursor=pointer]:
+              - /url: /products/relkon-yammiez-sour-hot-dogs-jelly
+              - heading "Relkon Yammiez Sour Hot Dogs Jelly" [level=3] [ref=f1e99]
+            - paragraph [ref=f1e100]: Rs 500
+            - button "Add to cart" [ref=f1e101]
+        - generic [ref=f1e102]:
+          - link [ref=f1e103] [cursor=pointer]:
+            - /url: /products/jojo-crazy-cone-lollypops
+            - img "Jojo Crazy Cone Lollypops" [ref=f1e105]
+          - generic [ref=f1e106]:
+            - link [ref=f1e107] [cursor=pointer]:
+              - /url: /products/jojo-crazy-cone-lollypops
+              - heading "Jojo Crazy Cone Lollypops" [level=3] [ref=f1e108]
+            - paragraph [ref=f1e109]: Rs 700
+            - button "Add to cart" [ref=f1e110]
+        - generic [ref=f1e111]:
+          - link [ref=f1e112] [cursor=pointer]:
+            - /url: /products/nerds-watermelon-cherry-candy
+            - img "Nerds Watermelon & Cherry Candy" [ref=f1e114]
+          - generic [ref=f1e115]:
+            - link [ref=f1e116] [cursor=pointer]:
+              - /url: /products/nerds-watermelon-cherry-candy
+              - heading "Nerds Watermelon & Cherry Candy" [level=3] [ref=f1e117]
+            - paragraph [ref=f1e118]: Rs 750
+            - button "Add to cart" [ref=f1e119]
+    - generic [ref=f1e120]:
+      - generic [ref=f1e121]:
+        - heading "Chocolate" [level=2] [ref=f1e122]
+        - link "View all →" [ref=f1e123] [cursor=pointer]:
+          - /url: /collections/chocolate
+      - generic [ref=f1e124]:
+        - generic [ref=f1e125]:
+          - link [ref=f1e126] [cursor=pointer]:
+            - /url: /products/mars-miniatures-pouch
+            - img "Mars Miniatures Pouch" [ref=f1e128]
+          - generic [ref=f1e129]:
+            - link [ref=f1e130] [cursor=pointer]:
+              - /url: /products/mars-miniatures-pouch
+              - heading "Mars Miniatures Pouch" [level=3] [ref=f1e131]
+            - paragraph [ref=f1e132]: Rs 3,450
+            - button "Add to cart" [ref=f1e133]
+        - generic [ref=f1e134]:
+          - link [ref=f1e135] [cursor=pointer]:
+            - /url: /products/ferrero-rocher-t3
+            - img "Ferrero Rocher T3" [ref=f1e137]
+          - generic [ref=f1e138]:
+            - link [ref=f1e139] [cursor=pointer]:
+              - /url: /products/ferrero-rocher-t3
+              - heading "Ferrero Rocher T3" [level=3] [ref=f1e140]
+            - paragraph [ref=f1e141]: Rs 890
+            - button "Add to cart" [ref=f1e142]
+        - generic [ref=f1e143]:
+          - link [ref=f1e144] [cursor=pointer]:
+            - /url: /products/kinder-bueno-milk-chocolate
+            - img "Kinder Bueno Milk Chocolate" [ref=f1e146]
+          - generic [ref=f1e147]:
+            - link [ref=f1e148] [cursor=pointer]:
+              - /url: /products/kinder-bueno-milk-chocolate
+              - heading "Kinder Bueno Milk Chocolate" [level=3] [ref=f1e149]
+            - paragraph [ref=f1e150]: Rs 590
+            - button "Add to cart" [ref=f1e151]
+        - generic [ref=f1e152]:
+          - link [ref=f1e153] [cursor=pointer]:
+            - /url: /products/galaxy-smooth-milk-chocolate-bar
+            - img "Galaxy Smooth Milk Chocolate Bar" [ref=f1e155]
+          - generic [ref=f1e156]:
+            - link [ref=f1e157] [cursor=pointer]:
+              - /url: /products/galaxy-smooth-milk-chocolate-bar
+              - heading "Galaxy Smooth Milk Chocolate Bar" [level=3] [ref=f1e158]
+            - paragraph [ref=f1e159]: Rs 670
+            - button "Add to cart" [ref=f1e160]
+    - generic [ref=f1e161]:
+      - generic [ref=f1e162]:
+        - heading "Jelly" [level=2] [ref=f1e163]
+        - link "View all →" [ref=f1e164] [cursor=pointer]:
+          - /url: /collections/jelly
+      - generic [ref=f1e165]:
+        - generic [ref=f1e166]:
+          - link [ref=f1e167] [cursor=pointer]:
+            - /url: /products/chupa-chups-sour-1-meter-belt
+            - img "Chupa Chups Sour 1 Meter Belt" [ref=f1e169]
+          - generic [ref=f1e170]:
+            - link [ref=f1e171] [cursor=pointer]:
+              - /url: /products/chupa-chups-sour-1-meter-belt
+              - heading "Chupa Chups Sour 1 Meter Belt" [level=3] [ref=f1e172]
+            - paragraph [ref=f1e173]: Rs 590
+            - button "Add to cart" [ref=f1e174]
+        - generic [ref=f1e175]:
+          - link [ref=f1e176] [cursor=pointer]:
+            - /url: /products/sweeto-sour-tangy-jelly
+            - img "Sweeto Sour Tangy Jelly" [ref=f1e178]
+          - generic [ref=f1e179]:
+            - link [ref=f1e180] [cursor=pointer]:
+              - /url: /products/sweeto-sour-tangy-jelly
+              - heading "Sweeto Sour Tangy Jelly" [level=3] [ref=f1e181]
+            - paragraph [ref=f1e182]: Rs 490
+            - button "Add to cart" [ref=f1e183]
+        - generic [ref=f1e184]:
+          - link [ref=f1e185] [cursor=pointer]:
+            - /url: /products/relkon-yammiez-sour-hot-dogs-jelly
+            - img "Relkon Yammiez Sour Hot Dogs Jelly" [ref=f1e187]
+          - generic [ref=f1e188]:
+            - link [ref=f1e189] [cursor=pointer]:
+              - /url: /products/relkon-yammiez-sour-hot-dogs-jelly
+              - heading "Relkon Yammiez Sour Hot Dogs Jelly" [level=3] [ref=f1e190]
+            - paragraph [ref=f1e191]: Rs 500
+            - button "Add to cart" [ref=f1e192]
+        - generic [ref=f1e193]:
+          - link [ref=f1e194] [cursor=pointer]:
+            - /url: /products/yupi-fruit-cocktails-jelly
+            - img "Yupi Fruit Cocktails Jelly" [ref=f1e196]
+          - generic [ref=f1e197]:
+            - link [ref=f1e198] [cursor=pointer]:
+              - /url: /products/yupi-fruit-cocktails-jelly
+              - heading "Yupi Fruit Cocktails Jelly" [level=3] [ref=f1e199]
+            - paragraph [ref=f1e200]: Rs 90
+            - button "Add to cart" [ref=f1e201]
+    - generic [ref=f1e202]:
+      - generic [ref=f1e203]:
+        - heading "Candy" [level=2] [ref=f1e204]
+        - link "View all →" [ref=f1e205] [cursor=pointer]:
+          - /url: /collections/candy
+      - generic [ref=f1e206]:
+        - generic [ref=f1e207]:
+          - link [ref=f1e208] [cursor=pointer]:
+            - /url: /products/fox-spring-tea-candy
+            - img "Fox Spring Tea Candy" [ref=f1e210]
+          - generic [ref=f1e211]:
+            - link [ref=f1e212] [cursor=pointer]:
+              - /url: /products/fox-spring-tea-candy
+              - heading "Fox Spring Tea Candy" [level=3] [ref=f1e213]
+            - paragraph [ref=f1e214]: Rs 350
+            - button "Add to cart" [ref=f1e215]
+        - generic [ref=f1e216]:
+          - link [ref=f1e217] [cursor=pointer]:
+            - /url: /products/mik-end-ike-jolly-joes-candy
+            - img "Mik end Ike Jolly Joes Candy" [ref=f1e219]
+          - generic [ref=f1e220]:
+            - link [ref=f1e221] [cursor=pointer]:
+              - /url: /products/mik-end-ike-jolly-joes-candy
+              - heading "Mik end Ike Jolly Joes Candy" [level=3] [ref=f1e222]
+            - paragraph [ref=f1e223]: Rs 1,490
+            - button "Add to cart" [ref=f1e224]
+        - generic [ref=f1e225]:
+          - link [ref=f1e226] [cursor=pointer]:
+            - /url: /products/nerds-watermelon-cherry-candy
+            - img "Nerds Watermelon & Cherry Candy" [ref=f1e228]
+          - generic [ref=f1e229]:
+            - link [ref=f1e230] [cursor=pointer]:
+              - /url: /products/nerds-watermelon-cherry-candy
+              - heading "Nerds Watermelon & Cherry Candy" [level=3] [ref=f1e231]
+            - paragraph [ref=f1e232]: Rs 750
+            - button "Add to cart" [ref=f1e233]
+        - generic [ref=f1e234]:
+          - link [ref=f1e235] [cursor=pointer]:
+            - /url: /products/jojo-crazy-cone-lollypops
+            - img "Jojo Crazy Cone Lollypops" [ref=f1e237]
+          - generic [ref=f1e238]:
+            - link [ref=f1e239] [cursor=pointer]:
+              - /url: /products/jojo-crazy-cone-lollypops
+              - heading "Jojo Crazy Cone Lollypops" [level=3] [ref=f1e240]
+            - paragraph [ref=f1e241]: Rs 700
+            - button "Add to cart" [ref=f1e242]
+    - generic [ref=f1e243]:
+      - generic [ref=f1e244]:
+        - heading "Crisps" [level=2] [ref=f1e245]
+        - link "View all →" [ref=f1e246] [cursor=pointer]:
+          - /url: /collections/crisps
+      - generic [ref=f1e247]:
+        - generic [ref=f1e248]:
+          - link [ref=f1e249] [cursor=pointer]:
+            - /url: /products/lays-yogurt-herb
+            - img "Lays Yogurt & Herb" [ref=f1e251]
+          - generic [ref=f1e252]:
+            - link [ref=f1e253] [cursor=pointer]:
+              - /url: /products/lays-yogurt-herb
+              - heading "Lays Yogurt & Herb" [level=3] [ref=f1e254]
+            - paragraph [ref=f1e255]: Rs 50
+            - button "Add to cart" [ref=f1e256]
+        - generic [ref=f1e257]:
+          - link [ref=f1e258] [cursor=pointer]:
+            - /url: /products/pop-nosh-caramel-crunch-pop-corn
+            - img "Pop Nosh Caramel Crunch Pop Corn" [ref=f1e260]
+          - generic [ref=f1e261]:
+            - link [ref=f1e262] [cursor=pointer]:
+              - /url: /products/pop-nosh-caramel-crunch-pop-corn
+              - heading "Pop Nosh Caramel Crunch Pop Corn" [level=3] [ref=f1e263]
+            - paragraph [ref=f1e264]: Rs 100
+            - button "Add to cart" [ref=f1e265]
+        - generic [ref=f1e266]:
+          - link [ref=f1e267] [cursor=pointer]:
+            - /url: /products/pringles-original
+            - img "Pringles Original" [ref=f1e269]
+          - generic [ref=f1e270]:
+            - link [ref=f1e271] [cursor=pointer]:
+              - /url: /products/pringles-original
+              - heading "Pringles Original" [level=3] [ref=f1e272]
+            - paragraph [ref=f1e273]: Rs 1,290
+            - button "Add to cart" [ref=f1e274]
+        - generic [ref=f1e275]:
+          - link [ref=f1e276] [cursor=pointer]:
+            - /url: /products/takis-fuego-mini
+            - img "Takis Fuego Mini" [ref=f1e278]
+          - generic [ref=f1e279]:
+            - link [ref=f1e280] [cursor=pointer]:
+              - /url: /products/takis-fuego-mini
+              - heading "Takis Fuego Mini" [level=3] [ref=f1e281]
+            - paragraph [ref=f1e282]: Rs 590
+            - button "Add to cart" [ref=f1e283]
+    - generic [ref=f1e284]:
+      - generic [ref=f1e285]:
+        - heading "Chips" [level=2] [ref=f1e286]
+        - link "View all →" [ref=f1e287] [cursor=pointer]:
+          - /url: /collections/chips
+      - generic [ref=f1e288]:
+        - generic [ref=f1e289]:
+          - link [ref=f1e290] [cursor=pointer]:
+            - /url: /products/noms-nachos-sour-cream-herb-32g
+            - img "Noms Nachos Sour Cream&herb 32g" [ref=f1e292]
+          - generic [ref=f1e293]:
+            - link [ref=f1e294] [cursor=pointer]:
+              - /url: /products/noms-nachos-sour-cream-herb-32g
+              - heading "Noms Nachos Sour Cream&herb 32g" [level=3] [ref=f1e295]
+            - paragraph [ref=f1e296]: Rs 80
+            - button "Add to cart" [ref=f1e297]
+        - generic [ref=f1e298]:
+          - link [ref=f1e299] [cursor=pointer]:
+            - /url: /products/noms-nachos-pink-salt-pepper-32g
+            - img "Noms Nachos Pink Salt&Pepper 32g" [ref=f1e301]
+          - generic [ref=f1e302]:
+            - link [ref=f1e303] [cursor=pointer]:
+              - /url: /products/noms-nachos-pink-salt-pepper-32g
+              - heading "Noms Nachos Pink Salt&Pepper 32g" [level=3] [ref=f1e304]
+            - paragraph [ref=f1e305]: Rs 80
+            - button "Add to cart" [ref=f1e306]
+        - generic [ref=f1e307]:
+          - link [ref=f1e308] [cursor=pointer]:
+            - /url: /products/noms-nachos-cilli-lemon-35g
+            - img "Noms Nachos Cilli Lemon 35g" [ref=f1e310]
+          - generic [ref=f1e311]:
+            - link [ref=f1e312] [cursor=pointer]:
+              - /url: /products/noms-nachos-cilli-lemon-35g
+              - heading "Noms Nachos Cilli Lemon 35g" [level=3] [ref=f1e313]
+            - paragraph [ref=f1e314]: Rs 80
+            - button "Add to cart" [ref=f1e315]
+        - generic [ref=f1e316]:
+          - link [ref=f1e317] [cursor=pointer]:
+            - /url: /products/noms-nachos-smoky-bbq
+            - img "Noms Nachos Smoky BBQ" [ref=f1e319]
+          - generic [ref=f1e320]:
+            - link [ref=f1e321] [cursor=pointer]:
+              - /url: /products/noms-nachos-smoky-bbq
+              - heading "Noms Nachos Smoky BBQ" [level=3] [ref=f1e322]
+            - paragraph [ref=f1e323]: Rs 80
+            - button "Add to cart" [ref=f1e324]
+    - generic [ref=f1e325]:
+      - generic [ref=f1e326]:
+        - heading "Biscuits" [level=2] [ref=f1e327]
+        - link "View all →" [ref=f1e328] [cursor=pointer]:
+          - /url: /collections/biscuits
+      - generic [ref=f1e329]:
+        - generic [ref=f1e330]:
+          - link [ref=f1e331] [cursor=pointer]:
+            - /url: /products/nutella-biscuits
+            - img "Nutella Biscuits" [ref=f1e333]
+          - generic [ref=f1e334]:
+            - link [ref=f1e335] [cursor=pointer]:
+              - /url: /products/nutella-biscuits
+              - heading "Nutella Biscuits" [level=3] [ref=f1e336]
+            - paragraph [ref=f1e337]: Rs 570
+            - button "Add to cart" [ref=f1e338]
+        - generic [ref=f1e339]:
+          - link [ref=f1e340] [cursor=pointer]:
+            - /url: /products/balocco-savoiardi-lady-fingers-boudoirs
+            - img "Balocco Savoiardi Lady Fingers Boudoirs" [ref=f1e342]
+          - generic [ref=f1e343]:
+            - link [ref=f1e344] [cursor=pointer]:
+              - /url: /products/balocco-savoiardi-lady-fingers-boudoirs
+              - heading "Balocco Savoiardi Lady Fingers Boudoirs" [level=3] [ref=f1e345]
+            - paragraph [ref=f1e346]: Rs 850
+            - button "Add to cart" [ref=f1e347]
+        - generic [ref=f1e348]:
+          - link [ref=f1e349] [cursor=pointer]:
+            - /url: /products/caramelito-caramelised-biscuits
+            - img "Caramelito Caramelised Biscuits" [ref=f1e351]
+          - generic [ref=f1e352]:
+            - link [ref=f1e353] [cursor=pointer]:
+              - /url: /products/caramelito-caramelised-biscuits
+              - heading "Caramelito Caramelised Biscuits" [level=3] [ref=f1e354]
+            - paragraph [ref=f1e355]: Rs 1,400
+            - button "Add to cart" [ref=f1e356]
+        - generic [ref=f1e357]:
+          - link [ref=f1e358] [cursor=pointer]:
+            - /url: /products/oreo-wafer-roll-vanilla
+            - img "Oreo Wafer Roll vanilla" [ref=f1e360]
+          - generic [ref=f1e361]:
+            - link [ref=f1e362] [cursor=pointer]:
+              - /url: /products/oreo-wafer-roll-vanilla
+              - heading "Oreo Wafer Roll vanilla" [level=3] [ref=f1e363]
+            - paragraph [ref=f1e364]: Rs 690
+            - button "Add to cart" [ref=f1e365]
+    - generic [ref=f1e366]:
+      - generic [ref=f1e367]:
+        - heading "Noodles" [level=2] [ref=f1e368]
+        - link "View all →" [ref=f1e369] [cursor=pointer]:
+          - /url: /collections/noodles
+      - generic [ref=f1e370]:
+        - generic [ref=f1e371]:
+          - link [ref=f1e372] [cursor=pointer]:
+            - /url: /products/samyang-3x-hot-chicken-ramen
+            - img "Samyang 3x Hot Chicken Ramen" [ref=f1e374]
+          - generic [ref=f1e375]:
+            - link [ref=f1e376] [cursor=pointer]:
+              - /url: /products/samyang-3x-hot-chicken-ramen
+              - heading "Samyang 3x Hot Chicken Ramen" [level=3] [ref=f1e377]
+            - paragraph [ref=f1e378]: Rs 550
+            - button "Add to cart" [ref=f1e379]
+        - generic [ref=f1e380]:
+          - link [ref=f1e381] [cursor=pointer]:
+            - /url: /products/samyang-buldak-carbonara-hot-chicken-flavor-ramen-noodles
+            - img "Samyang Buldak Carbonara Hot Chicken Flavor Ramen Noodles" [ref=f1e383]
+          - generic [ref=f1e384]:
+            - link [ref=f1e385] [cursor=pointer]:
+              - /url: /products/samyang-buldak-carbonara-hot-chicken-flavor-ramen-noodles
+              - heading "Samyang Buldak Carbonara Hot Chicken Flavor Ramen Noodles" [level=3] [ref=f1e386]
+            - paragraph [ref=f1e387]: Rs 550
+            - button "Add to cart" [ref=f1e388]
+    - generic [ref=f1e389]:
+      - generic [ref=f1e390]:
+        - heading "Coffee & Drinks" [level=2] [ref=f1e391]
+        - link "View all →" [ref=f1e392] [cursor=pointer]:
+          - /url: /collections/coffee-drinks
+      - generic [ref=f1e393]:
+        - generic [ref=f1e394]:
+          - link [ref=f1e395] [cursor=pointer]:
+            - /url: /products/davidoff-rich-aroma
+            - img "DavidOff Rich Aroma" [ref=f1e397]
+          - generic [ref=f1e398]:
+            - link [ref=f1e399] [cursor=pointer]:
+              - /url: /products/davidoff-rich-aroma
+              - heading "DavidOff Rich Aroma" [level=3] [ref=f1e400]
+            - paragraph [ref=f1e401]: Rs 3,350
+            - button "Add to cart" [ref=f1e402]
+        - generic [ref=f1e403]:
+          - link [ref=f1e404] [cursor=pointer]:
+            - /url: /products/italiano-basil-seed-drink-lychee
+            - img "Italiano Basil Seed Drink Lychee" [ref=f1e406]
+          - generic [ref=f1e407]:
+            - link [ref=f1e408] [cursor=pointer]:
+              - /url: /products/italiano-basil-seed-drink-lychee
+              - heading "Italiano Basil Seed Drink Lychee" [level=3] [ref=f1e409]
+            - paragraph [ref=f1e410]: Rs 190
+            - button "Add to cart" [ref=f1e411]
+  - contentinfo [ref=f1e412]:
+    - generic [ref=f1e413]:
+      - generic [ref=f1e414]:
+        - paragraph [ref=f1e415]: MAW-Choco-Shop
+        - paragraph [ref=f1e416]: Snacks, sweets & drinks delivered.
+      - generic [ref=f1e417]:
+        - generic [ref=f1e418]:
+          - generic [ref=f1e419]: Contact
+          - link "candyshopnetwork24@gmail.com" [ref=f1e420] [cursor=pointer]:
+            - /url: mailto:candyshopnetwork24@gmail.com
+        - generic [ref=f1e421]:
+          - generic [ref=f1e422]: Follow us
+          - generic [ref=f1e423]:
+            - link "Facebook" [ref=f1e424] [cursor=pointer]:
+              - /url: "#"
+            - link "Instagram" [ref=f1e425] [cursor=pointer]:
+              - /url: "#"
+    - generic [ref=f1e426]: © 2026 MAW-Choco-Shop. All rights reserved.
+  - dialog [ref=f1e427]:
+    - generic [ref=f1e428]:
+      - heading [level=2] [ref=f1e429]: Your cart
+      - button [ref=f1e430]
+    - paragraph [ref=f1e435]: Your cart is empty.
+  - button "Open Next.js Dev Tools" [ref=f1e441] [cursor=pointer]

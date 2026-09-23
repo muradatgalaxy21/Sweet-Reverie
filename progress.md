@@ -112,3 +112,9 @@ Format per entry:
 - Not done: performance pass (Lighthouse/bundle audit) — no production domain yet to test against realistically, revisit at/after Phase 7 launch
 - **Phase 6 (SEO + accessibility) done**, performance sub-item deferred to launch.
 - Next up: Phase 7 — domain connection, DNS, go-live checklist
+
+## 2026-09-23 — Frontend reset / removal
+- Deleted entire frontend implementation (`src/` directory and `.next/` build artifacts) per user instruction to prepare for rebuilding from scratch
+- Files touched: deleted all files in `src/` (`src/app/*`, `src/components/*`, `src/lib/*`), deleted `.next/`
+- Deviations from plan.md: Entire frontend removed to allow a full rebuild from scratch
+- Next up: Scaffold and build frontend from scratch
