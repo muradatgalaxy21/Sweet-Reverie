@@ -138,3 +138,15 @@ Format per entry:
 - Files touched: `src/app/*`, `src/components/*`, `src/lib/*`, `public/*`, `progress.md`
 - Next up: Swap in final transparent logo from user and proceed with collection/PDP pages
 
+## 2026-09-25 — Header logo + full-bleed hero banner slide
+- Fixed hydration warning: browser extensions (Grammarly) inject `data-gr-*` attrs on `<body>` before hydration; added `suppressHydrationWarning` to `<body>` in `src/app/layout.tsx`
+- Header logo (`src/components/site-header.tsx`): swapped white-badge JPEG for transparent PNG (`public/logo/sweet-reverie-no-bg.png`), several size/crop iterations landing on a cream circular badge (`bg-[#FAF7F2]`, 2px maroon border, 128px/144px mobile/desktop) with the logo at 95% width so the whole emblem fits inside without a gap
+- Hero carousel (`src/components/hero-carousel.tsx`): now full-bleed (no max-width/padding/rounded corners) and fills the viewport height below the announcement bar + navbar (`min-h-[max(380px,calc(100svh-115px))]`)
+- Added slide 1: user-supplied full-bleed banner image (`public/hero/exquisite-chocolate-reverie-v2.jpeg`, text/CTA baked into the image) — added optional `bgImage` field to the `HeroSlide` type that skips the gradient/badge/collage/button overlay when set, whole slide wraps in a `<Link>`. Existing "Feel the Fire" and "World of Sweet Wonders" slides now play second/third.
+- Bug found + fixed: overwriting the hero image file in place didn't show up in the app — Next's `.next/cache/images` + browser cache both key on the unchanged filename. First tried a `?v=2` query string, but this Next.js version rejects query strings on local `next/image` src unless allow-listed in `next.config.ts` `images.localPatterns` — reverted to a versioned filename instead (`-v2`, bump to `-v3` etc. on next swap, documented inline in `hero-carousel.tsx`)
+- Repo hygiene: deleted 6 stale tracked Playwright debug `.yml` snapshots under `.playwright-mcp/`, added `.playwright-mcp/` to `.gitignore`
+- User preference logged to memory (not just this file): always ask permission before any Playwright/browser-automation call — see `~/.claude/projects/E--Ahmad-Waseem-Shopify-Store/memory/ask-before-playwright.md`
+- Files touched: `src/app/layout.tsx`, `src/components/site-header.tsx`, `src/components/hero-carousel.tsx`, `public/logo/sweet-reverie-no-bg.png` (new), `public/hero/exquisite-chocolate-reverie-v2.jpeg` (new), `.gitignore`, `.playwright-mcp/*` (removed)
+- Deviations: none from plan.md scope — visual/asset polish only
+- Next up: swap in final logo/hero art if the client revises further; proceed with collection/PDP pages per plan.md Phase 3 remainder
+
