@@ -67,13 +67,14 @@ export function SiteHeader() {
             {/* Center Brand Logo with Circular Badge */}
             <div className="absolute left-1/2 -translate-x-1/2 top-1 z-50">
               <Link href="/" className="block group">
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-[#FAF7F2] p-1.5 shadow-xl border-4 border-amber-400 group-hover:scale-105 transition-transform duration-300 flex items-center justify-center overflow-hidden">
+                <div className="w-28 md:w-32 group-hover:scale-105 transition-transform duration-300">
                   <Image
-                    src="/logo/sweet-reverie-renewed.jpeg"
+                    src="/logo/sweet-reverie-no-bg.png"
                     alt="Sweet Reverie Fine Confections"
-                    width={96}
-                    height={96}
-                    className="object-contain rounded-full"
+                    width={2073}
+                    height={1800}
+                    sizes="128px"
+                    className="w-full h-auto"
                     priority
                   />
                 </div>
