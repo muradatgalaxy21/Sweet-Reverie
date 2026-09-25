@@ -49,7 +49,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${jakarta.variable}`}>
-      <body className="antialiased min-h-screen flex flex-col justify-between selection:bg-[#ECA58A] selection:text-[#662A37]">
+      <body suppressHydrationWarning className="antialiased min-h-screen flex flex-col justify-between selection:bg-[#ECA58A] selection:text-[#662A37]">
         <CartProvider>
           {/* Top Marquee Announcement */}
           <AnnouncementBar />
