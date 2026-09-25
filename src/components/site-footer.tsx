@@ -18,7 +18,7 @@ export function SiteFooter() {
   };
 
   return (
-    <footer id="footer" className="bg-[#24120B] text-[#FAF7F2] pt-14 pb-8 border-t-4 border-[#662A37]">
+    <footer id="footer" className="bg-[#4A1A25] text-[#FAF7F2] pt-14 pb-8 border-t-4 border-[#662A37]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-stone-800">
           {/* Column 1: Brand Info & Payment Badges */}

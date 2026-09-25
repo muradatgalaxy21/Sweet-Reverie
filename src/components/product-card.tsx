@@ -84,7 +84,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <button
           type="button"
           onClick={handleAddToCart}
-          className="w-full bg-[#F59E0B] hover:bg-[#E68A00] active:scale-95 text-black font-extrabold text-xs uppercase tracking-wider py-2.5 px-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2"
+          className="w-full bg-[#4A1A25] hover:bg-[#662A37] active:scale-95 text-white font-extrabold text-xs uppercase tracking-wider py-2.5 px-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2"
         >
           <ShoppingBag className="w-4 h-4 stroke-[2.5]" />
           <span>Add to cart</span>

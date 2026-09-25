@@ -2,18 +2,26 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/categories";
-import { SectionBadge } from "./section-badge";
 
 /**
  * ShopByCategory component replicating the 5-column category grid from the mockup.
- * 1. Notched ribbon title SHOP BY CATEGORY.
+ * 1. SHOP BY CATEGORY banner.
  * 2. 5-column responsive grid featuring all 17 categories.
  * 3. Double-border card framing and high-contrast bottom label pills.
  */
 export function ShopByCategory() {
   return (
     <section id="categories" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-      <SectionBadge title="SHOP BY CATEGORY" />
+      <div className="flex justify-center my-4 md:my-6">
+        <h2 className="sr-only">Shop by Category</h2>
+        <Image
+          src="/banners/shop-by-category-banner-v1.png"
+          alt="Shop by Category"
+          width={2323}
+          height={730}
+          className="max-w-xs sm:max-w-md md:max-w-lg w-full h-auto object-contain drop-shadow-sm"
+        />
+      </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
         {CATEGORIES.map((category) => (

@@ -18,7 +18,7 @@ export function SpecialOffersBanner() {
 
   return (
     <section id="special-offers" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
-      <div className="relative overflow-hidden rounded-3xl bg-[#24120B] border-2 border-amber-500/40 shadow-2xl p-8 md:p-14 flex flex-col lg:flex-row items-center justify-between gap-8">
+      <div className="relative overflow-hidden rounded-3xl bg-[#4A1A25] border-2 border-amber-500/40 shadow-2xl p-8 md:p-14 flex flex-col lg:flex-row items-center justify-between gap-8">
         {/* Subtle decorative background glow */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
