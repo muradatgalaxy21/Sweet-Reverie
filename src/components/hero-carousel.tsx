@@ -76,9 +76,9 @@ export function HeroCarousel() {
   const active = slides[currentSlide];
 
   return (
-    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2">
+    <section className="relative">
       <div
-        className={`relative overflow-hidden rounded-3xl bg-gradient-to-r ${active.bgGradient} min-h-[max(380px,calc(100svh-139px))] shadow-2xl transition-all duration-700 flex flex-col justify-between p-6 md:p-12 text-white border-2 border-amber-300/40`}
+        className={`relative overflow-hidden bg-gradient-to-r ${active.bgGradient} min-h-[max(380px,calc(100svh-115px))] shadow-2xl transition-all duration-700 flex flex-col justify-between p-6 md:p-12 text-white`}
       >
         {/* Decorative background flare */}
         <div className="absolute inset-0 bg-radial-gradient from-white/10 via-transparent to-black/40 pointer-events-none" />
