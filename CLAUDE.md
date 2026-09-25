@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## State
 
-Pre-implementation. Repo has no code yet — only `plan.md`, the full spec for this project. No `package.json`, no framework scaffold, not a git repo.
+Scaffolded and in active build. Next.js 16 (App Router) + React 19 + Tailwind 4 project, git repo initialized. Storefront data layer (GraphQL codegen) present but UI has been built ahead of it using static mock data (`src/lib/products-data.ts`, `src/lib/categories.ts`) — Shopify Storefront API wiring is still pending per plan.md phases.
 
 Before writing code, read `plan.md` in full. It defines:
 - Architecture: Next.js (App Router) frontend + Shopify Storefront API (GraphQL) for data, Shopify-hosted checkout for payment
@@ -20,9 +20,21 @@ Before writing code, read `plan.md` in full. It defines:
 - **Customer accounts**: Shopify-hosted flow, not custom-built auth (see Decisions Log §8).
 - **Revalidation**: product pages use SSG/ISR revalidated by webhook on product update, not polling.
 
-## Once scaffolded
+## Commands
 
-Update this file with actual build/lint/test/dev commands and real architecture notes once the Next.js project exists — this section is a placeholder until then.
+- `npm run dev` — start dev server (Turbopack, Next 16)
+- `npm run build` — production build
+- `npm run start` — serve production build
+- `npm run lint` — ESLint (flat config, `eslint-config-next`)
+- `npm run codegen` — regenerate GraphQL types from `codegen.ts` (Storefront API schema)
+
+## Architecture notes
+
+- `src/app/` — App Router: `layout.tsx` (root shell: announcement bar, header, footer, cart drawer, WhatsApp button) + `page.tsx` (homepage sections).
+- `src/components/` — presentational sections (hero carousel, category/brand shelves, best sellers, new arrivals, product card, search modal, cart drawer, site header/footer).
+- `src/lib/` — `cart-context.tsx` (client cart state via React context, not yet wired to Shopify cart ID), `products-data.ts` / `categories.ts` (static mock data standing in for Storefront API), `types.ts`, `utils.ts`.
+- Styling: Tailwind 4 (`globals.css` has `@import "tailwindcss"` + `@layer base` CSS variables for brand colors — burgundy/peach/gold/cream palette). No component library beyond `@base-ui/react` primitives + `shadcn` CLI-generated pieces.
+- `codegen.ts` + `@graphql-codegen/*` deps are present for Storefront API type generation but no live queries are wired in yet — cart, product fetch, and checkout redirect (`cart.checkoutUrl`) are still on static/mock data pending that integration.
 
 ## Workflow rules
 
