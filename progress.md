@@ -148,5 +148,38 @@ Format per entry:
 - User preference logged to memory (not just this file): always ask permission before any Playwright/browser-automation call — see `~/.claude/projects/E--Ahmad-Waseem-Shopify-Store/memory/ask-before-playwright.md`
 - Files touched: `src/app/layout.tsx`, `src/components/site-header.tsx`, `src/components/hero-carousel.tsx`, `public/logo/sweet-reverie-no-bg.png` (new), `public/hero/exquisite-chocolate-reverie-v2.jpeg` (new), `.gitignore`, `.playwright-mcp/*` (removed)
 - Deviations: none from plan.md scope — visual/asset polish only
-- Next up: swap in final logo/hero art if the client revises further; proceed with collection/PDP pages per plan.md Phase 3 remainder
+## 2026-09-25 — Circular Favicon replacement with user's icon
+- Replaced generated favicon with user's custom circular candy emblem from [assets/My-Logo/icon-sweet-reverie.ico](file:///e:/Ahmad-Waseem-Shopify-Store/assets/My-Logo/icon-sweet-reverie.ico)
+- Updated [src/app/favicon.ico](file:///e:/Ahmad-Waseem-Shopify-Store/src/app/favicon.ico) and [public/favicon.ico](file:///e:/Ahmad-Waseem-Shopify-Store/public/favicon.ico) directly with the user's `.ico` file
+- Synchronized all accompanying web and mobile icons (`src/app/icon.png`, `src/app/apple-icon.png`, `public/favicon.png`, `public/apple-touch-icon.png`, `public/icon-192.png`, `public/icon-512.png`) using [assets/My-Logo/icon-sweet-reverie.png](file:///e:/Ahmad-Waseem-Shopify-Store/assets/My-Logo/icon-sweet-reverie.png)
+- Verified active endpoints serving HTTP 200 OK
+- Next up: Proceed with collection / PDP pages per plan.md Phase 3
 
+## 2026-09-25 — Shop by Brand Header Banner
+- Replaced the first section heading (`SectionBadge`) on the home page with the banner artwork from `assets/banners/shop-by-brand-banner.png`
+- Placed the banner inside a luxury cream squared-rounded card (`bg-[#FAF7F2]`, 2px burgundy border `border-[#662A37]/25`, `rounded-2xl md:rounded-3xl`, soft drop-shadow)
+- Optimized and saved image asset to `public/banners/shop-by-brand-banner.png`
+- Files touched: `src/components/shop-by-brand.tsx`, `public/banners/*`, `progress.md`
+
+## 2026-09-25 — Hero carousel: mobile crop, real CTA button, no autoplay
+- Added a portrait `bgImageMobile` crop shown below `md`, full desktop image stays above `md`
+- Replaced the whole-slide `<Link>` overlay with a positioned CTA button so the call-to-action is real accessible markup instead of baked into the banner image
+- Removed the 6s auto-advance `setInterval` — carousel now advances only via the arrow controls
+- Tagged the section `id="hero"` so the header's scroll-based logo-shrink measurement (`getElementById("hero")`) has a target
+- Bumped hero banner to `-v3` filename (Next image cache-bust, same reason as the `-v2` bump) and added the new mobile crop
+- Files touched: `src/components/hero-carousel.tsx`, `public/hero/exquisite-chocolate-reverie-v3.jpeg` (new), `public/hero/exquisite-chocolate-reverie-mobile-view.jpeg` (new)
+- Deviations: none from plan.md scope — visual/UX polish only
+
+## 2026-09-25 — Section banners rollout + burgundy palette
+- Replaced the `SectionBadge` ribbon component with designed PNG banners for Shop by Category, Best Sellers, and New Arrivals (Shop by Brand got its banner in the prior session); deleted the now-unused `section-badge.tsx`
+- Reworked `ShopByBrand` from a static grid into two infinite marquee rows (`animate-marquee` / new `animate-marquee-reverse` keyframe in `globals.css`)
+- Recolored category pills, the product-card "Add to cart" button, footer background, and the special-offers banner to the burgundy palette (`#4A1A25` / `#662A37`), replacing the old pink/dark-brown mix
+- Removed the unused duplicate logo asset (`public/logo/Sweet-Reverie-Confectionary-Store.jpeg`), superseded by the banner set
+- Files touched: `src/app/globals.css`, `src/components/{shop-by-category,shop-by-brand,best-sellers-section,new-arrivals-section,product-card,site-footer,special-offers-banner}.tsx`, `src/components/section-badge.tsx` (deleted), `assets/banners/*`, `public/banners/*`
+- Deviations: none from plan.md scope — visual polish only
+
+## 2026-09-25 — Custom navbar icons
+- Swapped `lucide-react`'s Search/User/ShoppingBag icons in `site-header.tsx` for inline SVG components matching the shapes supplied in `assets/icons/{search,profile,cart}.svg`, using `stroke="currentColor"` so existing hover/scale styling keeps working
+- Menu/X stay on `lucide-react` — no matching custom icon was supplied for those
+- Files touched: `src/components/site-header.tsx`, `assets/icons/{search,profile,cart}.svg` (new)
+- Next up: swap in final logo/hero art if the client revises further; proceed with collection/PDP pages per plan.md Phase 3 remainder
