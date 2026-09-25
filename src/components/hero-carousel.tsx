@@ -14,17 +14,30 @@ interface HeroSlide {
   buttonLink: string;
   bgGradient: string;
   featuredImages: string[];
+  /** Full-bleed background image with text/CTA baked in (skips the text/collage overlay below). */
+  bgImage?: string;
 }
 
 /**
  * Hero carousel component replicating the dynamic banners from the design mockup.
- * 1. Slide 1: Feel The Fire / Spicy Snacks showcase with purple/amber backdrop.
- * 2. Slide 2: Colorful imported confections & treats explosion.
- * 3. Left/Right circular arrows and indicator pills.
- * 4. Automatic slide rotation every 6 seconds.
+ * 1. Slide 1: Full-bleed "Exquisite Chocolate Reverie" brand banner (text baked into image).
+ * 2. Slide 2: Feel The Fire / Spicy Snacks showcase with purple/amber backdrop.
+ * 3. Slide 3: Colorful imported confections & treats explosion.
+ * 4. Left/Right circular arrows and indicator pills.
+ * 5. Automatic slide rotation every 6 seconds.
  */
 export function HeroCarousel() {
   const slides: HeroSlide[] = [
+    {
+      id: "slide-0",
+      headline: "Exquisite Chocolate Reverie",
+      subheadline: "A curated collection for every sweet desire",
+      buttonText: "SHOP ALL CHOCOLATES",
+      buttonLink: "#new-arrivals",
+      bgGradient: "",
+      featuredImages: [],
+      bgImage: "/hero/exquisite-chocolate-reverie.jpeg",
+    },
     {
       id: "slide-1",
       badge: "EXTREME CRUNCH",
@@ -78,52 +91,67 @@ export function HeroCarousel() {
   return (
     <section className="relative">
       <div
-        className={`relative overflow-hidden bg-gradient-to-r ${active.bgGradient} min-h-[max(380px,calc(100svh-115px))] shadow-2xl transition-all duration-700 flex flex-col justify-between p-6 md:p-12 text-white`}
+        className={`relative overflow-hidden ${active.bgImage ? "" : `bg-gradient-to-r ${active.bgGradient}`} min-h-[max(380px,calc(100svh-115px))] shadow-2xl transition-all duration-700 flex flex-col justify-between p-6 md:p-12 text-white`}
       >
-        {/* Decorative background flare */}
-        <div className="absolute inset-0 bg-radial-gradient from-white/10 via-transparent to-black/40 pointer-events-none" />
-
-        {/* Top Text Showcase */}
-        <div className="relative z-10 text-center space-y-2 max-w-3xl mx-auto pt-2">
-          {active.badge && (
-            <span className="inline-block bg-amber-400 text-black text-[11px] md:text-xs font-black tracking-widest uppercase px-3 py-1 rounded-full shadow-md">
-              {active.badge}
-            </span>
-          )}
-          <h2 className="text-3xl md:text-6xl font-black tracking-tight text-yellow-300 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] font-sans">
-            {active.headline}
-          </h2>
-          <p className="text-xs md:text-sm text-white/90 font-medium max-w-xl mx-auto drop-shadow-md">
-            {active.subheadline}
-          </p>
-        </div>
-
-        {/* Center Product Showcase Collage */}
-        <div className="relative z-10 my-4 flex items-center justify-center space-x-3 md:space-x-6">
-          {active.featuredImages.map((src, idx) => (
-            <div
-              key={idx}
-              className="relative w-24 h-24 md:w-36 md:h-36 bg-white/95 rounded-2xl p-2 shadow-2xl border-2 border-white/60 transform hover:scale-110 transition-transform duration-300 flex-shrink-0"
-            >
-              <Image
-                src={src}
-                alt="Featured confection"
-                fill
-                className="object-contain p-1 rounded-xl"
-              />
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom CTA Button */}
-        <div className="relative z-10 text-center pb-2">
-          <Link
-            href={active.buttonLink}
-            className="inline-flex items-center justify-center bg-black hover:bg-[#662A37] text-white hover:text-amber-300 text-xs md:text-sm font-extrabold tracking-widest uppercase px-8 py-3 rounded-full border-2 border-amber-400/80 shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
-          >
-            {active.buttonText}
+        {active.bgImage ? (
+          /* Full-bleed banner: image already carries headline, subheadline & CTA */
+          <Link href={active.buttonLink} className="absolute inset-0 z-10" aria-label={active.headline}>
+            <Image
+              src={active.bgImage}
+              alt={active.headline}
+              fill
+              priority={currentSlide === 0}
+              className="object-cover"
+            />
           </Link>
-        </div>
+        ) : (
+          <>
+            {/* Decorative background flare */}
+            <div className="absolute inset-0 bg-radial-gradient from-white/10 via-transparent to-black/40 pointer-events-none" />
+
+            {/* Top Text Showcase */}
+            <div className="relative z-10 text-center space-y-2 max-w-3xl mx-auto pt-2">
+              {active.badge && (
+                <span className="inline-block bg-amber-400 text-black text-[11px] md:text-xs font-black tracking-widest uppercase px-3 py-1 rounded-full shadow-md">
+                  {active.badge}
+                </span>
+              )}
+              <h2 className="text-3xl md:text-6xl font-black tracking-tight text-yellow-300 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] font-sans">
+                {active.headline}
+              </h2>
+              <p className="text-xs md:text-sm text-white/90 font-medium max-w-xl mx-auto drop-shadow-md">
+                {active.subheadline}
+              </p>
+            </div>
+
+            {/* Center Product Showcase Collage */}
+            <div className="relative z-10 my-4 flex items-center justify-center space-x-3 md:space-x-6">
+              {active.featuredImages.map((src, idx) => (
+                <div
+                  key={idx}
+                  className="relative w-24 h-24 md:w-36 md:h-36 bg-white/95 rounded-2xl p-2 shadow-2xl border-2 border-white/60 transform hover:scale-110 transition-transform duration-300 flex-shrink-0"
+                >
+                  <Image
+                    src={src}
+                    alt="Featured confection"
+                    fill
+                    className="object-contain p-1 rounded-xl"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom CTA Button */}
+            <div className="relative z-10 text-center pb-2">
+              <Link
+                href={active.buttonLink}
+                className="inline-flex items-center justify-center bg-black hover:bg-[#662A37] text-white hover:text-amber-300 text-xs md:text-sm font-extrabold tracking-widest uppercase px-8 py-3 rounded-full border-2 border-amber-400/80 shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
+              >
+                {active.buttonText}
+              </Link>
+            </div>
+          </>
+        )}
 
         {/* Circular Navigation Arrows */}
         <button
