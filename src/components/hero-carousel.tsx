@@ -36,7 +36,8 @@ export function HeroCarousel() {
       buttonLink: "#new-arrivals",
       bgGradient: "",
       featuredImages: [],
-      bgImage: "/hero/exquisite-chocolate-reverie.jpeg",
+      // Bump ?v= whenever this file is swapped in place, so Next's image cache and the browser don't serve the stale version.
+      bgImage: "/hero/exquisite-chocolate-reverie.jpeg?v=2",
     },
     {
       id: "slide-1",
