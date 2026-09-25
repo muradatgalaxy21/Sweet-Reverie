@@ -14,3 +14,4 @@ PRODUCT_IMAGES/
 WEBSITE-DESIGN-IMGS/
 *.tsbuildinfo
 data-import/
+.playwright-mcp/
