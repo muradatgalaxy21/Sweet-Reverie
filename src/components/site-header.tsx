@@ -74,7 +74,7 @@ export function SiteHeader() {
                     width={2073}
                     height={1800}
                     sizes="130px"
-                    className="w-[105%] max-w-none h-auto"
+                    className="w-[95%] max-w-none h-auto"
                     priority
                   />
                 </div>
