@@ -36,8 +36,10 @@ export function HeroCarousel() {
       buttonLink: "#new-arrivals",
       bgGradient: "",
       featuredImages: [],
-      // Bump ?v= whenever this file is swapped in place, so Next's image cache and the browser don't serve the stale version.
-      bgImage: "/hero/exquisite-chocolate-reverie.jpeg?v=2",
+      // Next.js image optimizer rejects query strings on local images unless allow-listed in
+      // next.config.ts, so bump the filename suffix (-v3, -v4, ...) instead of overwriting in place —
+      // that's what actually busts the Next cache and the browser cache.
+      bgImage: "/hero/exquisite-chocolate-reverie-v2.jpeg",
     },
     {
       id: "slide-1",
