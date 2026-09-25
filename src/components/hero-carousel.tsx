@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -16,6 +16,8 @@ interface HeroSlide {
   featuredImages: string[];
   /** Full-bleed background image with text/CTA baked in (skips the text/collage overlay below). */
   bgImage?: string;
+  /** Portrait crop of bgImage shown below md breakpoint, if different from the desktop image. */
+  bgImageMobile?: string;
 }
 
 /**
@@ -39,7 +41,8 @@ export function HeroCarousel() {
       // Next.js image optimizer rejects query strings on local images unless allow-listed in
       // next.config.ts, so bump the filename suffix (-v3, -v4, ...) instead of overwriting in place —
       // that's what actually busts the Next cache and the browser cache.
-      bgImage: "/hero/exquisite-chocolate-reverie-v2.jpeg",
+      bgImage: "/hero/exquisite-chocolate-reverie-v3.jpeg",
+      bgImageMobile: "/hero/exquisite-chocolate-reverie-mobile-view.jpeg",
     },
     {
       id: "slide-1",
@@ -74,13 +77,6 @@ export function HeroCarousel() {
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [slides.length]);
-
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
@@ -92,21 +88,40 @@ export function HeroCarousel() {
   const active = slides[currentSlide];
 
   return (
-    <section className="relative">
+    <section id="hero" className="relative">
       <div
-        className={`relative overflow-hidden ${active.bgImage ? "" : `bg-gradient-to-r ${active.bgGradient}`} min-h-[max(380px,calc(100svh-115px))] shadow-2xl transition-all duration-700 flex flex-col justify-between p-6 md:p-12 text-white`}
+        className={`relative overflow-hidden ${active.bgImage ? "" : `bg-gradient-to-r ${active.bgGradient}`} ${
+          active.bgImage && active.bgImageMobile
+            ? "aspect-[1536/2752] md:aspect-auto md:min-h-[max(380px,calc(100svh-115px))]"
+            : "min-h-[max(380px,calc(100svh-115px))]"
+        } shadow-2xl transition-all duration-700 flex flex-col justify-between p-6 md:p-12 text-white`}
       >
         {active.bgImage ? (
-          /* Full-bleed banner: image already carries headline, subheadline & CTA */
-          <Link href={active.buttonLink} className="absolute inset-0 z-10" aria-label={active.headline}>
+          /* Full-bleed banner: image carries headline/subheadline; CTA is a real button overlaid at the same spot. */
+          <div className="absolute inset-0 z-10">
+            {active.bgImageMobile && (
+              <Image
+                src={active.bgImageMobile}
+                alt={active.headline}
+                fill
+                priority={currentSlide === 0}
+                className="object-cover md:hidden"
+              />
+            )}
             <Image
               src={active.bgImage}
               alt={active.headline}
               fill
               priority={currentSlide === 0}
-              className="object-cover"
+              className={`object-cover ${active.bgImageMobile ? "hidden md:block" : ""}`}
             />
-          </Link>
+            <Link
+              href={active.buttonLink}
+              className="absolute left-1/2 -translate-x-1/2 bottom-[4%] md:left-[6%] md:bottom-[14%] md:translate-x-0 inline-flex items-center justify-center bg-[#F2871A] hover:bg-[#d9740f] text-white text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95"
+            >
+              {active.buttonText}
+            </Link>
+          </div>
         ) : (
           <>
             {/* Decorative background flare */}
