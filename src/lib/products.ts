@@ -4,6 +4,8 @@ import type {
   CollectionProductsQuery,
   CollectionProductsQueryVariables,
   ProductCardFragment,
+  ProductPageQuery,
+  ProductPageQueryVariables,
   ProductsQuery,
   ProductsQueryVariables,
 } from "./generated/storefront";
@@ -61,8 +63,56 @@ const PRODUCTS = /* GraphQL */ `
   ${PRODUCT_CARD}
 `;
 
+const PRODUCT = /* GraphQL */ `
+  query ProductPage($handle: String!) {
+    product(handle: $handle) {
+      id
+      handle
+      title
+      description
+      descriptionHtml
+      seo {
+        title
+        description
+      }
+      images(first: 10) {
+        nodes {
+          url
+          altText
+        }
+      }
+      variants(first: 100) {
+        nodes {
+          id
+          title
+          availableForSale
+          selectedOptions {
+            name
+            value
+          }
+          price {
+            amount
+          }
+          compareAtPrice {
+            amount
+          }
+          image {
+            url
+          }
+        }
+      }
+      collections(first: 1) {
+        nodes {
+          handle
+          title
+        }
+      }
+    }
+  }
+`;
+
 // Shown when a Shopify product has no image yet.
-const PLACEHOLDER_IMAGE = "/logo/sweet-reverie-no-bg.png";
+export const PLACEHOLDER_IMAGE = "/logo/sweet-reverie-no-bg.png";
 
 /** Maps a Storefront API product to the card shape the UI uses. */
 function toProduct(node: ProductCardFragment): Product {
@@ -118,6 +168,13 @@ export async function getCollectionPage(
     products: nodes.map(toProduct),
     nextCursor: pageInfo.hasNextPage ? pageInfo.endCursor ?? null : null,
   };
+}
+
+export type ProductDetail = NonNullable<ProductPageQuery["product"]>;
+
+export async function getProductByHandle(handle: string): Promise<ProductDetail | null> {
+  const data = await shopifyFetch<ProductPageQuery, ProductPageQueryVariables>(PRODUCT, { handle });
+  return data.product ?? null;
 }
 
 export async function getProducts(variables: ProductsQueryVariables): Promise<Product[]> {

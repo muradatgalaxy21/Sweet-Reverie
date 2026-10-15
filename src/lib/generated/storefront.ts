@@ -53,3 +53,10 @@ export type ProductsQueryVariables = Exact<{
 
 
 export type ProductsQuery = { products: { nodes: Array<{ id: string, handle: string, title: string, availableForSale: boolean, featuredImage: { url: string, altText: string | null } | null, variants: { nodes: Array<{ price: { amount: string }, compareAtPrice: { amount: string } | null }> } }> } };
+
+export type ProductPageQueryVariables = Exact<{
+  handle: string;
+}>;
+
+
+export type ProductPageQuery = { product: { id: string, handle: string, title: string, description: string, descriptionHtml: string, seo: { title: string | null, description: string | null }, images: { nodes: Array<{ url: string, altText: string | null }> }, variants: { nodes: Array<{ id: string, title: string, availableForSale: boolean, selectedOptions: Array<{ name: string, value: string }>, price: { amount: string }, compareAtPrice: { amount: string } | null, image: { url: string } | null }> }, collections: { nodes: Array<{ handle: string, title: string }> } } | null };

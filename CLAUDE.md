@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## State
 
-Scaffolded and in active build. Next.js 16 (App Router) + React 19 + Tailwind 4 project, git repo initialized. Homepage product sections + search modal read live Shopify Storefront API data; cart is still local React state (Shopify cart ID + checkout redirect pending, plan.md Phase 4); collection page built (grid + Load more, no filters/sort yet); product page not built yet.
+Scaffolded and in active build. Next.js 16 (App Router) + React 19 + Tailwind 4 project, git repo initialized. Homepage product sections + search modal read live Shopify Storefront API data; cart is still local React state (Shopify cart ID + checkout redirect pending, plan.md Phase 4); collection page built (grid + Load more, no filters/sort yet); product page built (gallery, variants, qty, related, WhatsApp order).
 
 Before writing code, read `plan.md` in full. It defines:
 - Architecture: Next.js (App Router) frontend + Shopify Storefront API (GraphQL) for data, Shopify-hosted checkout for payment

@@ -214,3 +214,14 @@ Format per entry:
 - Verified: `next build` clean, ESLint clean on new files; prod server: `candies-jellies` 200 with 9 products, `chewing-gums` 200 with empty state, unknown handle 404; cursor paging verified against live Storefront API (4+4+1 = 9, no dupes). "Load more" button itself not clicked in a browser — no collection exceeds 20 products yet
 - Deviations: none. User choices: burgundy banner strip header, Load more paging, filters/sorting deferred
 - Next up: product detail page `/products/[handle]` (cards link there, currently 404); filters/sort on collection page later
+
+## 2026-10-15 — Product page (`/products/[handle]`)
+- `src/app/products/[handle]/page.tsx` — breadcrumb (Home / first collection / product), two-column layout (stacks on mobile), "You may also like" row (up to 5 products from the same collection + View all); `notFound()` for unknown handles; `generateMetadata` from Shopify SEO fields/description + OG image; `generateStaticParams` returns `[]` (on-demand ISR, same as collection page)
+- `src/components/product-detail.tsx` — client buy box: image gallery (thumbnails only when >1 image), per-option variant picker (only options with >1 value; switching jumps to the variant's image), price + compare-at with Sale badge, In/Out of stock pill, quantity stepper, Add to cart (disabled when out of stock), "Order on WhatsApp" link prefilled with quantity + title, `descriptionHtml` render (store-admin content)
+- `src/lib/products.ts` — `ProductPage` query + `getProductByHandle()`, `ProductDetail` type; `PLACEHOLDER_IMAGE` exported; regenerated codegen
+- `src/components/floating-whatsapp.tsx` — number pulled into exported `WHATSAPP_NUMBER`, reused by PDP
+- Add to cart still uses the local cart (keyed by variant id) — replaced by Shopify cart lines in Phase 4
+- Verified: `next build` + ESLint clean; prod server: product 200, unknown handle 404; Playwright: qty 2 → Add to cart opens drawer with "Your Cart (2)", WhatsApp link prefilled; desktop + 390px mobile screenshots look right
+- Known: all 32 products currently have 1 image, 1 variant, no description, so gallery thumbs / variant picker / description are hidden until that data exists in Shopify (code paths built but not exercised with real data). Header's `/account` link prefetch 404s (pre-existing; Phase 5)
+- Deviations: none. User choices: two-column cream layout; extras = quantity selector, breadcrumb, related row, WhatsApp order button
+- Next up: Phase 4 — Shopify cart (cart ID cookie, cart mutations, drawer on Shopify data, `checkoutUrl` redirect)
