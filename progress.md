@@ -183,3 +183,12 @@ Format per entry:
 - Menu/X stay on `lucide-react` — no matching custom icon was supplied for those
 - Files touched: `src/components/site-header.tsx`, `assets/icons/{search,profile,cart}.svg` (new)
 - Next up: swap in final logo/hero art if the client revises further; proceed with collection/PDP pages per plan.md Phase 3 remainder
+
+## 2026-10-15 — Shopify collections restructure (store-side, no app code)
+- Created 20 collections in Shopify matching the handles in `src/lib/categories.ts` + `new-arrivals`/`best-sellers`/`special-offers`; all smart collections with a product-tag rule equal to the handle. 13 imported via Matrixify (`shopify-import/collections-new.csv`), descriptions added to `candies-jellies`/`chewing-gums`
+- Published all new collections to the `My Store Headless` channel (imports only landed on Online Store, so the Storefront API couldn't see them)
+- Deleted 9 old collections (`chocolate`, `jelly`, `candy`, `biscuits`, `biscuits-1`, `chips`, `crisps`, `spread`, `coffee-drinks`); prior product membership saved in `shopify-import/old-collections-backup.json`
+- Dev Dashboard app now has Admin scopes (`write_products`, `write_publications`); `SHOPIFY_CLIENT_ID`/`SHOPIFY_CLIENT_SECRET` in `.env` (gitignored), Admin token fetched via client-credentials grant (24h expiry)
+- Storefront API verified: 21 collections visible (20 new + `frontpage`)
+- Deviations: none from plan.md — store data only
+- Next up: tag products so the new collections fill (all empty except `noodles`), then Shopify data wiring (plan.md Phase 2 rebuild)

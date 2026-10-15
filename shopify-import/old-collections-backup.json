@@ -1,0 +1,234 @@
+[
+  {
+    "id": "gid://shopify/Collection/363882053781",
+    "handle": "chocolate",
+    "title": "Chocolate",
+    "products": [
+      {
+        "handle": "mars-miniatures-pouch",
+        "title": "Mars Miniatures Pouch",
+        "tags": []
+      },
+      {
+        "handle": "ferrero-rocher-t3",
+        "title": "Ferrero Rocher T3",
+        "tags": []
+      },
+      {
+        "handle": "kinder-bueno-milk-chocolate",
+        "title": "Kinder Bueno Milk Chocolate",
+        "tags": []
+      },
+      {
+        "handle": "galaxy-smooth-milk-chocolate-bar",
+        "title": "Galaxy Smooth Milk Chocolate Bar",
+        "tags": []
+      },
+      {
+        "handle": "dairy-milk-roasted-almond",
+        "title": "Dairy Milk Roasted Almond",
+        "tags": []
+      },
+      {
+        "handle": "cadbury-dairy-milk-roast-almond-bar",
+        "title": "Cadbury Dairy Milk Roast Almond Bar",
+        "tags": []
+      },
+      {
+        "handle": "toblerone-dark-chocolate-bar",
+        "title": "Toblerone Dark Chocolate Bar",
+        "tags": []
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Collection/363882152085",
+    "handle": "jelly",
+    "title": "Jelly",
+    "products": [
+      {
+        "handle": "chupa-chups-sour-1-meter-belt",
+        "title": "Chupa Chups Sour 1 Meter Belt",
+        "tags": []
+      },
+      {
+        "handle": "sweeto-sour-tangy-jelly",
+        "title": "Sweeto Sour Tangy Jelly",
+        "tags": []
+      },
+      {
+        "handle": "relkon-yammiez-sour-hot-dogs-jelly",
+        "title": "Relkon Yammiez Sour Hot Dogs Jelly",
+        "tags": []
+      },
+      {
+        "handle": "yupi-fruit-cocktails-jelly",
+        "title": "Yupi Fruit Cocktails Jelly",
+        "tags": []
+      },
+      {
+        "handle": "yupi-korean-bbq-jelly",
+        "title": "Yupi Korean BBQ Jelly",
+        "tags": []
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Collection/363882184853",
+    "handle": "candy",
+    "title": "Candy",
+    "products": [
+      {
+        "handle": "fox-spring-tea-candy",
+        "title": "Fox Spring Tea Candy",
+        "tags": []
+      },
+      {
+        "handle": "mik-end-ike-jolly-joes-candy",
+        "title": "Mik end Ike Jolly Joes Candy",
+        "tags": []
+      },
+      {
+        "handle": "nerds-watermelon-cherry-candy",
+        "title": "Nerds Watermelon & Cherry Candy",
+        "tags": []
+      },
+      {
+        "handle": "jojo-crazy-cone-lollypops",
+        "title": "Jojo Crazy Cone Lollypops",
+        "tags": []
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Collection/363882217621",
+    "handle": "biscuits",
+    "title": "Biscuits",
+    "products": [
+      {
+        "handle": "nutella-biscuits",
+        "title": "Nutella Biscuits",
+        "tags": []
+      },
+      {
+        "handle": "balocco-savoiardi-lady-fingers-boudoirs",
+        "title": "Balocco Savoiardi Lady Fingers Boudoirs",
+        "tags": []
+      },
+      {
+        "handle": "caramelito-caramelised-biscuits",
+        "title": "Caramelito Caramelised Biscuits",
+        "tags": []
+      },
+      {
+        "handle": "oreo-wafer-roll-vanilla",
+        "title": "Oreo Wafer Roll vanilla",
+        "tags": []
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Collection/363882250389",
+    "handle": "biscuits-1",
+    "title": "Biscuits",
+    "products": [
+      {
+        "handle": "nutella-biscuits",
+        "title": "Nutella Biscuits",
+        "tags": []
+      },
+      {
+        "handle": "balocco-savoiardi-lady-fingers-boudoirs",
+        "title": "Balocco Savoiardi Lady Fingers Boudoirs",
+        "tags": []
+      },
+      {
+        "handle": "caramelito-caramelised-biscuits",
+        "title": "Caramelito Caramelised Biscuits",
+        "tags": []
+      },
+      {
+        "handle": "oreo-wafer-roll-vanilla",
+        "title": "Oreo Wafer Roll vanilla",
+        "tags": []
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Collection/363882315925",
+    "handle": "chips",
+    "title": "Chips",
+    "products": [
+      {
+        "handle": "noms-nachos-sour-cream-herb-32g",
+        "title": "Noms Nachos Sour Cream&herb 32g",
+        "tags": []
+      },
+      {
+        "handle": "noms-nachos-pink-salt-pepper-32g",
+        "title": "Noms Nachos Pink Salt&Pepper 32g",
+        "tags": []
+      },
+      {
+        "handle": "noms-nachos-cilli-lemon-35g",
+        "title": "Noms Nachos Cilli Lemon 35g",
+        "tags": []
+      },
+      {
+        "handle": "noms-nachos-smoky-bbq",
+        "title": "Noms Nachos Smoky BBQ",
+        "tags": []
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Collection/363882348693",
+    "handle": "crisps",
+    "title": "Crisps",
+    "products": [
+      {
+        "handle": "lays-yogurt-herb",
+        "title": "Lays Yogurt & Herb",
+        "tags": []
+      },
+      {
+        "handle": "pop-nosh-caramel-crunch-pop-corn",
+        "title": "Pop Nosh Caramel Crunch Pop Corn",
+        "tags": []
+      },
+      {
+        "handle": "pringles-original",
+        "title": "Pringles Original",
+        "tags": []
+      },
+      {
+        "handle": "takis-fuego-mini",
+        "title": "Takis Fuego Mini",
+        "tags": []
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Collection/363882414229",
+    "handle": "spread",
+    "title": "Spread",
+    "products": []
+  },
+  {
+    "id": "gid://shopify/Collection/363882446997",
+    "handle": "coffee-drinks",
+    "title": "Coffee & Drinks",
+    "products": [
+      {
+        "handle": "davidoff-rich-aroma",
+        "title": "DavidOff Rich Aroma",
+        "tags": []
+      },
+      {
+        "handle": "italiano-basil-seed-drink-lychee",
+        "title": "Italiano Basil Seed Drink Lychee",
+        "tags": []
+      }
+    ]
+  }
+]

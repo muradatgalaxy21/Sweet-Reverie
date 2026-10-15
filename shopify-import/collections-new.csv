@@ -1,0 +1,14 @@
+Handle,Command,Title,Body HTML,Sort Order,Published,Must Match,Rule: Product Column,Rule: Relation,Rule: Condition
+coffee-tea,NEW,Coffee & Tea,"<p>Rich coffees and comforting teas from around the world, the perfect companion to every sweet treat.</p>",,TRUE,all conditions,Tag,Equals,coffee-tea
+cookies-biscuits,NEW,Cookies & Biscuits,"<p>Crisp, buttery and irresistibly crunchy. Imported cookies and biscuits for tea time, snack time, any time.</p>",,TRUE,all conditions,Tag,Equals,cookies-biscuits
+gifting,NEW,Gifting,"<p>Thoughtfully chosen chocolates and confections that make every occasion feel special. Gifts they will remember.</p>",,TRUE,all conditions,Tag,Equals,gifting
+bundles,NEW,Bundles,"<p>Curated bundles of our favourite treats, put together for more variety and better value.</p>",,TRUE,all conditions,Tag,Equals,bundles
+kids-section,NEW,Kids Section,"<p>Colourful, fun and full of flavour. Sweet treats made for little hands and big smiles.</p>",,TRUE,all conditions,Tag,Equals,kids-section
+beverages,NEW,Beverages,"<p>Refreshing drinks, juices and sodas from top international brands to quench every craving.</p>",,TRUE,all conditions,Tag,Equals,beverages
+baby-care,NEW,Baby Care,"<p>Gentle, trusted essentials for your little one, from brands parents rely on.</p>",,TRUE,all conditions,Tag,Equals,baby-care
+grocery,NEW,Grocery,"<p>Pantry staples and imported grocery favourites, delivered right to your door.</p>",,TRUE,all conditions,Tag,Equals,grocery
+health-beauty,NEW,Health & Beauty,"<p>Everyday health and beauty essentials to help you look and feel your best.</p>",,TRUE,all conditions,Tag,Equals,health-beauty
+pet-care-food,NEW,Pet Care & Food,"<p>Nutritious food and treats for your furry family members, because they deserve something sweet too.</p>",,TRUE,all conditions,Tag,Equals,pet-care-food
+new-arrivals,NEW,New Arrivals,"<p>The latest additions to our shelves. Discover what is new and be the first to taste it.</p>",Created Descending,TRUE,all conditions,Tag,Equals,new-arrivals
+best-sellers,NEW,Best Sellers,"<p>Our most-loved treats, chosen again and again by Sweet Reverie customers.</p>",Best Selling,TRUE,all conditions,Tag,Equals,best-sellers
+special-offers,NEW,Special Offers,"<p>Limited-time deals on your favourite chocolates, candies and snacks. Indulge for less.</p>",,TRUE,all conditions,Tag,Equals,special-offers

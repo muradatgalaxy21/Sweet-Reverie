@@ -1,0 +1,4 @@
+Handle,Command,Title,Body HTML,Sort Order,Published,Must Match,Rule: Product Column,Rule: Relation,Rule: Condition
+new-arrivals,NEW,New Arrivals,"<p>The latest additions to our shelves. Discover what is new and be the first to taste it.</p>",Created Descending,TRUE,all conditions,Tag,Equals,new-arrivals
+best-sellers,NEW,Best Sellers,"<p>Our most-loved treats, chosen again and again by Sweet Reverie customers.</p>",Best Selling,TRUE,all conditions,Tag,Equals,best-sellers
+special-offers,NEW,Special Offers,"<p>Limited-time deals on your favourite chocolates, candies and snacks. Indulge for less.</p>",,TRUE,all conditions,Tag,Equals,special-offers
