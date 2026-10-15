@@ -1,0 +1,50 @@
+import React from "react";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getCollectionPage } from "@/lib/products";
+import { CollectionGrid } from "@/components/collection-grid";
+
+// Render each collection on first visit, then serve it statically with ISR (via shopifyFetch's 60s revalidate).
+export async function generateStaticParams() {
+  return [];
+}
+
+export async function generateMetadata(props: PageProps<"/collections/[handle]">): Promise<Metadata> {
+  const { handle } = await props.params;
+  const collection = await getCollectionPage(handle);
+  if (!collection) return {};
+  return { title: collection.title, description: collection.description || undefined };
+}
+
+/** Collection (PLP) page: burgundy title strip + product grid with "Load more". */
+export default async function CollectionPage(props: PageProps<"/collections/[handle]">) {
+  const { handle } = await props.params;
+  const collection = await getCollectionPage(handle);
+  if (!collection) notFound();
+
+  return (
+    <div className="pb-10">
+      <section className="bg-[#4A1A25] border-b-2 border-amber-500/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14 text-center">
+          <h1 className="text-3xl md:text-5xl font-serif text-[#D4AF7A] tracking-tight">
+            {collection.title}
+          </h1>
+          {collection.description && (
+            <p className="mt-3 max-w-2xl mx-auto text-sm md:text-base text-amber-100/80">
+              {collection.description}
+            </p>
+          )}
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <CollectionGrid
+          key={handle}
+          handle={handle}
+          initialProducts={collection.products}
+          initialCursor={collection.nextCursor}
+        />
+      </section>
+    </div>
+  );
+}

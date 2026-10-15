@@ -206,3 +206,11 @@ Format per entry:
 - Known: both sections show the same 10 products until the client tags products into `new-arrivals`/`best-sellers` or real sales accrue. Pre-existing ESLint error in `cart-context.tsx` (`set-state-in-effect`, localStorage hydrate) left alone — that file gets replaced in Phase 4
 - Deviations: none from plan.md
 - Next up: collection page `/collections/[handle]` (category tiles currently 404), then PDP, then Shopify cart (Phase 4)
+
+## 2026-10-15 — Collection page (`/collections/[handle]`), grid only
+- `src/app/collections/[handle]/page.tsx` — burgundy title strip (`#4A1A25`, gold serif title, Shopify description if set) + 5-col product grid (same breakpoints as homepage sections); `notFound()` for unknown handles; `generateMetadata` from collection title/description; `generateStaticParams` returns `[]` so each collection renders on first visit then serves via ISR
+- `src/components/collection-grid.tsx` — client grid, 20 per page, "Load more" button appends next page via `src/lib/collection-actions.ts` server action (cursor-based); empty-state message for collections with no products
+- `src/lib/products.ts` — `CollectionProducts` query now takes `$after` and returns `title`, `description`, `pageInfo`; new `getCollectionPage()`; regenerated codegen types
+- Verified: `next build` clean, ESLint clean on new files; prod server: `candies-jellies` 200 with 9 products, `chewing-gums` 200 with empty state, unknown handle 404; cursor paging verified against live Storefront API (4+4+1 = 9, no dupes). "Load more" button itself not clicked in a browser — no collection exceeds 20 products yet
+- Deviations: none. User choices: burgundy banner strip header, Load more paging, filters/sorting deferred
+- Next up: product detail page `/products/[handle]` (cards link there, currently 404); filters/sort on collection page later

@@ -32,11 +32,17 @@ const PRODUCT_CARD = /* GraphQL */ `
 `;
 
 const COLLECTION_PRODUCTS = /* GraphQL */ `
-  query CollectionProducts($handle: String!, $first: Int!) {
+  query CollectionProducts($handle: String!, $first: Int!, $after: String) {
     collection(handle: $handle) {
-      products(first: $first) {
+      title
+      description
+      products(first: $first, after: $after) {
         nodes {
           ...ProductCard
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
         }
       }
     }
@@ -83,6 +89,35 @@ export async function getCollectionProducts(handle: string, first = 10): Promise
     { handle, first }
   );
   return (data.collection?.products.nodes ?? []).map(toProduct);
+}
+
+export interface CollectionPage {
+  title: string;
+  description: string;
+  products: Product[];
+  /** Cursor for the next page, or null when this is the last one. */
+  nextCursor: string | null;
+}
+
+/** One page of a collection for `/collections/[handle]`; null if the collection doesn't exist. */
+export async function getCollectionPage(
+  handle: string,
+  after?: string,
+  first = 20
+): Promise<CollectionPage | null> {
+  const data = await shopifyFetch<CollectionProductsQuery, CollectionProductsQueryVariables>(
+    COLLECTION_PRODUCTS,
+    { handle, first, after }
+  );
+  const collection = data.collection;
+  if (!collection) return null;
+  const { nodes, pageInfo } = collection.products;
+  return {
+    title: collection.title,
+    description: collection.description,
+    products: nodes.map(toProduct),
+    nextCursor: pageInfo.hasNextPage ? pageInfo.endCursor ?? null : null,
+  };
 }
 
 export async function getProducts(variables: ProductsQueryVariables): Promise<Product[]> {

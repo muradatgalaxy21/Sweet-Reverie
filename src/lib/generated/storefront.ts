@@ -38,10 +38,11 @@ export type ProductCardFragment = { id: string, handle: string, title: string, a
 export type CollectionProductsQueryVariables = Exact<{
   handle: string;
   first: number;
+  after?: string | null | undefined;
 }>;
 
 
-export type CollectionProductsQuery = { collection: { products: { nodes: Array<{ id: string, handle: string, title: string, availableForSale: boolean, featuredImage: { url: string, altText: string | null } | null, variants: { nodes: Array<{ price: { amount: string }, compareAtPrice: { amount: string } | null }> } }> } } | null };
+export type CollectionProductsQuery = { collection: { title: string, description: string, products: { nodes: Array<{ id: string, handle: string, title: string, availableForSale: boolean, featuredImage: { url: string, altText: string | null } | null, variants: { nodes: Array<{ price: { amount: string }, compareAtPrice: { amount: string } | null }> } }>, pageInfo: { hasNextPage: boolean, endCursor: string | null } } } | null };
 
 export type ProductsQueryVariables = Exact<{
   first: number;
