@@ -226,3 +226,14 @@ Format per entry:
 - Deviations: none. User choices: two-column cream layout; extras = quantity selector, breadcrumb, related row, WhatsApp order button
 - Security (open, flagged by automated review): `product-detail.tsx` renders Shopify `descriptionHtml` unsanitized via `dangerouslySetInnerHTML` (stored XSS risk). Only Shopify admin staff or apps with `write_products` can author it — same trust level as Shopify's own themes — so exploitation needs a compromised staff account/app. Fix: sanitize server-side in `getProductByHandle` with an allowlist (`sanitize-html`: p, ul/ol/li, strong/em, br, h2–h4, a with http/https only). Planned for Phase 6 unless done sooner
 - Next up: Phase 4 — Shopify cart (cart ID cookie, cart mutations, drawer on Shopify data, `checkoutUrl` redirect)
+
+## 2026-10-15 — 100 products imported to Shopify (store-side, no app code)
+- Matched `assets/My-Products-Images` (455 files) to `data-import/candyshop_products.csv` for title/price/weight. The CSV's image links are unreliable (e.g. `A5.jpeg` labeled "Wrigleys Extra White" is Trident Watermelon), so a pick needs filename≈title similarity ≥0.75 or was checked by eye. All 100 picks checked on contact sheets
+- Selection (`shopify-import/select-products.py` → `shopify-import/products-batch-1.csv`): skip titles already in store, keyword → category tag (one per product), round-robin ~10 per category, brands interleaved. User asked for ~100, not all
+- Upload (`shopify-import/upload-products.py`): Admin token via client-credentials, staged image upload, `productSet` keyed by handle (idempotent re-run), ACTIVE, price from CSV (PKR), weight in grams when known, tracked inventory 100 at "Nishtar Block", deny oversell; published to Online Store + My Store Headless (not POS)
+- App scopes expanded (user released new version + approved on store): inventory/locations, discounts, shipping, content, legal policies, navigation, metaobject definitions, orders. Note: `write_metaobjects` (entries, not definitions) and Storefront `unauthenticated_read_metaobjects`/`read_content` did not show up in the granted list — re-add if brand metaobjects are built
+- Storefront token still can't read `quantityAvailable` (denied) — the public token is from a separate credential; fine, UI only uses `availableForSale`
+- Result: 132 products on Storefront. Collections: candies-jellies 20, chips-snacks 18, chocolate-bars 15, cookies-biscuits 14, beverages 12, chocolate-pouches 11, chewing-gums 10, grocery 10, noodles 12 (was still indexing), health-beauty 6, chocolate-boxes 3, coffee-tea 1. Still empty: gifting, bundles, kids-section, baby-care, pet-care-food, new-arrivals, best-sellers, special-offers
+- Product images/prices come from another shop's site (assets.indolj.io scrape) — client should confirm they're OK to use before launch
+- Deviations: none from plan.md — store data only
+- Next up: Phase 4 — Shopify cart
