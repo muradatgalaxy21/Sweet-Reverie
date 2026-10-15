@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { NEW_ARRIVALS } from "@/lib/products-data";
+import { getNewArrivals } from "@/lib/products";
 import { ProductCard } from "./product-card";
 
 /**
@@ -8,7 +8,10 @@ import { ProductCard } from "./product-card";
  * 1. Displays NEW ARRIVALS banner.
  * 2. Displays 5-column product card grid with dual pricing.
  */
-export function NewArrivalsSection() {
+export async function NewArrivalsSection() {
+  const products = await getNewArrivals();
+  if (!products.length) return null;
+
   return (
     <section id="new-arrivals" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div className="flex justify-center my-4 md:my-6">
@@ -23,7 +26,7 @@ export function NewArrivalsSection() {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
-        {NEW_ARRIVALS.map((product) => (
+        {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { BRANDS } from "@/lib/products-data";
+import { BRANDS } from "@/lib/brands";
 
 /**
  * ShopByBrand component displaying confectionery brand logos matching mockup.

@@ -1,0 +1,103 @@
+import { shopifyFetch } from "./shopify";
+import { Product } from "./types";
+import type {
+  CollectionProductsQuery,
+  CollectionProductsQueryVariables,
+  ProductCardFragment,
+  ProductsQuery,
+  ProductsQueryVariables,
+} from "./generated/storefront";
+
+const PRODUCT_CARD = /* GraphQL */ `
+  fragment ProductCard on Product {
+    id
+    handle
+    title
+    availableForSale
+    featuredImage {
+      url
+      altText
+    }
+    variants(first: 1) {
+      nodes {
+        price {
+          amount
+        }
+        compareAtPrice {
+          amount
+        }
+      }
+    }
+  }
+`;
+
+const COLLECTION_PRODUCTS = /* GraphQL */ `
+  query CollectionProducts($handle: String!, $first: Int!) {
+    collection(handle: $handle) {
+      products(first: $first) {
+        nodes {
+          ...ProductCard
+        }
+      }
+    }
+  }
+  ${PRODUCT_CARD}
+`;
+
+const PRODUCTS = /* GraphQL */ `
+  query Products($first: Int!, $sortKey: ProductSortKeys, $reverse: Boolean, $query: String) {
+    products(first: $first, sortKey: $sortKey, reverse: $reverse, query: $query) {
+      nodes {
+        ...ProductCard
+      }
+    }
+  }
+  ${PRODUCT_CARD}
+`;
+
+// Shown when a Shopify product has no image yet.
+const PLACEHOLDER_IMAGE = "/logo/sweet-reverie-no-bg.png";
+
+/** Maps a Storefront API product to the card shape the UI uses. */
+function toProduct(node: ProductCardFragment): Product {
+  const variant = node.variants.nodes[0];
+  const price = Number(variant?.price.amount ?? 0);
+  const compareAt = Number(variant?.compareAtPrice?.amount ?? 0);
+  const onSale = compareAt > price;
+
+  return {
+    id: node.id,
+    handle: node.handle,
+    title: node.title,
+    price,
+    compareAtPrice: onSale ? compareAt : undefined,
+    imageUrl: node.featuredImage?.url ?? PLACEHOLDER_IMAGE,
+    badge: onSale ? "Sale" : undefined,
+    availableForSale: node.availableForSale,
+  };
+}
+
+export async function getCollectionProducts(handle: string, first = 10): Promise<Product[]> {
+  const data = await shopifyFetch<CollectionProductsQuery, CollectionProductsQueryVariables>(
+    COLLECTION_PRODUCTS,
+    { handle, first }
+  );
+  return (data.collection?.products.nodes ?? []).map(toProduct);
+}
+
+export async function getProducts(variables: ProductsQueryVariables): Promise<Product[]> {
+  const data = await shopifyFetch<ProductsQuery, ProductsQueryVariables>(PRODUCTS, variables);
+  return data.products.nodes.map(toProduct);
+}
+
+/** Hand-picked `new-arrivals` collection, falling back to the newest products while it's empty. */
+export async function getNewArrivals(first = 10): Promise<Product[]> {
+  const picked = await getCollectionProducts("new-arrivals", first);
+  return picked.length ? picked : getProducts({ first, sortKey: "CREATED_AT", reverse: true });
+}
+
+/** Hand-picked `best-sellers` collection, falling back to Shopify's best-selling sort while it's empty. */
+export async function getBestSellers(first = 10): Promise<Product[]> {
+  const picked = await getCollectionProducts("best-sellers", first);
+  return picked.length ? picked : getProducts({ first, sortKey: "BEST_SELLING" });
+}

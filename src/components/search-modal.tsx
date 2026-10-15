@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Search, X } from "lucide-react";
-import { NEW_ARRIVALS, BEST_SELLERS } from "@/lib/products-data";
+import { searchProducts } from "@/lib/search-actions";
 import { CATEGORIES } from "@/lib/categories";
+import { Product } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
 
 interface SearchModalProps {
@@ -21,13 +22,23 @@ interface SearchModalProps {
  */
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+  // Debounced Storefront API search; `stale` drops responses for an outdated query.
+  useEffect(() => {
+    let stale = false;
+    const timer = setTimeout(() => {
+      searchProducts(query)
+        .then((results) => !stale && setFilteredProducts(results))
+        .catch(() => !stale && setFilteredProducts([]));
+    }, 250);
+    return () => {
+      stale = true;
+      clearTimeout(timer);
+    };
+  }, [query]);
 
   if (!isOpen) return null;
-
-  const allProducts = [...NEW_ARRIVALS, ...BEST_SELLERS];
-  const filteredProducts = query.trim()
-    ? allProducts.filter((p) => p.title.toLowerCase().includes(query.toLowerCase()))
-    : [];
 
   const filteredCategories = query.trim()
     ? CATEGORIES.filter((c) => c.title.toLowerCase().includes(query.toLowerCase()))

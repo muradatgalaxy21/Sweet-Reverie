@@ -10,17 +10,20 @@ if (!domain || !token) {
   );
 }
 
+// Storefront custom scalars arrive as JSON strings.
+const scalars = { URL: "string", Decimal: "string", DateTime: "string", HTML: "string" };
+
 const config: CodegenConfig = {
   schema: {
     [`https://${domain}/api/2026-01/graphql.json`]: {
       headers: { "X-Shopify-Storefront-Access-Token": token },
     },
   },
-  documents: ["src/lib/products.ts", "src/lib/cart.ts"],
+  documents: ["src/lib/products.ts"],
   generates: {
     "src/lib/generated/storefront-types.ts": {
       plugins: ["typescript"],
-      config: { enumsAsTypes: true },
+      config: { enumsAsTypes: true, scalars },
     },
     "src/lib/generated/storefront.ts": {
       plugins: [
@@ -30,6 +33,7 @@ const config: CodegenConfig = {
       config: {
         enumsAsTypes: true,
         namespacedImportName: "Types",
+        scalars,
       },
     },
   },

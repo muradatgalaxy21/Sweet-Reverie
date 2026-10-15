@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { BEST_SELLERS } from "@/lib/products-data";
+import { getBestSellers } from "@/lib/products";
 import { ProductCard } from "./product-card";
 
 /**
@@ -8,7 +8,10 @@ import { ProductCard } from "./product-card";
  * 1. Displays OUR BEST SELLERS banner.
  * 2. Displays 5-column product card grid with dual pricing and Quick Add.
  */
-export function BestSellersSection() {
+export async function BestSellersSection() {
+  const products = await getBestSellers();
+  if (!products.length) return null;
+
   return (
     <section id="best-sellers" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div className="flex justify-center my-4 md:my-6">
@@ -23,7 +26,7 @@ export function BestSellersSection() {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
-        {BEST_SELLERS.map((product) => (
+        {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

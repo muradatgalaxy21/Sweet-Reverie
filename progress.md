@@ -194,3 +194,15 @@ Format per entry:
 - Next up: tag products so the new collections fill (all empty except `noodles`), then Shopify data wiring (plan.md Phase 2 rebuild)
 - Follow-up: bulk-tagged all 32 products via Admin API (`tagsAdd`, one category tag each, mapped from old collection + product name). Matrixify had imported 13 collections as manual (rule columns ignored) — converted them (and `noodles`) to `TAG EQUALS <handle>` smart collections via `collectionUpdate`; `new-arrivals` sort Created desc, `best-sellers` sort Best selling
 - Storefront counts: candies-jellies 9, chips-snacks 8, chocolate-bars 5, cookies-biscuits 4, noodles 2, chocolate-boxes/pouches/coffee-tea/beverages 1 each. Still empty (no matching products yet): chewing-gums, gifting, bundles, kids-section, baby-care, grocery, health-beauty, pet-care-food, new-arrivals, best-sellers, special-offers
+
+## 2026-10-15 — Shopify data layer rebuilt + homepage on live data
+- `src/lib/shopify.ts` — Storefront API `fetch` helper (60s `revalidate`, `shopify` cache tag for a future webhook `revalidateTag`); replaced `graphql-request` (uninstalled — plain `fetch` is needed for Next's cache options)
+- `src/lib/products.ts` — `ProductCard` fragment, `CollectionProducts` + `Products` queries, `toProduct()` mapping to the existing UI `Product` type (first-variant price, "Sale" badge when compare-at > price, logo placeholder when no image); `getNewArrivals` / `getBestSellers` use the `new-arrivals` / `best-sellers` collections, falling back to newest / best-selling sort while empty (user choice)
+- `codegen.ts` — documents now just `src/lib/products.ts`; custom scalars mapped to `string`; regenerated `src/lib/generated/*`
+- Homepage New Arrivals / Best Sellers sections are async server components on live data (hide if empty); homepage prerenders static with 1m ISR
+- Search modal now queries Shopify via `src/lib/search-actions.ts` server action (250ms debounce) instead of mock arrays
+- `src/lib/products-data.ts` → `src/lib/brands.ts` (mock product arrays deleted, brand logos kept — no brand data in Shopify yet)
+- Verified: `tsc --noEmit`, `next build` clean; prerendered homepage contains live Shopify products/CDN images
+- Known: both sections show the same 10 products until the client tags products into `new-arrivals`/`best-sellers` or real sales accrue. Pre-existing ESLint error in `cart-context.tsx` (`set-state-in-effect`, localStorage hydrate) left alone — that file gets replaced in Phase 4
+- Deviations: none from plan.md
+- Next up: collection page `/collections/[handle]` (category tiles currently 404), then PDP, then Shopify cart (Phase 4)
