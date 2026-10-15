@@ -192,3 +192,5 @@ Format per entry:
 - Storefront API verified: 21 collections visible (20 new + `frontpage`)
 - Deviations: none from plan.md — store data only
 - Next up: tag products so the new collections fill (all empty except `noodles`), then Shopify data wiring (plan.md Phase 2 rebuild)
+- Follow-up: bulk-tagged all 32 products via Admin API (`tagsAdd`, one category tag each, mapped from old collection + product name). Matrixify had imported 13 collections as manual (rule columns ignored) — converted them (and `noodles`) to `TAG EQUALS <handle>` smart collections via `collectionUpdate`; `new-arrivals` sort Created desc, `best-sellers` sort Best selling
+- Storefront counts: candies-jellies 9, chips-snacks 8, chocolate-bars 5, cookies-biscuits 4, noodles 2, chocolate-boxes/pouches/coffee-tea/beverages 1 each. Still empty (no matching products yet): chewing-gums, gifting, bundles, kids-section, baby-care, grocery, health-beauty, pet-care-food, new-arrivals, best-sellers, special-offers
