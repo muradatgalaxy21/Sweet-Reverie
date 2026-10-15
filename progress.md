@@ -249,3 +249,12 @@ Format per entry:
 - Known: Next segment prefetch 404s for not-yet-generated ISR pages and `/account` in console (pre-existing, unrelated). Old `sweet_reverie_cart_items` localStorage key is just ignored
 - Deviations: none from plan.md. Small UI addition: "Sold out" state on product card add button
 - Next up: Phase 5 — link to Shopify hosted Customer Account flow (`/account` currently 404s)
+
+## 2026-10-15 — Phase 5: Accounts (Shopify-hosted)
+- `src/components/site-header.tsx` — account icon now links to `https://<store>.myshopify.com/account` (`ACCOUNT_URL`), which Shopify redirects to the store's new Customer Accounts login (`shopify.com/80205611157/account`). Was `/account` (404). Icon now visible on phones too; mobile menu gets a "MY ACCOUNT" item (user choice: both)
+- `shop.customerAccountUrl` from Storefront API is `null` (only set with a customer-account vanity domain), so the store-domain redirect is used instead
+- No logged-in/out indicator: the hosted flow's session lives on shopify.com, the headless site can't see it without the Customer Account API OAuth (out of scope per plan.md §8)
+- Exit point: Shopify's account pages link back to the store's primary domain — set when domain is connected in Phase 7 so it returns to this site, not the Online Store theme
+- Verified: `tsc`, ESLint, `next build`; prod server + Playwright at 390px: account icon click lands on Shopify customer login (`shopify.com/authentication/80205611157/oauth/authorize`)
+- Deviations: none
+- **Phase 5 done.** Next up: Phase 6 — polish (SEO, performance, accessibility, sanitize `descriptionHtml`), or the leftover Phase 3 items (collection filters/sort, static pages)

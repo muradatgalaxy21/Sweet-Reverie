@@ -35,6 +35,9 @@ function CartIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+// Shopify-hosted customer account (plan.md §8); the store redirects to its account login/order pages.
+const ACCOUNT_URL = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/account`;
+
 const LOGO_MAX_DESKTOP = 130;
 const LOGO_MAX_MOBILE = 71;
 const LOGO_MIN = 56;
@@ -169,13 +172,13 @@ export function SiteHeader() {
               </button>
 
               {/* Account Link */}
-              <Link
-                href="/account"
-                className="hidden sm:inline-block p-2 hover:text-[#662A37] hover:scale-110 transition-transform"
-                aria-label="User Account"
+              <a
+                href={ACCOUNT_URL}
+                className="p-2 hover:text-[#662A37] hover:scale-110 transition-transform"
+                aria-label="My Account"
               >
                 <ProfileIcon className="h-5 w-5 md:h-6 md:w-6" />
-              </Link>
+              </a>
 
               {/* Cart Drawer Trigger */}
               <button
@@ -226,6 +229,12 @@ export function SiteHeader() {
             >
               CONTACT
             </Link>
+            <a
+              href={ACCOUNT_URL}
+              className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
+            >
+              MY ACCOUNT
+            </a>
           </div>
         )}
       </header>
