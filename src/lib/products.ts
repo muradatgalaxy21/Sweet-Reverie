@@ -22,6 +22,7 @@ const PRODUCT_CARD = /* GraphQL */ `
     }
     variants(first: 1) {
       nodes {
+        id
         price {
           amount
         }
@@ -123,6 +124,7 @@ function toProduct(node: ProductCardFragment): Product {
 
   return {
     id: node.id,
+    variantId: variant?.id ?? "",
     handle: node.handle,
     title: node.title,
     price,

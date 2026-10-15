@@ -1,5 +1,7 @@
 export interface Product {
   id: string;
+  /** First variant, used by the card's quick "Add to cart". */
+  variantId: string;
   handle: string;
   title: string;
   price: number;
@@ -27,8 +29,8 @@ export interface Brand {
 }
 
 export interface CartLineItem {
+  /** Shopify cart line id. */
   id: string;
-  productId: string;
   title: string;
   price: number;
   quantity: number;
@@ -40,5 +42,5 @@ export interface Cart {
   items: CartLineItem[];
   totalQuantity: number;
   totalPrice: number;
-  checkoutUrl?: string;
+  checkoutUrl: string;
 }

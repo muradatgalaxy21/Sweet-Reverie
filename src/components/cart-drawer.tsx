@@ -13,15 +13,8 @@ import { formatPrice } from "@/lib/utils";
  * 3. Subtotal price computation and checkout trigger.
  */
 export function CartDrawer() {
-  const {
-    items,
-    isOpen,
-    closeCart,
-    updateQuantity,
-    removeItem,
-    totalQuantity,
-    totalPrice,
-  } = useCart();
+  const { cart, isOpen, isPending, error, closeCart, updateQuantity, removeItem } = useCart();
+  const items = cart?.items ?? [];
 
   // Prevent background body scroll when drawer is open
   useEffect(() => {
@@ -53,7 +46,7 @@ export function CartDrawer() {
             <div className="flex items-center space-x-2">
               <ShoppingBag className="w-5 h-5 text-amber-300" />
               <h2 className="text-base font-black tracking-wider uppercase">
-                Your Cart ({totalQuantity})
+                Your Cart ({cart?.totalQuantity ?? 0})
               </h2>
             </div>
             <button
@@ -68,7 +61,14 @@ export function CartDrawer() {
 
           {/* Line Items List */}
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
-            {items.length === 0 ? (
+            {error && (
+              <p role="alert" className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-xl p-3">
+                {error}
+              </p>
+            )}
+            {items.length === 0 && isPending ? (
+              <p className="text-center py-16 text-sm font-semibold text-stone-500">Updating your cart...</p>
+            ) : items.length === 0 ? (
               <div className="text-center py-16 space-y-4">
                 <div className="w-16 h-16 bg-[#662A37]/10 text-[#662A37] rounded-full mx-auto flex items-center justify-center">
                   <ShoppingBag className="w-8 h-8" />
@@ -117,7 +117,8 @@ export function CartDrawer() {
                       <div className="flex items-center space-x-2 bg-stone-100 rounded-lg p-1">
                         <button
                           type="button"
-                          onClick={() => updateQuantity(item.id, -1)}
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          disabled={isPending}
                           className="w-6 h-6 flex items-center justify-center text-stone-600 hover:text-black rounded"
                           aria-label="Decrease quantity"
                         >
@@ -128,7 +129,8 @@ export function CartDrawer() {
                         </span>
                         <button
                           type="button"
-                          onClick={() => updateQuantity(item.id, 1)}
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          disabled={isPending}
                           className="w-6 h-6 flex items-center justify-center text-stone-600 hover:text-black rounded"
                           aria-label="Increase quantity"
                         >
@@ -140,6 +142,7 @@ export function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => removeItem(item.id)}
+                        disabled={isPending}
                         className="text-stone-400 hover:text-red-600 p-1"
                         aria-label="Remove item"
                       >
@@ -158,7 +161,7 @@ export function CartDrawer() {
               <div className="flex items-center justify-between text-sm">
                 <span className="font-bold text-stone-600">Subtotal:</span>
                 <span className="text-lg font-black text-[#662A37]">
-                  {formatPrice(totalPrice)}
+                  {formatPrice(cart?.totalPrice ?? 0)}
                 </span>
               </div>
               <p className="text-[11px] text-stone-400">
@@ -167,10 +170,9 @@ export function CartDrawer() {
 
               <button
                 type="button"
-                onClick={() => {
-                  alert("Redirecting to secure Shopify checkout...");
-                }}
-                className="w-full bg-[#F59E0B] hover:bg-[#E68A00] text-black font-black text-sm uppercase tracking-wider py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2"
+                onClick={() => cart && window.location.assign(cart.checkoutUrl)}
+                disabled={isPending}
+                className="disabled:opacity-60 w-full bg-[#F59E0B] hover:bg-[#E68A00] text-black font-black text-sm uppercase tracking-wider py-3.5 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2"
               >
                 <span>PROCEED TO CHECKOUT</span>
               </button>

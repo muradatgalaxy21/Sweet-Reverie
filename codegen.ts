@@ -19,7 +19,7 @@ const config: CodegenConfig = {
       headers: { "X-Shopify-Storefront-Access-Token": token },
     },
   },
-  documents: ["src/lib/products.ts"],
+  documents: ["src/lib/products.ts", "src/lib/cart-actions.ts"],
   generates: {
     "src/lib/generated/storefront-types.ts": {
       plugins: ["typescript"],

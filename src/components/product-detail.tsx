@@ -59,18 +59,7 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
 
   const handleAddToCart = () => {
     if (!variant) return;
-    // ponytail: local cart keyed by variant id; replaced by Shopify cart lines in Phase 4
-    addItem(
-      {
-        id: variant.id,
-        handle: product.handle,
-        title,
-        price,
-        imageUrl: images[activeImage].url,
-        availableForSale: inStock,
-      },
-      quantity
-    );
+    addItem(variant.id, quantity);
   };
 
   const whatsappText = encodeURIComponent(

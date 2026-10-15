@@ -50,7 +50,8 @@ const MOBILE_BREAKPOINT = 768;
  * 4. Responsive mobile menu drawer for smaller viewports.
  */
 export function SiteHeader() {
-  const { totalQuantity, openCart } = useCart();
+  const { cart, openCart } = useCart();
+  const totalQuantity = cart?.totalQuantity ?? 0;
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);

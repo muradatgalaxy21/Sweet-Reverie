@@ -237,3 +237,15 @@ Format per entry:
 - Product images/prices come from another shop's site (assets.indolj.io scrape) — client should confirm they're OK to use before launch
 - Deviations: none from plan.md — store data only
 - Next up: Phase 4 — Shopify cart
+
+## 2026-10-15 — Phase 4: Shopify cart + checkout handoff
+- `src/lib/cart-actions.ts` — server actions `getCart` / `addToCart` / `updateCartLine` / `removeCartLine` (Storefront `cartCreate`, `cartLinesAdd/Update/Remove`, `userErrors` thrown). Cart ID in an httpOnly, SameSite=Lax `cartId` cookie (10-day max-age, secure in prod), set only when a cart is created; a missing/expired/checked-out cart is recreated on next add
+- `src/lib/shopify.ts` — `shopifyFetch(query, vars, { cache: false })` uses `no-store` so per-user cart data is never cached or shared
+- `src/lib/cart-context.tsx` rewritten: holds the Shopify cart returned by each action (no localStorage), `useTransition` pending flag, error message; loads the cart on mount (keeps homepage/collection/product pages static)
+- `cart-drawer.tsx` on Shopify data: buttons disabled while pending, "Updating your cart..." on first add, error line, checkout button → `window.location.assign(cart.checkoutUrl)` (replaces the `alert` stub)
+- `Product` gets `variantId` (first variant) so card quick-add sends a merchandise ID; card button disabled + "Sold out" when `!availableForSale`. PDP adds `variant.id` × quantity. `CartLineItem.id` is now the Shopify line ID
+- `codegen.ts` documents include `cart-actions.ts`; regenerated types
+- Verified: `tsc`, ESLint (clean — pre-existing `set-state-in-effect` error gone with the old context), `next build` (home still static/ISR). Prod server + Playwright: card add → drawer "Your Cart (1)"; + → 2; navigate to PDP, add → 3 (persists via cookie); remove, −, − to empty state; checkout redirects to `eakhun-ed.myshopify.com/checkouts/...` "Checkout - My Store". No order placed
+- Known: Next segment prefetch 404s for not-yet-generated ISR pages and `/account` in console (pre-existing, unrelated). Old `sweet_reverie_cart_items` localStorage key is just ignored
+- Deviations: none from plan.md. Small UI addition: "Sold out" state on product card add button
+- Next up: Phase 5 — link to Shopify hosted Customer Account flow (`/account` currently 404s)
