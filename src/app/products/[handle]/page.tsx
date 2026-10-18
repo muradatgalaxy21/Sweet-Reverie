@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { getCollectionProducts, getProductByHandle, PLACEHOLDER_IMAGE } from "@/lib/products";
 import { ProductDetail } from "@/components/product-detail";
 import { ProductCard } from "@/components/product-card";
-import { SITE_URL } from "@/lib/utils";
+import { OPEN_GRAPH_DEFAULTS, SITE_URL } from "@/lib/utils";
 
 // Render each product on first visit, then serve it statically with ISR (refreshed by the Shopify webhook, see api/revalidate).
 export async function generateStaticParams() {
@@ -21,7 +21,7 @@ export async function generateMetadata(props: PageProps<"/products/[handle]">): 
     title: product.seo.title || product.title,
     description: product.seo.description || product.description || undefined,
     alternates: { canonical: `/products/${handle}` },
-    openGraph: image ? { images: [image] } : undefined,
+    openGraph: { ...OPEN_GRAPH_DEFAULTS, ...(image && { images: [image] }) },
   };
 }
 

@@ -40,7 +40,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     entry("/"),
-    ...first.collections.nodes.map((c) => entry(`/collections/${c.handle}`, c.updatedAt)),
+    // "frontpage" is Shopify's default Online Store collection, not a page on this site.
+    ...first.collections.nodes
+      .filter((c) => c.handle !== "frontpage")
+      .map((c) => entry(`/collections/${c.handle}`, c.updatedAt)),
     ...products.map((p) => entry(`/products/${p.handle}`, p.updatedAt)),
   ];
 }
