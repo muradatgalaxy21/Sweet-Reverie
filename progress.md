@@ -224,7 +224,7 @@ Format per entry:
 - Verified: `next build` + ESLint clean; prod server: product 200, unknown handle 404; Playwright: qty 2 → Add to cart opens drawer with "Your Cart (2)", WhatsApp link prefilled; desktop + 390px mobile screenshots look right
 - Known: all 32 products currently have 1 image, 1 variant, no description, so gallery thumbs / variant picker / description are hidden until that data exists in Shopify (code paths built but not exercised with real data). Header's `/account` link prefetch 404s (pre-existing; Phase 5)
 - Deviations: none. User choices: two-column cream layout; extras = quantity selector, breadcrumb, related row, WhatsApp order button
-- Security (open, flagged by automated review): `product-detail.tsx` renders Shopify `descriptionHtml` unsanitized via `dangerouslySetInnerHTML` (stored XSS risk). Only Shopify admin staff or apps with `write_products` can author it — same trust level as Shopify's own themes — so exploitation needs a compromised staff account/app. Fix: sanitize server-side in `getProductByHandle` with an allowlist (`sanitize-html`: p, ul/ol/li, strong/em, br, h2–h4, a with http/https only). Planned for Phase 6 unless done sooner
+- Security (RESOLVED 2026-10-18, see below; was open, flagged by automated review): `product-detail.tsx` renders Shopify `descriptionHtml` unsanitized via `dangerouslySetInnerHTML` (stored XSS risk). Only Shopify admin staff or apps with `write_products` can author it — same trust level as Shopify's own themes — so exploitation needs a compromised staff account/app. Fix: sanitize server-side in `getProductByHandle` with an allowlist (`sanitize-html`: p, ul/ol/li, strong/em, br, h2–h4, a with http/https only). Planned for Phase 6 unless done sooner
 - Next up: Phase 4 — Shopify cart (cart ID cookie, cart mutations, drawer on Shopify data, `checkoutUrl` redirect)
 
 ## 2026-10-15 — 100 products imported to Shopify (store-side, no app code)
@@ -258,3 +258,13 @@ Format per entry:
 - Verified: `tsc`, ESLint, `next build`; prod server + Playwright at 390px: account icon click lands on Shopify customer login (`shopify.com/authentication/80205611157/oauth/authorize`)
 - Deviations: none
 - **Phase 5 done.** Next up: Phase 6 — polish (SEO, performance, accessibility, sanitize `descriptionHtml`), or the leftover Phase 3 items (collection filters/sort, static pages)
+
+## 2026-10-18 — Phase 6: sanitize product `descriptionHtml` (stored-XSS fix)
+- `src/lib/sanitize.ts` — `sanitizeDescription()` via `sanitize-html` allowlist: p, ul/ol/li, strong/em/b/i, br, h2–h4, a (`href` only, http/https schemes, no protocol-relative; `target` and all other attributes stripped). Everything else removed, `<script>`/`<style>` contents dropped
+- `src/lib/products.ts` — `getProductByHandle()` returns the product with `descriptionHtml` sanitized server-side, so `product-detail.tsx`'s `dangerouslySetInnerHTML` only ever sees clean HTML (component unchanged)
+- Deps: `sanitize-html`, `@types/sanitize-html` (dev)
+- `scripts/check-sanitize.mjs` — assertion check (`node --experimental-strip-types scripts/check-sanitize.mjs`): `<script>`, `onerror=`/`onclick=`, `<img>`, `javascript:` href and `target` stripped; allowed tags + https link survive
+- Verified: check passes, `tsc --noEmit`, ESLint (0 errors; pre-existing unused-var warning in `build-favicons.mjs`), `next build` clean
+- **Security item from 2026-10-15 Product page entry resolved**
+- Deviations: none from plan.md
+- Next up: rest of Phase 6 polish (SEO, performance, accessibility) or leftover Phase 3 items (collection filters/sort, static pages)
