@@ -338,3 +338,14 @@ Format per entry:
 - Verified: `tsc`, ESLint (0 errors). Dev server + Playwright: `/privacy-policy` → 404 status + branded page; `/products/x` with Shopify unreachable → 500 + branded error page; axe (WCAG 2.2 AA) clean on both at 390/1440; screenshots checked
 - Deviations: none from plan.md
 - Next up: OG image (asset from user); Phase 3 leftovers (filters/sort, static pages); Phase 7 (Vercel project + env vars + Shopify webhooks + domain)
+
+## 2026-10-18 — Phase 3: policy pages (Shopify-managed text)
+- User decisions: build policy pages next; text comes from Shopify admin → Settings → Policies (not hardcoded)
+- `src/lib/policies.ts` — `ShopPolicies` query (all 4 policies, one cached request), `getPolicy(handle)` → null if the policy is empty in Shopify. `src/lib/sanitize.ts` — `sanitizePolicy` (description allowlist + `u`, and `mailto:`/`tel:` links)
+- `src/app/policies/[handle]/page.tsx` — burgundy title strip (same as collection page) + policy body. Handles: `privacy-policy`, `shipping-policy`, `refund-policy`, `terms-of-service`, prerendered at build, `dynamicParams = false` (anything else 404s); empty policy → 404
+- Footer policy links `/privacy-policy` etc. → `/policies/privacy-policy` etc. Matches Shopify's own `/policies/<handle>` URLs, which checkout and emails link to on the primary domain — so those resolve here after Phase 7 domain connection
+- `codegen.ts` documents += `src/lib/policies.ts`. **Generated types (`ShopPolicyFieldsFragment`, `ShopPoliciesQuery`) hand-written** into `src/lib/generated/storefront.ts` in codegen's format (no token in session) — run `npm run codegen` next session with creds to confirm no diff
+- Verified: `tsc`, ESLint (0 errors). Dev server with mocked Storefront response: set policies 200 with correct `<title>`, null/blank policies and unknown handles 404; `<script>`, `javascript:` href, `onerror` stripped, `mailto:` kept; 390px screenshot OK, no horizontal scroll. **Not verified against live Shopify** (no creds) — policies must actually be filled in Shopify admin or the pages 404
+- Known: policy edits don't fire the product/collection webhooks, so changes show within the 1h ISR safety net. Policy pages not in sitemap (low SEO value)
+- Deviations: none from plan.md
+- Next up: fill policies in Shopify admin if empty + run codegen; About/Contact/FAQ (needs copy from user); collection filters/sort; OG image; Phase 7
