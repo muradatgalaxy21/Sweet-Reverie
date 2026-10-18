@@ -364,3 +364,6 @@ Format per entry:
 - `fetchPriority="low"` on below-the-fold images: 4 section banners, brand logos, category tiles, special-offers montage
 - `site-header.tsx` — logo `sizes` 130px → `(min-width: 768px) 130px, 72px` (preloaded on every page; mobile shows ≤71px)
 - Verified: `tsc`, ESLint (0 errors); re-measure on live after deploy (see next entry / chat)
+- Round 1 result on live (Playwright, DevTools throttling): 5.8s → 5.2s only. DevTools throttling splits bandwidth evenly across requests, ignoring priority, so it overstates contention. Lighthouse 12 (PageSpeed's engine, simulated throttling) on live: homepage LCP 2.4–2.6s (score 89–98), collection 2.1s, PDP 1.8s — homepage borderline
+- Lighthouse LCP breakdown: largest part is resource *load delay* (~780 ms): hero discovered in HTML but requested after CSS/fonts
+- Round 2: `hero-carousel.tsx` — `ReactDOM.preload()` for slide 1 with `media` (`(max-width: 767px)` mobile srcset @70vw, `(min-width: 768px)` desktop @100vw), `fetchPriority="high"` → hero request starts in `<head>`. Verified locally: two media-scoped preload links, 390px fetches only the mobile hero, 1440px only the desktop one

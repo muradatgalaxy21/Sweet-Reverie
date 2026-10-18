@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image, { getImageProps } from "next/image";
+import { preload } from "react-dom";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -45,7 +46,7 @@ function ArtDirectedImage({
 }) {
   const common = { alt, fill: true, sizes: "100vw" };
   const {
-    props: { srcSet: desktop },
+    props: { srcSet: desktop, src: desktopFallback },
   } = getImageProps({ ...common, src: desktopSrc });
   const {
     props: { srcSet: mobile, ...rest },
@@ -56,6 +57,13 @@ function ArtDirectedImage({
     loading: eager ? "eager" : "lazy",
     fetchPriority: eager ? "high" : "auto",
   });
+
+  // Preload in <head> so the LCP image starts with the CSS instead of after it; `media` keeps
+  // each viewport from fetching the other's image.
+  if (eager) {
+    preload(rest.src, { as: "image", imageSrcSet: mobile, imageSizes: "70vw", fetchPriority: "high", media: "(max-width: 767px)" });
+    preload(desktopFallback, { as: "image", imageSrcSet: desktop, imageSizes: "100vw", fetchPriority: "high", media: "(min-width: 768px)" });
+  }
 
   return (
     <picture>
