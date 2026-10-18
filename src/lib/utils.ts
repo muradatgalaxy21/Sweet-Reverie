@@ -25,3 +25,10 @@ export function formatPrice(amount: number): string {
 
 /** Public site origin for canonical URLs, sitemap and JSON-LD. Production domain gets set in Phase 7. */
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+/** Site-wide Open Graph fields. A page that sets its own `openGraph` replaces the root one, so spread these in. */
+export const OPEN_GRAPH_DEFAULTS = {
+  type: "website",
+  locale: "en_PK",
+  siteName: "Sweet Reverie",
+} as const;

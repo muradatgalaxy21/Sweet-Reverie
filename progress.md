@@ -320,3 +320,12 @@ Format per entry:
 - **Not done / found:** footer policy links (`/privacy-policy`, `/shipping-policy`, `/refund-policy`, `/terms-of-service`) 404 — Phase 3 static pages. Newsletter form is UI-only (no backend). Variant buttons/qty are fine; no screen-reader (NVDA/VoiceOver) manual pass done
 - Deviations: none from plan.md. Small visible changes: focus rings on keyboard focus, slightly darker grey/green text, search box 40px narrower so it no longer overlaps the close button
 - Next up: Phase 6 remaining → user's call on held hero contrast + hero crop; then Phase 3 leftovers (filters/sort, static pages) / Phase 7
+
+## 2026-10-18 — Phase 6: SEO leftovers + availability review
+- `src/lib/utils.ts` — `OPEN_GRAPH_DEFAULTS` (type/locale/siteName); used by root layout and spread into the PDP `openGraph`, so product pages now carry og:site_name/locale/type again (they were dropped because a page-level `openGraph` replaces the root one)
+- `src/app/sitemap.ts` — drops Shopify's default `frontpage` collection
+- Verified: `tsc`, ESLint (0 errors); dev server: root og:site_name/locale/type still rendered. PDP og not checked live (needs Shopify data)
+- **Held:** dropping empty collections from the sitemap needs a query change → `npm run codegen` needs the Storefront token (not in this session). No default OG image (needs an asset from user)
+- **Availability review (plan.md §3), held for user:** pages are ISR, so a Shopify outage during revalidation keeps serving the last good page — catching errors per section would be worse (it would cache a degraded page for up to 1h). Real gap: no `app/error.tsx` / `app/not-found.tsx`, so a first-ever render that fails, or any 404 (incl. footer policy links), shows Next's unbranded default page. Both are new UI + copy → needs user's design/copy call per CLAUDE.md
+- Deviations: none
+- Next up: user decisions on held items (hero CTA contrast, hero desktop crop, error/404 pages); then Phase 3 leftovers (filters/sort, static pages) and Phase 7 launch

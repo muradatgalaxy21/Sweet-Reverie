@@ -7,7 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CartDrawer } from "@/components/cart-drawer";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
-import { SITE_URL } from "@/lib/utils";
+import { OPEN_GRAPH_DEFAULTS, SITE_URL } from "@/lib/utils";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -39,11 +39,7 @@ export const metadata: Metadata = {
     "Gourmet Hampers",
   ],
   // og:title/description fall back to each page's own title/description.
-  openGraph: {
-    type: "website",
-    locale: "en_PK",
-    siteName: "Sweet Reverie",
-  },
+  openGraph: OPEN_GRAPH_DEFAULTS,
   // Title/description/image are filled from each page's Open Graph tags.
   twitter: { card: "summary_large_image" },
   icons: {
