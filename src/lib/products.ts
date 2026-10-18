@@ -87,6 +87,7 @@ const PRODUCT = /* GraphQL */ `
         nodes {
           id
           title
+          sku
           availableForSale
           selectedOptions {
             name
@@ -94,6 +95,7 @@ const PRODUCT = /* GraphQL */ `
           }
           price {
             amount
+            currencyCode
           }
           compareAtPrice {
             amount

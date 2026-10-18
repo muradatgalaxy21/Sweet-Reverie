@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CartDrawer } from "@/components/cart-drawer";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
+import { SITE_URL } from "@/lib/utils";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -21,7 +22,11 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Sweet Reverie — Fine Confections | Luxury Imported Chocolates & Treats",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Sweet Reverie — Fine Confections | Luxury Imported Chocolates & Treats",
+    template: "%s | Sweet Reverie",
+  },
   description:
     "Discover Pakistan's premier destination for original imported chocolates, luxury confectionery, artisanal sweets, and gourmet snacks. Est. 2024.",
   keywords: [
@@ -33,13 +38,14 @@ export const metadata: Metadata = {
     "Artisan Sweets",
     "Gourmet Hampers",
   ],
+  // og:title/description fall back to each page's own title/description.
   openGraph: {
-    title: "Sweet Reverie — Fine Confections",
-    description: "Premium imported confectionery, chocolates, and artisan treats.",
     type: "website",
     locale: "en_PK",
     siteName: "Sweet Reverie",
   },
+  // Title/description/image are filled from each page's Open Graph tags.
+  twitter: { card: "summary_large_image" },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

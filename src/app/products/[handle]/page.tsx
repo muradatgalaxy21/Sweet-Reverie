@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { getCollectionProducts, getProductByHandle, PLACEHOLDER_IMAGE } from "@/lib/products";
 import { ProductDetail } from "@/components/product-detail";
 import { ProductCard } from "@/components/product-card";
+import { SITE_URL } from "@/lib/utils";
 
 // Render each product on first visit, then serve it statically with ISR (via shopifyFetch's 60s revalidate).
 export async function generateStaticParams() {
@@ -19,6 +20,7 @@ export async function generateMetadata(props: PageProps<"/products/[handle]">): 
   return {
     title: product.seo.title || product.title,
     description: product.seo.description || product.description || undefined,
+    alternates: { canonical: `/products/${handle}` },
     openGraph: image ? { images: [image] } : undefined,
   };
 }
@@ -35,8 +37,33 @@ export default async function ProductPage(props: PageProps<"/products/[handle]">
     : [];
   const images = product.images.nodes.length ? product.images.nodes : [{ url: PLACEHOLDER_IMAGE }];
 
+  // Structured data for the default (first) variant.
+  const variant = product.variants.nodes[0];
+  const url = new URL(`/products/${handle}`, SITE_URL).href;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    image: product.images.nodes.map((img) => img.url),
+    description: product.description || undefined,
+    sku: variant?.sku || undefined,
+    url,
+    offers: variant && {
+      "@type": "Offer",
+      price: variant.price.amount,
+      priceCurrency: variant.price.currencyCode,
+      availability: `https://schema.org/${variant.availableForSale ? "InStock" : "OutOfStock"}`,
+      url,
+    },
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+      <script
+        type="application/ld+json"
+        // Escape "<" so store-authored text can't close the script tag.
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <nav aria-label="Breadcrumb" className="mb-6 text-xs md:text-sm text-stone-500">
         <ol className="flex flex-wrap items-center gap-1.5">
           <li>
