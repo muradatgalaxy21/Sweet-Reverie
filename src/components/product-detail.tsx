@@ -93,6 +93,7 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
                 type="button"
                 onClick={() => setActiveImage(i)}
                 aria-label={`Show image ${i + 1}`}
+                aria-current={i === activeImage || undefined}
                 className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border bg-stone-50 ${
                   i === activeImage ? "border-[#662A37] ring-2 ring-[#662A37]" : "border-stone-200"
                 }`}
@@ -112,16 +113,19 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
 
         <div className="flex items-baseline gap-3">
           {onSale && (
-            <span className="text-base font-semibold text-stone-400 line-through">
+            <span className="text-base font-semibold text-stone-600 line-through">
+              <span className="sr-only">Original price </span>
               {formatPrice(compareAt)}
             </span>
           )}
           <span className="text-2xl md:text-3xl font-extrabold text-[#662A37]">
+            {onSale && <span className="sr-only">Sale price </span>}
             {formatPrice(price)}
           </span>
         </div>
 
         <span
+          aria-live="polite"
           className={`w-fit text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${
             inStock ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700"
           }`}
@@ -193,7 +197,7 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
           href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 rounded-xl border-2 border-[#25D366] text-[#128C3E] hover:bg-[#25D366] hover:text-white font-bold text-sm uppercase tracking-wider py-3 px-6 transition-colors"
+          className="flex items-center justify-center gap-2 rounded-xl border-2 border-[#25D366] text-[#0E7A35] hover:bg-[#25D366] hover:text-white font-bold text-sm uppercase tracking-wider py-3 px-6 transition-colors"
         >
           <MessageCircle className="w-4 h-4" />
           Order on WhatsApp

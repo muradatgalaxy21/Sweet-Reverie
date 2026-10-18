@@ -8,6 +8,7 @@ import { searchProducts } from "@/lib/search-actions";
 import { CATEGORIES } from "@/lib/categories";
 import { Product } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
+import { useDialog } from "@/lib/use-dialog";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -23,6 +24,7 @@ interface SearchModalProps {
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const panelRef = useDialog<HTMLDivElement>(isOpen, onClose);
 
   // Debounced Storefront API search; `stale` drops responses for an outdated query.
   useEffect(() => {
@@ -45,8 +47,17 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     : [];
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm flex justify-center items-start pt-20 px-4">
-      <div className="bg-[#FAF7F2] rounded-2xl max-w-2xl w-full p-6 shadow-2xl border-2 border-[#ECA58A] relative animate-in fade-in zoom-in-95 duration-200">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm flex justify-center items-start pt-20 px-4"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Search products"
+        tabIndex={-1}
+        className="focus:outline-none bg-[#FAF7F2] rounded-2xl max-w-2xl w-full p-6 shadow-2xl border-2 border-[#ECA58A] relative animate-in fade-in zoom-in-95 duration-200">
         {/* Close Button */}
         <button
           type="button"
@@ -58,26 +69,30 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         </button>
 
         {/* Search Input Bar */}
-        <div className="relative mt-2">
-          <Search className="absolute left-4 top-3.5 h-5 w-5 text-stone-400" />
+        <div className="relative mt-2 mr-10">
+          <Search aria-hidden className="absolute left-4 top-3.5 h-5 w-5 text-stone-400" />
           <input
             type="text"
+            aria-label="Search products"
             placeholder="Search chocolates, snacks, candies, drinks..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            autoFocus
+            data-autofocus
             className="w-full pl-12 pr-4 py-3 bg-white border-2 border-[#ECA58A] focus:border-[#662A37] rounded-full text-black placeholder:text-stone-400 focus:outline-none text-base shadow-inner"
           />
         </div>
 
         {/* Results Area */}
+        <p role="status" className="sr-only">
+          {query.trim() ? `${filteredProducts.length + filteredCategories.length} results` : ""}
+        </p>
         <div className="mt-6 max-h-96 overflow-y-auto space-y-4">
           {query.trim() === "" ? (
-            <div className="text-center py-8 text-stone-500 text-sm">
+            <div className="text-center py-8 text-stone-600 text-sm">
               Type above to search imported chocolates, candies, and snacks...
             </div>
           ) : filteredProducts.length === 0 && filteredCategories.length === 0 ? (
-            <div className="text-center py-8 text-stone-500 text-sm">
+            <div className="text-center py-8 text-stone-600 text-sm">
               No confections found matching &quot;{query}&quot;. Try another search term!
             </div>
           ) : (

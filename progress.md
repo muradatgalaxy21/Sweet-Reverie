@@ -303,3 +303,20 @@ Format per entry:
 - `site-header.tsx` is CRLF — edited preserving line endings
 - Deviations: none
 - Next up: accessibility audit (Phase 6), then Phase 3 leftovers (filters/sort, static pages)
+
+## 2026-10-18 — Phase 6: accessibility audit
+- **Dialogs** — new `src/lib/use-dialog.ts` (Escape closes, focus moves in on open — `data-autofocus` element or the panel — Tab/Shift+Tab trapped, focus returns to the opener). Cart drawer + search modal: `role="dialog"`, `aria-modal`, labelled; search also closes on backdrop click (cart already did), input labelled, `role="status"` "N results" announcement; cart +/−/remove labels name the item
+- **Keyboard/focus** — skip-to-content link (layout; `#main-content` focusable); global `:focus-visible` ring (burgundy, gold inside `data-focus="light"` dark sections: footer, cart header, special offers) in `@layer base` so components with their own focus style keep it; removed `focus:outline-none` from the mobile menu toggle
+- **Header** — mobile menu toggle `aria-expanded`/`aria-controls`, menus are labelled `<nav>`s; cart button label includes item count, badge `aria-hidden` + `motion-safe:animate-pulse`
+- **Broken nav (bug fix)** — header/footer `#best-sellers` / `#special-offers` / `#new-arrivals` / `#categories` links only worked on the homepage; now `/#…`
+- **Product card** — image link removed from tab order (duplicate of title link), image `alt=""` (title is adjacent); "Add to cart"/"Sold out" carry the product title as sr-only text; sr-only "Original price"/"Sale price"
+- **PDP** — same price labels, stock badge `aria-live`, active thumbnail `aria-current`
+- **Hero** — labelled carousel region, decorative collage `alt=""`, dots `aria-current` and 24px hit area (dots look the same; spacing 8px → 14px)
+- **Motion** — marquees stop under `prefers-reduced-motion`; announcement bar's duplicated loop copy `aria-hidden` (screen readers read it once)
+- **Contrast** — strikethrough prices stone-400 → 500/600, cart/search helper text stone-400/500 → 500/600, WhatsApp outline text #128C3E → #0E7A35 (all AA now)
+- Newsletter: input labelled + `autoComplete="email"`, thank-you message in `role="status"`. Special Offers: two `<h2>`s → one heading (same look)
+- Verified: `tsc`, ESLint (0 errors). axe-core (WCAG 2.0/2.1/2.2 A+AA) via Playwright at 390px and 1440px on a throwaway page rendering all sections + product cards + PDP with fixture data, page / search open / cart open: **only remaining violation is the held item below**. Keyboard run: skip link first, search + cart trap Tab, Escape closes, focus returns to opener; mobile menu `aria-expanded` toggles. Screenshots checked. Not run against live Shopify data / `next build` (no creds in session)
+- **HELD — needs user design call:** hero slide 1 "SHOP ALL CHOCOLATES" button, white on `#F2871A` = 2.54:1 (AA needs 4.5:1). Options: black text on the same orange (~8:1, no colour change), or darken to ~`#B45309` with white text
+- **Not done / found:** footer policy links (`/privacy-policy`, `/shipping-policy`, `/refund-policy`, `/terms-of-service`) 404 — Phase 3 static pages. Newsletter form is UI-only (no backend). Variant buttons/qty are fine; no screen-reader (NVDA/VoiceOver) manual pass done
+- Deviations: none from plan.md. Small visible changes: focus rings on keyboard focus, slightly darker grey/green text, search box 40px narrower so it no longer overlaps the close button
+- Next up: Phase 6 remaining → user's call on held hero contrast + hero crop; then Phase 3 leftovers (filters/sort, static pages) / Phase 7
