@@ -51,6 +51,7 @@ function ArtDirectedImage({
     props: { srcSet: mobile, ...rest },
   } = getImageProps({
     ...common,
+    sizes: "70vw",
     src: mobileSrc,
     loading: eager ? "eager" : "lazy",
     fetchPriority: eager ? "high" : "auto",
@@ -59,7 +60,8 @@ function ArtDirectedImage({
   return (
     <picture>
       <source media="(min-width: 768px)" srcSet={desktop} sizes="100vw" />
-      <source srcSet={mobile} sizes="100vw" />
+      {/* 70vw caps phones at the 828w variant (~80KB vs 128KB at 1200w): the hero is the mobile LCP. */}
+      <source srcSet={mobile} sizes="70vw" />
       <img {...rest} alt={alt} className="object-cover md:object-left" />
     </picture>
   );

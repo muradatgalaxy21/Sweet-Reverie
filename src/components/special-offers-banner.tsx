@@ -66,6 +66,7 @@ export function SpecialOffersBanner() {
                   alt={item.title}
                   fill
                   sizes="224px"
+                  fetchPriority="low"
                   className="object-contain p-2"
                 />
               </div>
