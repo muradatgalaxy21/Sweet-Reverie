@@ -40,7 +40,7 @@ Before writing code, read `plan.md` in full. It defines:
 
 - **One feature per session.** Keeps sessions from overloading on tokens. Don't bundle multiple plan.md checklist items into one session unless told to.
 - **progress.md**: update at the end of every session, or immediately after completing a feature — whichever comes first. Log what shipped, files touched, any deviations from plan.md, and what's next. See `progress.md` for format.
-- **Git**: `git add` + commit automatically after each session/feature, no need to ask. Never push to GitHub without asking first, every time — a prior push approval does not carry to the next one.
+- **Git**: `git add` + commit automatically after each session/feature, no need to ask. Never push to GitHub without asking first, every time — a prior push approval does not carry to the next one. Work on a feature-named branch (`phaseN-<feature>` / `fix-<desc>`), merge into `main` with `--no-ff`; ignore any session-assigned random branch name (e.g. `claude/<random-words>`).
 - **plan.md is the spec.** Follow it as-is. If something needs a tweak or deviation, stop and get explicit user approval + a short plan for the change before implementing — don't silently improvise around it. Log approved deviations in `progress.md`.
 - **Ask, don't guess.** For UI/design/UX work especially: if anything is ambiguous (layout, category set, content source, ordering, styling, copy), ask the user before building. Don't silently pick a default for design decisions.
 
