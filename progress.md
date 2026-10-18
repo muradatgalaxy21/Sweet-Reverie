@@ -258,3 +258,16 @@ Format per entry:
 - Verified: `tsc`, ESLint, `next build`; prod server + Playwright at 390px: account icon click lands on Shopify customer login (`shopify.com/authentication/80205611157/oauth/authorize`)
 - Deviations: none
 - **Phase 5 done.** Next up: Phase 6 — polish (SEO, performance, accessibility, sanitize `descriptionHtml`), or the leftover Phase 3 items (collection filters/sort, static pages)
+
+## 2026-10-18 — Phase 6: SEO basics (sitemap, robots, canonical, Product JSON-LD)
+- `src/app/sitemap.ts` — homepage + every collection + every product from the Storefront API (`Sitemap` query, products paginated 250/page via cursor), `lastModified` from Shopify `updatedAt`. Live: 154 URLs (1 home, 21 collections, 132 products)
+- `src/app/robots.ts` — allow all, `Sitemap:` line points at `<SITE_URL>/sitemap.xml`
+- `src/lib/utils.ts` — `SITE_URL` from `NEXT_PUBLIC_SITE_URL`, falls back to `http://localhost:3000` (already in `.env.local.example`; set the real domain in Phase 7)
+- `src/app/layout.tsx` — `metadataBase` from `SITE_URL`; title is now `{ default, template: "%s | Sweet Reverie" }`; `twitter.card = summary_large_image`; dropped the hardcoded OG title/description so og:/twitter: title + description follow each page's own (collection pages were inheriting the homepage OG title)
+- Collection + product `generateMetadata` — `alternates.canonical` (`/collections/<handle>`, `/products/<handle>`)
+- `src/app/products/[handle]/page.tsx` — Product JSON-LD (name, images, plain-text description, sku if set, url, Offer with price/currency/availability) for the first variant; serialized with `<` escaped to `<`
+- `src/lib/products.ts` — `ProductPage` query adds variant `sku` and `price.currencyCode` (query only, no logic change); `codegen.ts` documents include `src/app/sitemap.ts`; regenerated types
+- Verified: `tsc --noEmit`, ESLint (0 errors, 1 pre-existing warning in `scripts/build-favicons.mjs`), `next build` (robots/sitemap static, sitemap 1m ISR). Prod server: `/robots.txt`, `/sitemap.xml` 200; product page has JSON-LD (`priceCurrency: PKR`, `InStock`), canonical, `Title | Sweet Reverie`; collection page canonical + own og:title
+- Known: products have no SKUs/descriptions yet, so those JSON-LD fields are omitted. Product pages set their own `openGraph` (image), which replaces the root one, so og:site_name/locale/type aren't on PDPs. Sitemap includes Shopify's default `frontpage` collection and empty collections. No default OG image yet. Sitemap pagination loop not exercised live (132 < 250)
+- Deviations: none from plan.md
+- Next up: rest of Phase 6 — sanitize `descriptionHtml` (separate branch), performance + accessibility pass

@@ -13,7 +13,11 @@ export async function generateMetadata(props: PageProps<"/collections/[handle]">
   const { handle } = await props.params;
   const collection = await getCollectionPage(handle);
   if (!collection) return {};
-  return { title: collection.title, description: collection.description || undefined };
+  return {
+    title: collection.title,
+    description: collection.description || undefined,
+    alternates: { canonical: `/collections/${handle}` },
+  };
 }
 
 /** Collection (PLP) page: burgundy title strip + product grid with "Load more". */

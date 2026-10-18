@@ -22,3 +22,6 @@ export function formatPrice(amount: number): string {
     maximumFractionDigits: 2,
   })}`;
 }
+
+/** Public site origin for canonical URLs, sitemap and JSON-LD. Production domain gets set in Phase 7. */
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
