@@ -1,9 +1,10 @@
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
-const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN;
+// Server-only (no NEXT_PUBLIC_ prefix): every Storefront call runs in server components/actions.
+const token = process.env.SHOPIFY_STOREFRONT_TOKEN;
 
 if (!domain || !token) {
   throw new Error(
-    "Missing NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN or NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN env vars"
+    "Missing NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN or SHOPIFY_STOREFRONT_TOKEN env vars"
   );
 }
 
