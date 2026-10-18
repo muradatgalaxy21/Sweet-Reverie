@@ -48,11 +48,13 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Product Image Area */}
       <Link
         href={`/products/${product.handle}`}
+        tabIndex={-1}
+        aria-hidden
         className="block relative w-full aspect-square bg-stone-50/80 rounded-xl overflow-hidden mb-3 p-3 flex items-center justify-center border border-stone-100"
       >
         <Image
           src={product.imageUrl}
-          alt={product.title}
+          alt=""
           fill
           sizes="(min-width: 1280px) 256px, (min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
           className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
@@ -71,11 +73,13 @@ export function ProductCard({ product }: ProductCardProps) {
           {/* Pricing Row */}
           <div className="mt-2 mb-3">
             {product.compareAtPrice && (
-              <span className="text-xs font-semibold text-stone-400 line-through mr-2">
+              <span className="text-xs font-semibold text-stone-500 line-through mr-2">
+                <span className="sr-only">Original price </span>
                 {formatPrice(product.compareAtPrice)}
               </span>
             )}
             <span className="text-sm md:text-base font-extrabold text-[#662A37]">
+              {product.compareAtPrice && <span className="sr-only">Sale price </span>}
               {formatPrice(product.price)}
             </span>
           </div>
@@ -88,8 +92,11 @@ export function ProductCard({ product }: ProductCardProps) {
           disabled={!product.availableForSale}
           className="disabled:opacity-50 disabled:pointer-events-none w-full bg-[#4A1A25] hover:bg-[#662A37] active:scale-95 text-white font-extrabold text-xs uppercase tracking-wider py-2.5 px-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2"
         >
-          <ShoppingBag className="w-4 h-4 stroke-[2.5]" />
-          <span>{product.availableForSale ? "Add to cart" : "Sold out"}</span>
+          <ShoppingBag aria-hidden className="w-4 h-4 stroke-[2.5]" />
+          <span>
+            {product.availableForSale ? "Add to cart" : "Sold out"}
+            <span className="sr-only">: {product.title}</span>
+          </span>
         </button>
       </div>
     </div>

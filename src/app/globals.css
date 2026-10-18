@@ -164,6 +164,28 @@
   animation-play-state: paused;
 }
 
+/* Accessibility: honour reduced-motion for the endless marquees (WCAG 2.2.2). */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none;
+  }
+}
+
+/* Visible keyboard focus everywhere (mouse clicks don't trigger :focus-visible).
+   In @layer base so components with their own focus style (focus:outline-none) win. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  /* Dark sections (footer, cart header, special offers) opt into a gold ring. */
+  [data-focus="light"] :focus-visible {
+    outline-color: var(--gold);
+  }
+}
+
 /* Smooth custom scrollbars */
 ::-webkit-scrollbar {
   width: 8px;

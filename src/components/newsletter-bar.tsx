@@ -44,6 +44,8 @@ export function NewsletterBar() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address..."
+              aria-label="Email address"
+              autoComplete="email"
               className="w-full pl-5 pr-14 py-3 bg-amber-400/50 placeholder:text-black/60 text-black font-medium text-sm rounded-full border-2 border-black focus:outline-none focus:bg-white transition-all shadow-inner"
             />
             <button
@@ -58,11 +60,9 @@ export function NewsletterBar() {
               )}
             </button>
           </div>
-          {isSubmitted && (
-            <p className="text-xs font-bold text-black mt-2 text-center md:text-left">
-              Thank you for subscribing to Sweet Reverie!
-            </p>
-          )}
+          <p role="status" className="text-xs font-bold text-black mt-2 text-center md:text-left empty:hidden">
+            {isSubmitted ? "Thank you for subscribing to Sweet Reverie!" : ""}
+          </p>
         </form>
       </div>
     </section>

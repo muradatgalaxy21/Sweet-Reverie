@@ -21,10 +21,14 @@ export function AnnouncementBar() {
         {[...announcements, ...announcements].map((item, index) => {
           const Icon = item.icon;
           return (
-            <div key={index} className="flex items-center mx-8">
-              <Icon className="w-3.5 h-3.5 mr-2 text-[#ECA58A]" />
+            <div
+              key={index}
+              aria-hidden={index >= announcements.length || undefined}
+              className="flex items-center mx-8"
+            >
+              <Icon aria-hidden className="w-3.5 h-3.5 mr-2 text-[#ECA58A]" />
               <span>{item.text}</span>
-              <span className="mx-6 text-[#ECA58A]/40">•</span>
+              <span aria-hidden className="mx-6 text-[#ECA58A]/40">•</span>
             </div>
           );
         })}

@@ -125,7 +125,7 @@ export function HeroCarousel() {
   const active = slides[currentSlide];
 
   return (
-    <section id="hero" className="relative">
+    <section id="hero" aria-roledescription="carousel" aria-label="Featured" className="relative">
       <div
         className={`relative overflow-hidden ${active.bgImage ? "" : `bg-gradient-to-r ${active.bgGradient}`} ${
           active.bgImage && active.bgImageMobile
@@ -189,7 +189,7 @@ export function HeroCarousel() {
                 >
                   <Image
                     src={src}
-                    alt="Featured confection"
+                    alt=""
                     fill
                     sizes="(min-width: 768px) 144px, 96px"
                     className="object-contain p-1 rounded-xl"
@@ -230,17 +230,22 @@ export function HeroCarousel() {
         </button>
 
         {/* Slide Indicators */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex">
           {slides.map((_, i) => (
             <button
               key={i}
               type="button"
               onClick={() => setCurrentSlide(i)}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                i === currentSlide ? "w-8 bg-amber-400" : "w-2.5 bg-white/50"
-              }`}
+              className="flex h-6 min-w-6 items-center justify-center"
               aria-label={`Slide ${i + 1}`}
-            />
+              aria-current={i === currentSlide || undefined}
+            >
+              <span
+                className={`block h-2.5 rounded-full transition-all duration-300 ${
+                  i === currentSlide ? "w-8 bg-amber-400" : "w-2.5 bg-white/50"
+                }`}
+              />
+            </button>
           ))}
         </div>
       </div>

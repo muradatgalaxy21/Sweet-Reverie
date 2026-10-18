@@ -101,15 +101,17 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-black hover:text-[#662A37] focus:outline-none"
+                className="p-2 text-black hover:text-[#662A37]"
                 aria-label="Toggle Navigation Menu"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
 
             {/* Left Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-8 text-xs font-black tracking-widest text-black uppercase">
+            <nav aria-label="Main" className="hidden md:flex items-center space-x-8 text-xs font-black tracking-widest text-black uppercase">
               <Link
                 href="/"
                 className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
@@ -117,13 +119,13 @@ export function SiteHeader() {
                 HOME
               </Link>
               <Link
-                href="#best-sellers"
+                href="/#best-sellers"
                 className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
               >
                 BEST SELLERS
               </Link>
               <Link
-                href="#special-offers"
+                href="/#special-offers"
                 className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
               >
                 SPECIAL OFFERS
@@ -185,11 +187,11 @@ export function SiteHeader() {
                 type="button"
                 onClick={openCart}
                 className="p-2 relative hover:text-[#662A37] hover:scale-110 transition-transform"
-                aria-label="Shopping Cart"
+                aria-label={totalQuantity > 0 ? `Shopping cart, ${totalQuantity} items` : "Shopping cart"}
               >
                 <CartIcon className="h-5 w-5 md:h-6 md:w-6" />
                 {totalQuantity > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#662A37] text-white text-[11px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white shadow-md animate-pulse">
+                  <span aria-hidden className="absolute -top-1 -right-1 bg-[#662A37] text-white text-[11px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white shadow-md motion-safe:animate-pulse">
                     {totalQuantity}
                   </span>
                 )}
@@ -200,7 +202,7 @@ export function SiteHeader() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-[#FAF7F2] border-t border-amber-300 px-4 pt-4 pb-6 space-y-3 shadow-2xl">
+          <nav id="mobile-menu" aria-label="Mobile" className="md:hidden bg-[#FAF7F2] border-t border-amber-300 px-4 pt-4 pb-6 space-y-3 shadow-2xl">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
@@ -209,14 +211,14 @@ export function SiteHeader() {
               HOME
             </Link>
             <Link
-              href="#best-sellers"
+              href="/#best-sellers"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
             >
               BEST SELLERS
             </Link>
             <Link
-              href="#special-offers"
+              href="/#special-offers"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
             >
@@ -235,7 +237,7 @@ export function SiteHeader() {
             >
               MY ACCOUNT
             </a>
-          </div>
+          </nav>
         )}
       </header>
 
