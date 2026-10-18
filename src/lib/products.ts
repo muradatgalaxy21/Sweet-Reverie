@@ -1,4 +1,5 @@
 import { shopifyFetch } from "./shopify";
+import { sanitizeDescription } from "./sanitize";
 import { Product } from "./types";
 import type {
   CollectionProductsQuery,
@@ -176,7 +177,8 @@ export type ProductDetail = NonNullable<ProductPageQuery["product"]>;
 
 export async function getProductByHandle(handle: string): Promise<ProductDetail | null> {
   const data = await shopifyFetch<ProductPageQuery, ProductPageQueryVariables>(PRODUCT, { handle });
-  return data.product ?? null;
+  if (!data.product) return null;
+  return { ...data.product, descriptionHtml: sanitizeDescription(data.product.descriptionHtml) };
 }
 
 export async function getProducts(variables: ProductsQueryVariables): Promise<Product[]> {
