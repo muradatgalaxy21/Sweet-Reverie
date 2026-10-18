@@ -50,7 +50,7 @@ Shopify hosted checkout (payment processing)
 |---|---|
 | **Performance** | LCP < 2.5s on PDP/PLP; use Next.js SSG/ISR for product pages, revalidate on webhook (product update) rather than polling |
 | **SEO** | Server-rendered product/collection pages, proper meta tags, structured data (Product schema), sitemap.xml |
-| **Security** | Storefront API token (public, read-only scopes) used client-side only; Admin API token (if used for revalidation webhooks) stays server-side only, never exposed to browser |
+| **Security** | Storefront API token (read-only scopes) used server-side only, no `NEXT_PUBLIC_` prefix (all Storefront calls run in server components/actions); Admin API token (if used for revalidation webhooks) stays server-side only, never exposed to browser |
 | **Scalability** | Stateless frontend, deployable to Vercel; cart state lives in Shopify (via cart ID), not in app server memory |
 | **Availability** | Frontend and Shopify backend fail independently — if Storefront API is slow, degrade gracefully (loading states, cached fallback) |
 | **Maintainability** | Typed GraphQL queries (codegen), component-based design system, environment-based config (dev/staging/prod) |
@@ -118,7 +118,7 @@ Shopify hosted checkout (payment processing)
 ### Step 5 — Environment variables (Next.js)
 ```
 NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
-NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN=xxxxxxxx
+SHOPIFY_STOREFRONT_TOKEN=xxxxxxxx   # server-only (renamed 2026-10-18, see progress.md)
 SHOPIFY_ADMIN_TOKEN=xxxxxxxx   # server-only, no NEXT_PUBLIC_ prefix
 ```
 

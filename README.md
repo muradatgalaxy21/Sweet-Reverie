@@ -57,7 +57,7 @@ This repository contains the official headless e-commerce web application for Sw
    *Required variables:*
    ```env
    NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
-   NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN=your_public_storefront_access_token
+   SHOPIFY_STOREFRONT_TOKEN=your_storefront_access_token   # server-only
    SHOPIFY_ADMIN_TOKEN=your_private_admin_token
    NEXT_PUBLIC_SITE_URL=http://localhost:3000
    ```

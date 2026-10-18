@@ -14,7 +14,7 @@ Before writing code, read `plan.md` in full. It defines:
 
 ## Key constraints from plan.md (don't violate these)
 
-- **Token scope**: Storefront API token is public/read-only, safe client-side (`NEXT_PUBLIC_` prefix). Admin API token is secret, server-only, never committed or exposed to browser.
+- **Token scope**: Storefront API token is read-only and server-only (`SHOPIFY_STOREFRONT_TOKEN`, no `NEXT_PUBLIC_` prefix; Vercel flags public tokens, and all Storefront calls run server-side). Admin API token is secret, server-only, never committed or exposed to browser.
 - **Checkout**: v1 uses Shopify-hosted checkout via `cart.checkoutUrl` redirect — no custom checkout UI (requires Shopify Plus, explicitly out of scope).
 - **Cart state**: lives in Shopify via cart ID (cookie), not in app server memory — keeps frontend stateless/deployable to Vercel.
 - **Customer accounts**: Shopify-hosted flow, not custom-built auth (see Decisions Log §8).

@@ -349,3 +349,10 @@ Format per entry:
 - Known: policy edits don't fire the product/collection webhooks, so changes show within the 1h ISR safety net. Policy pages not in sitemap (low SEO value)
 - Deviations: none from plan.md
 - Next up: fill policies in Shopify admin if empty + run codegen; About/Contact/FAQ (needs copy from user); collection filters/sort; OG image; Phase 7
+
+## 2026-10-18 — Storefront token made server-only (Vercel warning)
+- Vercel flagged `NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN` ("public prefix exposes value to the browser"). Every Storefront call already runs server-side (server components, server actions, route handlers — no client module imports `shopify.ts`), so the prefix only leaked the token into the client bundle for no reason
+- Renamed to `SHOPIFY_STOREFRONT_TOKEN` in `src/lib/shopify.ts`, `codegen.ts`, `.env.local.example`, README. `NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN` stays public (header account link uses it client-side; a domain isn't secret)
+- **Approved deviation (user request, 2026-10-18):** plan.md §3/§6 + CLAUDE.md said the Storefront token is public/client-side with `NEXT_PUBLIC_`; updated both to server-only
+- Verified: `tsc`, ESLint (0 errors); dev server with only `SHOPIFY_STOREFRONT_TOKEN` set: page renders, no client-side errors / "Missing env" throw, search server action runs server-side
+- **User action:** rename the variable in local `.env` and in Vercel (delete the `NEXT_PUBLIC_` one), then redeploy
