@@ -329,3 +329,12 @@ Format per entry:
 - **Availability review (plan.md §3), held for user:** pages are ISR, so a Shopify outage during revalidation keeps serving the last good page — catching errors per section would be worse (it would cache a degraded page for up to 1h). Real gap: no `app/error.tsx` / `app/not-found.tsx`, so a first-ever render that fails, or any 404 (incl. footer policy links), shows Next's unbranded default page. Both are new UI + copy → needs user's design/copy call per CLAUDE.md
 - Deviations: none
 - Next up: user decisions on held items (hero CTA contrast, hero desktop crop, error/404 pages); then Phase 3 leftovers (filters/sort, static pages) and Phase 7 launch
+
+## 2026-10-18 — Phase 6: held items resolved (hero contrast + crop, error/404 pages)
+- User decisions: (1) hero CTA black text, (2)+(3) "choose best" delegated to Claude, (4) empty-collection sitemap filter skipped for now, (5) OG image — asked which type (answered in chat)
+- `hero-carousel.tsx` — slide 1 CTA `text-white` → `text-black` on `#F2871A` (2.54:1 → ~8:1, AA pass, brand orange unchanged). Desktop hero `md:object-left`: the 3264×1312 (~2.5:1) banner was centre-cropped into a ~1.8:1 box, cutting the headline; now crop comes off the right (product edge) only. Kept full-viewport hero height (no per-slide height jump). Checked 1024×768, 1280×720, 1440×900, 1920×1080, 2560×1440; mobile unchanged (portrait image)
+- `src/app/not-found.tsx` — branded 404 (serif heading, Back to home, 6 popular category links), title "Page not found". Covers unknown URLs (incl. the 4 footer policy links until static pages exist) and `notFound()` for missing products/collections
+- `src/app/error.tsx` — branded error boundary (Next 16.3 `retry` prop): Try again, Back to home, WhatsApp order link; logs the error. Only shows when a page has no cached copy (ISR keeps last good page otherwise)
+- Verified: `tsc`, ESLint (0 errors). Dev server + Playwright: `/privacy-policy` → 404 status + branded page; `/products/x` with Shopify unreachable → 500 + branded error page; axe (WCAG 2.2 AA) clean on both at 390/1440; screenshots checked
+- Deviations: none from plan.md
+- Next up: OG image (asset from user); Phase 3 leftovers (filters/sort, static pages); Phase 7 (Vercel project + env vars + Shopify webhooks + domain)

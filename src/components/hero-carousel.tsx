@@ -60,7 +60,7 @@ function ArtDirectedImage({
     <picture>
       <source media="(min-width: 768px)" srcSet={desktop} sizes="100vw" />
       <source srcSet={mobile} sizes="100vw" />
-      <img {...rest} alt={alt} className="object-cover" />
+      <img {...rest} alt={alt} className="object-cover md:object-left" />
     </picture>
   );
 }
@@ -155,7 +155,7 @@ export function HeroCarousel() {
             )}
             <Link
               href={active.buttonLink}
-              className="absolute left-1/2 -translate-x-1/2 bottom-[4%] md:left-[6%] md:bottom-[14%] md:translate-x-0 inline-flex items-center justify-center bg-[#F2871A] hover:bg-[#d9740f] text-white text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95"
+              className="absolute left-1/2 -translate-x-1/2 bottom-[4%] md:left-[6%] md:bottom-[14%] md:translate-x-0 inline-flex items-center justify-center bg-[#F2871A] hover:bg-[#d9740f] text-black text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95"
             >
               {active.buttonText}
             </Link>
