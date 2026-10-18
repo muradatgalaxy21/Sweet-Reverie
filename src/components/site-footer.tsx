@@ -93,22 +93,22 @@ export function SiteFooter() {
             </h4>
             <ul className="space-y-2 text-xs font-medium text-stone-300">
               <li>
-                <Link href="/privacy-policy" className="hover:text-amber-400 transition-colors">
+                <Link href="/policies/privacy-policy" className="hover:text-amber-400 transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/shipping-policy" className="hover:text-amber-400 transition-colors">
+                <Link href="/policies/shipping-policy" className="hover:text-amber-400 transition-colors">
                   Shipping Policy
                 </Link>
               </li>
               <li>
-                <Link href="/refund-policy" className="hover:text-amber-400 transition-colors">
+                <Link href="/policies/refund-policy" className="hover:text-amber-400 transition-colors">
                   Return & Refund Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms-of-service" className="hover:text-amber-400 transition-colors">
+                <Link href="/policies/terms-of-service" className="hover:text-amber-400 transition-colors">
                   Terms of Service
                 </Link>
               </li>
