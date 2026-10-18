@@ -7,7 +7,7 @@ import { ProductDetail } from "@/components/product-detail";
 import { ProductCard } from "@/components/product-card";
 import { SITE_URL } from "@/lib/utils";
 
-// Render each product on first visit, then serve it statically with ISR (via shopifyFetch's 60s revalidate).
+// Render each product on first visit, then serve it statically with ISR (refreshed by the Shopify webhook, see api/revalidate).
 export async function generateStaticParams() {
   return [];
 }
