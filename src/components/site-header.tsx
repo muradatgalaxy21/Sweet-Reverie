@@ -153,7 +153,7 @@ export function SiteHeader() {
                     height={1800}
                     sizes="130px"
                     className="w-[95%] max-w-none h-auto"
-                    priority
+                    preload
                   />
                 </div>
               </Link>

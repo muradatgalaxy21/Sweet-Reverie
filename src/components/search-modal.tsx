@@ -100,6 +100,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                             src={product.imageUrl}
                             alt={product.title}
                             fill
+                            sizes="48px"
                             className="object-contain p-1"
                           />
                         </div>

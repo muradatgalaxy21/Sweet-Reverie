@@ -99,6 +99,7 @@ export function CartDrawer() {
                       src={item.imageUrl}
                       alt={item.title}
                       fill
+                      sizes="64px"
                       className="object-contain p-1"
                     />
                   </div>
