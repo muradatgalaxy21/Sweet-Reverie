@@ -291,3 +291,15 @@ Format per entry:
 - Known: one tag for everything, so any change marks all pages stale (fine at ~130 products). With `"max"`, the first visitor after a change sees the old page once while it regenerates. Price changes in variant-only edits arrive as `products/update`, so they're covered
 - Deviations: fallback interval change (60s → 1h) — implements plan.md §3 rather than deviating from it
 - Next up: Phase 6 performance pass
+
+## 2026-10-18 — Phase 6: performance pass (images)
+- **Hero art direction** (`hero-carousel.tsx`): mobile + desktop hero were two `<Image priority>` toggled by CSS, so every device downloaded both. Now an `ArtDirectedImage` `<picture>` (via `getImageProps`, `md` breakpoint) — browser fetches only the matching source; slide 1 gets `loading="eager"` + `fetchPriority="high"`. Slides without a mobile crop use `<Image fill sizes="100vw" preload>`
+- **`sizes` on every `fill` image** (default is 100vw, so tiles were downloading viewport-width images): product card (all 2/3/5-col grids in `max-w-7xl` → 256px cap), category tiles, brand logos 160px, special offers 224px, hero collage 96/144px, search 48px, cart 64px
+- **Section banners** (best sellers, new arrivals, categories, brands): 2300px intrinsic with no `sizes` → served the 3840w variant into a ≤512px slot. Added `sizes` matching `max-w-xs/md/lg`
+- Removed `priority` from the below-the-fold Shop by Brand banner (was competing with hero for bandwidth); `priority` → `preload` on header logo + PDP main image (`priority` deprecated in Next 16)
+- Verified: `tsc`, ESLint (0 errors). Dev server + Playwright (DPR 2) on a throwaway page rendering hero + category grid (homepage needs Shopify creds, not in this session): mobile 412 → 288KB (-30%), desktop 1043 → 471KB (-55%); each viewport now fetches only its own hero. Before/after screenshots render identically
+- **Not measured:** real LCP (needs live data + a deployed URL; plan target < 2.5s), product-card savings on homepage/PLP/PDP (needs Shopify data). Run Lighthouse/PageSpeed on the Vercel preview
+- **Pre-existing, not changed (design call for user):** desktop hero image is ~2.5:1 but its box is `100svh - 115px` tall, so at 1440×900 `object-cover` crops the headline's left edge ("…QUISITE …OCOLATE")
+- `site-header.tsx` is CRLF — edited preserving line endings
+- Deviations: none
+- Next up: accessibility audit (Phase 6), then Phase 3 leftovers (filters/sort, static pages)

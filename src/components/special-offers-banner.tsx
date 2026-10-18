@@ -67,6 +67,7 @@ export function SpecialOffersBanner() {
                   src={item.src}
                   alt={item.title}
                   fill
+                  sizes="224px"
                   className="object-contain p-2"
                 />
               </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -28,6 +28,43 @@ interface HeroSlide {
  * 4. Left/Right circular arrows and indicator pills.
  * 5. Automatic slide rotation every 6 seconds.
  */
+/**
+ * Portrait/landscape hero via <picture>: the browser downloads only the source matching
+ * the viewport (two <Image>s toggled by CSS would fetch both on first paint).
+ */
+function ArtDirectedImage({
+  desktopSrc,
+  mobileSrc,
+  alt,
+  eager,
+}: {
+  desktopSrc: string;
+  mobileSrc: string;
+  alt: string;
+  eager: boolean;
+}) {
+  const common = { alt, fill: true, sizes: "100vw" };
+  const {
+    props: { srcSet: desktop },
+  } = getImageProps({ ...common, src: desktopSrc });
+  const {
+    props: { srcSet: mobile, ...rest },
+  } = getImageProps({
+    ...common,
+    src: mobileSrc,
+    loading: eager ? "eager" : "lazy",
+    fetchPriority: eager ? "high" : "auto",
+  });
+
+  return (
+    <picture>
+      <source media="(min-width: 768px)" srcSet={desktop} sizes="100vw" />
+      <source srcSet={mobile} sizes="100vw" />
+      <img {...rest} alt={alt} className="object-cover" />
+    </picture>
+  );
+}
+
 export function HeroCarousel() {
   const slides: HeroSlide[] = [
     {
@@ -99,22 +136,23 @@ export function HeroCarousel() {
         {active.bgImage ? (
           /* Full-bleed banner: image carries headline/subheadline; CTA is a real button overlaid at the same spot. */
           <div className="absolute inset-0 z-10">
-            {active.bgImageMobile && (
+            {active.bgImageMobile ? (
+              <ArtDirectedImage
+                desktopSrc={active.bgImage}
+                mobileSrc={active.bgImageMobile}
+                alt={active.headline}
+                eager={currentSlide === 0}
+              />
+            ) : (
               <Image
-                src={active.bgImageMobile}
+                src={active.bgImage}
                 alt={active.headline}
                 fill
-                priority={currentSlide === 0}
-                className="object-cover md:hidden"
+                sizes="100vw"
+                preload={currentSlide === 0}
+                className="object-cover"
               />
             )}
-            <Image
-              src={active.bgImage}
-              alt={active.headline}
-              fill
-              priority={currentSlide === 0}
-              className={`object-cover ${active.bgImageMobile ? "hidden md:block" : ""}`}
-            />
             <Link
               href={active.buttonLink}
               className="absolute left-1/2 -translate-x-1/2 bottom-[4%] md:left-[6%] md:bottom-[14%] md:translate-x-0 inline-flex items-center justify-center bg-[#F2871A] hover:bg-[#d9740f] text-white text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95"
@@ -153,6 +191,7 @@ export function HeroCarousel() {
                     src={src}
                     alt="Featured confection"
                     fill
+                    sizes="(min-width: 768px) 144px, 96px"
                     className="object-contain p-1 rounded-xl"
                   />
                 </div>

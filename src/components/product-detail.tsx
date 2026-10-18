@@ -77,7 +77,7 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
             fill
             sizes="(min-width: 768px) 50vw, 100vw"
             className="object-contain p-6"
-            priority
+            preload
           />
           {onSale && (
             <span className="absolute top-4 right-4 bg-[#662A37] text-white text-xs font-extrabold tracking-wider uppercase px-3 py-1 rounded-full shadow-sm">

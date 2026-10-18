@@ -24,7 +24,7 @@ export function ShopByBrand() {
           alt="Shop by Brand"
           width={2268}
           height={641}
-          priority
+          sizes="(min-width: 768px) 512px, (min-width: 640px) 448px, 320px"
           className="max-w-xs sm:max-w-md md:max-w-lg w-full h-auto object-contain drop-shadow-sm"
         />
       </div>
@@ -63,6 +63,7 @@ function BrandRow({
               src={brand.logoUrl}
               alt={`${brand.name} logo`}
               fill
+              sizes="160px"
               className="object-contain filter contrast-105 scale-110 group-hover:scale-125 transition-transform duration-300 p-1"
             />
           </div>
