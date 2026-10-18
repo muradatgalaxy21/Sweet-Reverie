@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getCollectionPage } from "@/lib/products";
 import { CollectionGrid } from "@/components/collection-grid";
 
-// Render each collection on first visit, then serve it statically with ISR (via shopifyFetch's 60s revalidate).
+// Render each collection on first visit, then serve it statically with ISR (refreshed by the Shopify webhook, see api/revalidate).
 export async function generateStaticParams() {
   return [];
 }

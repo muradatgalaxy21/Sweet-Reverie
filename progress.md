@@ -281,3 +281,13 @@ Format per entry:
 - Known: products have no SKUs/descriptions yet, so those JSON-LD fields are omitted. Product pages set their own `openGraph` (image), which replaces the root one, so og:site_name/locale/type aren't on PDPs. Sitemap includes Shopify's default `frontpage` collection and empty collections. No default OG image yet. Sitemap pagination loop not exercised live (132 < 250)
 - Deviations: none from plan.md
 - Next up: rest of Phase 6 — performance + accessibility pass
+
+## 2026-10-18 — Phase 6: Shopify webhook revalidation
+- `src/app/api/revalidate/route.ts` — POST handler for Shopify webhooks. Checks `X-Shopify-Hmac-Sha256` (base64 HMAC-SHA256 of raw body, `timingSafeEqual`) against server-only `SHOPIFY_WEBHOOK_SECRET`; 401 on bad/missing signature, 500 if secret unset. For products/*, collections/* (create/update/delete) and `inventory_levels/update` it calls `revalidateTag("shopify", "max")`; other topics are 200-acked and ignored
+- `src/lib/shopify.ts` — fallback revalidate 60s → 3600s (safety net for missed webhooks only, per plan.md §3 "webhook, not polling"); comments in collection/product pages updated
+- `.env.local.example` — `SHOPIFY_WEBHOOK_SECRET`
+- Verified: `tsc --noEmit`, ESLint (0 errors, pre-existing warning), dev server + curl: valid signature → 200 `revalidated:true`; non-storefront topic → 200 ignored; bad, tampered-body and missing signature → 401. Not verified against the live store (no Shopify creds in this session) or a public URL
+- **Setup needed (user):** Shopify admin → Settings → Notifications → Webhooks → create webhooks (JSON) for the topics above pointing at `<SITE_URL>/api/revalidate`; copy the signing key shown there into `SHOPIFY_WEBHOOK_SECRET` (local `.env` + Vercel). Needs a public URL, so realistically Phase 7 / first Vercel deploy
+- Known: one tag for everything, so any change marks all pages stale (fine at ~130 products). With `"max"`, the first visitor after a change sees the old page once while it regenerates. Price changes in variant-only edits arrive as `products/update`, so they're covered
+- Deviations: fallback interval change (60s → 1h) — implements plan.md §3 rather than deviating from it
+- Next up: Phase 6 performance pass

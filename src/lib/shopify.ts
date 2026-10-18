@@ -11,9 +11,9 @@ const endpoint = `https://${domain}/api/2026-01/graphql.json`;
 
 /**
  * POSTs a query to the Storefront API.
- * Responses are cached for 60s and tagged "shopify" so a product-update webhook can
- * call revalidateTag("shopify") later (plan.md §3). Pass `cache: false` for per-user
- * data (carts) that must never be cached or shared.
+ * Responses are tagged "shopify" and refreshed by the Shopify webhook at
+ * `/api/revalidate` (plan.md §3); the 1h revalidate is only a safety net for missed
+ * webhooks. Pass `cache: false` for per-user data (carts) that must never be cached or shared.
  */
 export async function shopifyFetch<TData, TVariables = Record<string, never>>(
   query: string,
@@ -27,7 +27,7 @@ export async function shopifyFetch<TData, TVariables = Record<string, never>>(
       "X-Shopify-Storefront-Access-Token": token!,
     },
     body: JSON.stringify({ query, variables }),
-    ...(cache ? { next: { revalidate: 60, tags: ["shopify"] } } : { cache: "no-store" }),
+    ...(cache ? { next: { revalidate: 3600, tags: ["shopify"] } } : { cache: "no-store" }),
   });
 
   const json = await res.json();
