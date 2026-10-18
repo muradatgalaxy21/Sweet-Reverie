@@ -153,7 +153,7 @@ export function SiteHeader() {
                     alt="Sweet Reverie Fine Confections"
                     width={2073}
                     height={1800}
-                    sizes="130px"
+                    sizes="(min-width: 768px) 130px, 72px"
                     className="w-[95%] max-w-none h-auto"
                     preload
                   />

@@ -356,3 +356,11 @@ Format per entry:
 - **Approved deviation (user request, 2026-10-18):** plan.md §3/§6 + CLAUDE.md said the Storefront token is public/client-side with `NEXT_PUBLIC_`; updated both to server-only
 - Verified: `tsc`, ESLint (0 errors); dev server with only `SHOPIFY_STOREFRONT_TOKEN` set: page renders, no client-side errors / "Missing env" throw, search server action runs server-side
 - **User action:** rename the variable in local `.env` and in Vercel (delete the `NEXT_PUBLIC_` one), then redeploy
+
+## 2026-10-18 — fix: mobile homepage LCP (live measurement)
+- Live site (sweet-reverie.vercel.app) measured with Playwright, slow 4G (1.6 Mbps, 150 ms RTT) + 4× CPU, 390px @3x: homepage LCP 5.8s (target < 2.5s); collection 1.5s, PDP 2.1s, desktop all ≈0.6s
+- Cause: bandwidth contention, not server: image optimizer TTFB 60–600 ms, but ~960 KB (25+ images: brand logos, banners, product cards) downloaded alongside the 128 KB mobile hero, which finished only when nearly everything else had
+- `hero-carousel.tsx` — mobile `<source>` + img `sizes="70vw"` → phones get the 828w variant (80 KB vs 128 KB at 1200w)
+- `fetchPriority="low"` on below-the-fold images: 4 section banners, brand logos, category tiles, special-offers montage
+- `site-header.tsx` — logo `sizes` 130px → `(min-width: 768px) 130px, 72px` (preloaded on every page; mobile shows ≤71px)
+- Verified: `tsc`, ESLint (0 errors); re-measure on live after deploy (see next entry / chat)

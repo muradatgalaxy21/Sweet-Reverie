@@ -22,6 +22,7 @@ export async function BestSellersSection() {
           width={2323}
           height={730}
           sizes="(min-width: 768px) 512px, (min-width: 640px) 448px, 320px"
+          fetchPriority="low"
           className="max-w-xs sm:max-w-md md:max-w-lg w-full h-auto object-contain drop-shadow-sm"
         />
       </div>
