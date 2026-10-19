@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useEffect, useId, useRef, useState, useTransition } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { SlidersHorizontal, X } from "lucide-react";
 import { Product } from "@/lib/types";
 import type { CollectionFilterOptions } from "@/lib/products";
 import { loadCollectionProducts } from "@/lib/collection-actions";
+import { CATEGORIES } from "@/lib/categories";
 import {
   DEFAULT_QUERY,
+  PRICE_PRESETS,
   SORT_OPTIONS,
   countFilters,
   parseCollectionQuery,
@@ -110,7 +113,7 @@ export function CollectionBrowser({
           </h2>
           {activeFilters > 0 && <ClearButton onClick={clearAll} />}
         </div>
-        <FilterPanel options={filterOptions} query={query} onChange={applyQuery} />
+        <FilterPanel handle={handle} options={filterOptions} query={query} onChange={applyQuery} />
       </aside>
 
       <div>
@@ -206,7 +209,7 @@ export function CollectionBrowser({
           onClose={() => setDrawerOpen(false)}
           onClear={activeFilters > 0 ? clearAll : undefined}
         >
-          <FilterPanel options={filterOptions} query={query} onChange={applyQuery} />
+          <FilterPanel handle={handle} options={filterOptions} query={query} onChange={applyQuery} />
         </FilterDrawer>
       )}
     </div>
@@ -222,13 +225,20 @@ function ClearButton({ onClick }: { onClick: () => void }) {
 }
 
 interface FilterPanelProps {
+  /** Current collection, highlighted in the category list. */
+  handle: string;
   options: CollectionFilterOptions;
   query: CollectionQuery;
   onChange: (query: CollectionQuery) => void;
 }
 
-/** Price range + product type. Type is hidden until the collection has 2+ types. */
-function FilterPanel({ options, query, onChange }: FilterPanelProps) {
+const SECTION_HEADING = "text-xs font-black tracking-wider uppercase text-stone-600 mb-3";
+
+/**
+ * Availability, price (quick ranges + custom min/max), product type and category links.
+ * Type is hidden until the collection has 2+ types.
+ */
+function FilterPanel({ handle, options, query, onChange }: FilterPanelProps) {
   const id = useId();
   // Selected types stay listed (so they can be unticked) even if Shopify no longer reports them.
   const types = [...new Set([...options.types, ...query.types])];
@@ -248,10 +258,47 @@ function FilterPanel({ options, query, onChange }: FilterPanelProps) {
 
   return (
     <div className="space-y-6">
+      <fieldset>
+        <legend className={SECTION_HEADING}>Availability</legend>
+        <label className="flex items-center gap-2 text-sm text-stone-700 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={query.inStock}
+            onChange={(e) => onChange({ ...query, inStock: e.target.checked })}
+            className="w-4 h-4 accent-[#4A1A25]"
+          />
+          In stock only
+        </label>
+      </fieldset>
+
       <form onSubmit={applyPrice} aria-labelledby={`${id}-price`}>
-        <h3 id={`${id}-price`} className="text-xs font-black tracking-wider uppercase text-stone-600 mb-3">
+        <h3 id={`${id}-price`} className={SECTION_HEADING}>
           Price (Rs.)
         </h3>
+        <div className="flex flex-wrap gap-2 mb-3">
+          {PRICE_PRESETS.map((preset) => {
+            const minPrice = "minPrice" in preset ? preset.minPrice : undefined;
+            const maxPrice = "maxPrice" in preset ? preset.maxPrice : undefined;
+            const active = query.minPrice === minPrice && query.maxPrice === maxPrice;
+            return (
+              <button
+                key={preset.label}
+                type="button"
+                aria-pressed={active}
+                onClick={() =>
+                  onChange({ ...query, minPrice: active ? undefined : minPrice, maxPrice: active ? undefined : maxPrice })
+                }
+                className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+                  active
+                    ? "bg-[#4A1A25] border-[#4A1A25] text-white"
+                    : "border-stone-300 bg-white text-stone-700 hover:border-[#4A1A25]"
+                }`}
+              >
+                {preset.label}
+              </button>
+            );
+          })}
+        </div>
         {/* Keyed on the applied range so "Clear all" resets the inputs. */}
         <div key={`${query.minPrice}-${query.maxPrice}`} className="flex items-center gap-2">
           <PriceInput
@@ -278,7 +325,7 @@ function FilterPanel({ options, query, onChange }: FilterPanelProps) {
 
       {types.length >= 2 && (
         <fieldset>
-          <legend className="text-xs font-black tracking-wider uppercase text-stone-600 mb-3">Product type</legend>
+          <legend className={SECTION_HEADING}>Product type</legend>
           <div className="space-y-2">
             {types.map((type) => (
               <label key={type} className="flex items-center gap-2 text-sm text-stone-700 cursor-pointer">
@@ -294,6 +341,30 @@ function FilterPanel({ options, query, onChange }: FilterPanelProps) {
           </div>
         </fieldset>
       )}
+
+      <nav aria-labelledby={`${id}-categories`}>
+        <h3 id={`${id}-categories`} className={SECTION_HEADING}>
+          Categories
+        </h3>
+        <ul className="space-y-1.5">
+          {CATEGORIES.map((category) => {
+            const current = category.handle === handle;
+            return (
+              <li key={category.handle}>
+                <Link
+                  href={`/collections/${category.handle}`}
+                  aria-current={current ? "page" : undefined}
+                  className={`text-sm capitalize ${
+                    current ? "font-bold text-[#4A1A25]" : "text-stone-700 hover:text-[#4A1A25] hover:underline"
+                  }`}
+                >
+                  {category.title.toLowerCase()}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
     </div>
   );
 }
