@@ -508,10 +508,14 @@ export type CollectionProductsQueryVariables = Exact<{
   handle: string;
   first: number;
   after?: string | null | undefined;
+  sortKey?: Types.ProductCollectionSortKeys | null | undefined;
+  reverse?: boolean | null | undefined;
+  filters?: Array<Types.ProductFilter> | Types.ProductFilter | null | undefined;
+  withFilters?: boolean | null | undefined;
 }>;
 
 
-export type CollectionProductsQuery = { collection: { title: string, description: string, products: { nodes: Array<{ id: string, handle: string, title: string, availableForSale: boolean, featuredImage: { url: string, altText: string | null } | null, variants: { nodes: Array<{ id: string, price: { amount: string }, compareAtPrice: { amount: string } | null }> } }>, pageInfo: { hasNextPage: boolean, endCursor: string | null } } } | null };
+export type CollectionProductsQuery = { collection: { title: string, description: string, products: { filters?: Array<{ id: string, values: Array<{ input: unknown }> }>, nodes: Array<{ id: string, handle: string, title: string, availableForSale: boolean, featuredImage: { url: string, altText: string | null } | null, variants: { nodes: Array<{ id: string, price: { amount: string }, compareAtPrice: { amount: string } | null }> } }>, pageInfo: { hasNextPage: boolean, endCursor: string | null } } } | null };
 
 export type ProductsQueryVariables = Exact<{
   first: number;

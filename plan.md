@@ -21,12 +21,12 @@ Shopify hosted checkout (payment processing)
 
 ### 2.1 Storefront
 - [x] Home page — hero, featured collections, featured products
-- [ ] Product Listing Page (PLP) — per collection, built; filtering (price, tags/type) and sorting (price, newest, best-selling) not yet added
+- [x] Product Listing Page (PLP) — per collection, filtering (price, product type) and sorting (price, newest, best-selling)
 - [x] Product Detail Page (PDP) — images, variants (size/flavor/etc.), price, description, add-to-cart, stock status
-- [ ] Search — product search across catalog
+- [x] Search — product search across catalog
 - [x] Cart — drawer, add/update/remove line items, persists across sessions (cookie cart ID)
 - [x] Checkout handoff — redirect to Shopify-hosted checkout via `cart.checkoutUrl`
-- [ ] Customer accounts — login/signup, order history, saved addresses (via Shopify Customer Account API or hosted flow)
+- [x] Customer accounts — login/signup, order history, saved addresses (via Shopify Customer Account API or hosted flow)
 - [ ] Static pages — About, Contact, Shipping/Returns policy, FAQ
 - [x] Collections/category navigation
 
