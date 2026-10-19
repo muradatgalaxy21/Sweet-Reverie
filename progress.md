@@ -393,3 +393,12 @@ Format per entry:
 - Known: Marcellus has one weight, so the footer "SWEET REVERIE" wordmark is lighter than before (was Playfair Black) and lighter than the logo. No italic either — Special Offers "upto/off" use the browser's slanted version
 - Deviations: none from plan.md
 - Next up: same as previous entry (codegen with creds, product types + Search & Discovery, About/Contact/FAQ copy, OG image, Phase 7)
+
+## 2026-10-19 — Collection sidebar: more filters (no store setup needed)
+- User: live sidebar showed only Price (type filter hidden — no product types in the store); asked for more options so it doesn't look empty
+- `collection-query.ts` — `inStock` (`?stock=1` → Storefront `{ available: true }`, enabled by default in Shopify); `PRICE_PRESETS` (Under 500 / 500–1,000 / 1,000–2,000 / Over 2,000, from the imported catalog's spread: 41/27/11/21 of 100); `countFilters` counts in-stock
+- `collection-browser.tsx` — sidebar/drawer now: Availability ("In stock only"), Price quick-range pills (`aria-pressed`, click again to clear; also fill the min/max inputs) + custom range, Product type (still hidden until 2+ types), Categories (links to all `CATEGORIES`, current one bold + `aria-current`)
+- Verified: `tsc`, ESLint (0 errors). Mocked Storefront + Playwright 1440/390@2x: in-stock hides sold-out, preset sets `min/max` and only returns products in range, preset toggles off, category link navigates, axe WCAG 2.2 AA clean, no horizontal scroll, no page errors
+- Known: category list includes collections that are still empty in Shopify (gifting, bundles, kids-section, baby-care, pet-care-food — same set the homepage tiles link to); preset ranges are hardcoded (adjust in `PRICE_PRESETS` if pricing shifts)
+- Deviations: none from plan.md
+- Next up: brand filter (needs Vendor set per product via Admin API script + "Vendor" enabled in Search & Discovery); rest as previous entry
