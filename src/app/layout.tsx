@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Marcellus, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import { AnnouncementBar } from "@/components/announcement-bar";
@@ -9,9 +9,11 @@ import { CartDrawer } from "@/components/cart-drawer";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
 import { OPEN_GRAPH_DEFAULTS, SITE_URL } from "@/lib/utils";
 
-const playfair = Playfair_Display({
+// Display headings (font-serif): free lookalike of Friz Quadrata, the closest match to the logo lettering.
+const marcellus = Marcellus({
+  weight: "400",
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-marcellus",
   display: "swap",
 });
 
@@ -63,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${jakarta.variable}`}>
+    <html lang="en" className={`${marcellus.variable} ${jakarta.variable}`}>
       <body suppressHydrationWarning className="antialiased min-h-screen flex flex-col justify-between selection:bg-[#ECA58A] selection:text-[#662A37]">
         <a
           href="#main-content"

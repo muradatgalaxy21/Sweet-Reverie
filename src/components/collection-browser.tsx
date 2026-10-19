@@ -105,7 +105,7 @@ export function CollectionBrowser({
     <div className="lg:grid lg:grid-cols-[13rem_1fr] lg:gap-8">
       <aside aria-labelledby="filters-heading" className="hidden lg:block">
         <div className="flex items-baseline justify-between mb-4">
-          <h2 id="filters-heading" className="font-sans text-sm font-black tracking-wider uppercase text-[#4A1A25]">
+          <h2 id="filters-heading" className="text-sm font-black tracking-wider uppercase text-[#4A1A25]">
             Filters
           </h2>
           {activeFilters > 0 && <ClearButton onClick={clearAll} />}
@@ -249,7 +249,7 @@ function FilterPanel({ options, query, onChange }: FilterPanelProps) {
   return (
     <div className="space-y-6">
       <form onSubmit={applyPrice} aria-labelledby={`${id}-price`}>
-        <h3 id={`${id}-price`} className="font-sans text-xs font-black tracking-wider uppercase text-stone-600 mb-3">
+        <h3 id={`${id}-price`} className="text-xs font-black tracking-wider uppercase text-stone-600 mb-3">
           Price (Rs.)
         </h3>
         {/* Keyed on the applied range so "Clear all" resets the inputs. */}

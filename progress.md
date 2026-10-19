@@ -384,3 +384,12 @@ Format per entry:
 - Known: filtered results aren't in the static HTML (fine — filtered URLs aren't canonical/indexed). Filter changes replace (don't push) history, so Back leaves the page
 - Deviations: none from plan.md (plan.md §2.1 checkboxes updated: PLP, plus Search and Customer accounts which were already built)
 - Next up: codegen with creds; product types + Search & Discovery setup; About/Contact/FAQ (needs copy); OG image; Phase 7
+
+## 2026-10-19 — Fonts: logo-style headings (Marcellus) + one body font
+- User decisions: match the logo lettering; user identified it as Friz Quadrata (paid licence) → free lookalike **Marcellus** (Google Fonts); logo font for display headings only, Plus Jakarta Sans (the price font) for everything else
+- `layout.tsx` — Playfair Display → Marcellus (`--font-marcellus`, weight 400 only). `globals.css` — `--font-serif` → Marcellus; dropped the global `h1–h4 → serif` rule, so the display font is opt-in via `font-serif` (page titles: collection/PDP/policy/404/error, PDP "You may also like", Special Offers, footer wordmark). Small headings now render in Jakarta: product card titles, footer column labels, cart drawer title/items, search modal labels, newsletter heading, filter labels. `.font-serif` gets `font-synthesis-weight: none` so `font-black` on a one-weight font doesn't produce a smeared fake bold
+- `collection-browser.tsx` — removed the two `font-sans` overrides that only existed to cancel the old global serif rule
+- Verified: `tsc`, ESLint (0 errors). Mocked Storefront + Playwright before/after at 1440 and 390: home (incl. Special Offers, newsletter, footer), collection, PDP, 404, cart drawer — no page errors, layouts unchanged apart from the type
+- Known: Marcellus has one weight, so the footer "SWEET REVERIE" wordmark is lighter than before (was Playfair Black) and lighter than the logo. No italic either — Special Offers "upto/off" use the browser's slanted version
+- Deviations: none from plan.md
+- Next up: same as previous entry (codegen with creds, product types + Search & Discovery, About/Contact/FAQ copy, OG image, Phase 7)

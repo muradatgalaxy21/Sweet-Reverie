@@ -14,7 +14,7 @@
     --text-muted: #7A6368;
     --border-color: #F0E2D8;
 
-    --font-serif: var(--font-playfair);
+    --font-serif: var(--font-marcellus);
     --font-sans: var(--font-jakarta);
   }
 
@@ -31,8 +31,11 @@
     overflow-x: hidden;
   }
 
-  h1, h2, h3, h4, .font-serif {
+  /* Display headings opt in with `font-serif`; everything else, small headings included, is the sans.
+     Marcellus has one weight, so bold classes keep it at 400 instead of a smeared fake bold. */
+  .font-serif {
     font-family: var(--font-serif), serif;
+    font-synthesis-weight: none;
   }
 }
 
