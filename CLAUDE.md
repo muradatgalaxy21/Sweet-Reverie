@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## State
 
-Scaffolded and in active build. Next.js 16 (App Router) + React 19 + Tailwind 4 project, git repo initialized. Homepage product sections + search modal read live Shopify Storefront API data; cart is a Shopify cart (ID in httpOnly `cartId` cookie, server actions in `cart-actions.ts`, checkout via `cart.checkoutUrl` redirect � Phase 4 done); collection page built (grid + Load more, no filters/sort yet); product page built (gallery, variants, qty, related, WhatsApp order).
+Scaffolded and in active build. Next.js 16 (App Router) + React 19 + Tailwind 4 project, git repo initialized. Homepage product sections + search modal read live Shopify Storefront API data; cart is a Shopify cart (ID in httpOnly `cartId` cookie, server actions in `cart-actions.ts`, checkout via `cart.checkoutUrl` redirect � Phase 4 done); collection page built (grid + Load more, price/type filters + sort in the URL); product page built (gallery, variants, qty, related, WhatsApp order).
 
 Before writing code, read `plan.md` in full. It defines:
 - Architecture: Next.js (App Router) frontend + Shopify Storefront API (GraphQL) for data, Shopify-hosted checkout for payment
@@ -32,7 +32,7 @@ Before writing code, read `plan.md` in full. It defines:
 
 - `src/app/` — App Router: `layout.tsx` (root shell: announcement bar, header, footer, cart drawer, WhatsApp button) + `page.tsx` (homepage sections).
 - `src/components/` — presentational sections (hero carousel, category/brand shelves, best sellers, new arrivals, product card, search modal, cart drawer, site header/footer).
-- `src/lib/` — `cart-context.tsx` (client view of the Shopify cart + drawer open state), `cart-actions.ts` (server actions: get/add/update/remove cart lines, sets cart-ID cookie on create), `shopify.ts` (Storefront `fetch` helper, 60s revalidate, `shopify` cache tag), `products.ts` (typed queries + `Product` mapping, new-arrivals/best-sellers collection-with-fallback), `search-actions.ts` (server action for search modal), `brands.ts` / `categories.ts` (static brand logos + category tiles; category handles match Shopify collections), `types.ts`, `utils.ts`.
+- `src/lib/` — `cart-context.tsx` (client view of the Shopify cart + drawer open state), `cart-actions.ts` (server actions: get/add/update/remove cart lines, sets cart-ID cookie on create), `shopify.ts` (Storefront `fetch` helper, 60s revalidate, `shopify` cache tag), `products.ts` (typed queries + `Product` mapping, new-arrivals/best-sellers collection-with-fallback), `search-actions.ts` (server action for search modal), `collection-query.ts` (collection sort/filter URL params <-> Storefront variables) + `collection-actions.ts` (server action for filtered pages / Load more), `brands.ts` / `categories.ts` (static brand logos + category tiles; category handles match Shopify collections), `types.ts`, `utils.ts`.
 - Styling: Tailwind 4 (`globals.css` has `@import "tailwindcss"` + `@layer base` CSS variables for brand colors — burgundy/peach/gold/cream palette). No component library beyond `@base-ui/react` primitives + `shadcn` CLI-generated pieces.
 - `npm run codegen` regenerates `src/lib/generated/*` from GraphQL documents in `src/lib/products.ts` + `src/lib/cart-actions.ts` (add new query files to `documents` in `codegen.ts`). Shopify custom scalars (URL, Decimal, DateTime, HTML) are mapped to `string`.
 

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCollectionPage } from "@/lib/products";
-import { CollectionGrid } from "@/components/collection-grid";
+import { CollectionBrowser, CollectionBrowserFromUrl } from "@/components/collection-browser";
 
 // Render each collection on first visit, then serve it statically with ISR (refreshed by the Shopify webhook, see api/revalidate).
 export async function generateStaticParams() {
@@ -11,7 +11,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: PageProps<"/collections/[handle]">): Promise<Metadata> {
   const { handle } = await props.params;
-  const collection = await getCollectionPage(handle);
+  // Same arguments as the page, so the two calls share one Storefront request.
+  const collection = await getCollectionPage(handle, { withFilters: true });
   if (!collection) return {};
   return {
     title: collection.title,
@@ -20,11 +21,18 @@ export async function generateMetadata(props: PageProps<"/collections/[handle]">
   };
 }
 
-/** Collection (PLP) page: burgundy title strip + product grid with "Load more". */
+/** Collection (PLP) page: burgundy title strip + filters/sort + product grid with "Load more". */
 export default async function CollectionPage(props: PageProps<"/collections/[handle]">) {
   const { handle } = await props.params;
-  const collection = await getCollectionPage(handle);
+  const collection = await getCollectionPage(handle, { withFilters: true });
   if (!collection) notFound();
+
+  const browserProps = {
+    handle,
+    initialProducts: collection.products,
+    initialCursor: collection.nextCursor,
+    filterOptions: collection.filterOptions ?? { types: [], priceRange: null },
+  };
 
   return (
     <div className="pb-10">
@@ -42,12 +50,10 @@ export default async function CollectionPage(props: PageProps<"/collections/[han
       </section>
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <CollectionGrid
-          key={handle}
-          handle={handle}
-          initialProducts={collection.products}
-          initialCursor={collection.nextCursor}
-        />
+        {/* Sort/filters live in the URL, read on the client so the page stays static (ISR). */}
+        <Suspense fallback={<CollectionBrowser {...browserProps} />}>
+          <CollectionBrowserFromUrl key={handle} {...browserProps} />
+        </Suspense>
       </section>
     </div>
   );
