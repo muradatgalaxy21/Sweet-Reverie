@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## State
 
-Scaffolded and in active build. Next.js 16 (App Router) + React 19 + Tailwind 4 project, git repo initialized. Homepage product sections + search modal read live Shopify Storefront API data; cart is a Shopify cart (ID in httpOnly `cartId` cookie, server actions in `cart-actions.ts`, checkout via `cart.checkoutUrl` redirect � Phase 4 done); collection page built (grid + Load more, no filters/sort yet); product page built (gallery, variants, qty, related, WhatsApp order).
+Scaffolded and in active build. Next.js 16 (App Router) + React 19 + Tailwind 4 project, git repo initialized. Homepage product sections + search modal read live Shopify Storefront API data; cart is a Shopify cart (ID in httpOnly `cartId` cookie, server actions in `cart-actions.ts`, checkout via `cart.checkoutUrl` redirect � Phase 4 done); collection page built (grid + Load more, price/type filters + sort in the URL); product page built (gallery, variants, qty, related, WhatsApp order).
 
 Before writing code, read `plan.md` in full. It defines:
 - Architecture: Next.js (App Router) frontend + Shopify Storefront API (GraphQL) for data, Shopify-hosted checkout for payment
@@ -14,7 +14,7 @@ Before writing code, read `plan.md` in full. It defines:
 
 ## Key constraints from plan.md (don't violate these)
 
-- **Token scope**: Storefront API token is public/read-only, safe client-side (`NEXT_PUBLIC_` prefix). Admin API token is secret, server-only, never committed or exposed to browser.
+- **Token scope**: Storefront API token is read-only and server-only (`SHOPIFY_STOREFRONT_TOKEN`, no `NEXT_PUBLIC_` prefix; Vercel flags public tokens, and all Storefront calls run server-side). Admin API token is secret, server-only, never committed or exposed to browser.
 - **Checkout**: v1 uses Shopify-hosted checkout via `cart.checkoutUrl` redirect — no custom checkout UI (requires Shopify Plus, explicitly out of scope).
 - **Cart state**: lives in Shopify via cart ID (cookie), not in app server memory — keeps frontend stateless/deployable to Vercel.
 - **Customer accounts**: Shopify-hosted flow, not custom-built auth (see Decisions Log §8).
@@ -32,7 +32,7 @@ Before writing code, read `plan.md` in full. It defines:
 
 - `src/app/` — App Router: `layout.tsx` (root shell: announcement bar, header, footer, cart drawer, WhatsApp button) + `page.tsx` (homepage sections).
 - `src/components/` — presentational sections (hero carousel, category/brand shelves, best sellers, new arrivals, product card, search modal, cart drawer, site header/footer).
-- `src/lib/` — `cart-context.tsx` (client view of the Shopify cart + drawer open state), `cart-actions.ts` (server actions: get/add/update/remove cart lines, sets cart-ID cookie on create), `shopify.ts` (Storefront `fetch` helper, 60s revalidate, `shopify` cache tag), `products.ts` (typed queries + `Product` mapping, new-arrivals/best-sellers collection-with-fallback), `search-actions.ts` (server action for search modal), `brands.ts` / `categories.ts` (static brand logos + category tiles; category handles match Shopify collections), `types.ts`, `utils.ts`.
+- `src/lib/` — `cart-context.tsx` (client view of the Shopify cart + drawer open state), `cart-actions.ts` (server actions: get/add/update/remove cart lines, sets cart-ID cookie on create), `shopify.ts` (Storefront `fetch` helper, 60s revalidate, `shopify` cache tag), `products.ts` (typed queries + `Product` mapping, new-arrivals/best-sellers collection-with-fallback), `search-actions.ts` (server action for search modal), `collection-query.ts` (collection sort/filter URL params <-> Storefront variables) + `collection-actions.ts` (server action for filtered pages / Load more), `brands.ts` / `categories.ts` (static brand logos + category tiles; category handles match Shopify collections), `types.ts`, `utils.ts`.
 - Styling: Tailwind 4 (`globals.css` has `@import "tailwindcss"` + `@layer base` CSS variables for brand colors — burgundy/peach/gold/cream palette). No component library beyond `@base-ui/react` primitives + `shadcn` CLI-generated pieces.
 - `npm run codegen` regenerates `src/lib/generated/*` from GraphQL documents in `src/lib/products.ts` + `src/lib/cart-actions.ts` (add new query files to `documents` in `codegen.ts`). Shopify custom scalars (URL, Decimal, DateTime, HTML) are mapped to `string`.
 
@@ -40,7 +40,7 @@ Before writing code, read `plan.md` in full. It defines:
 
 - **One feature per session.** Keeps sessions from overloading on tokens. Don't bundle multiple plan.md checklist items into one session unless told to.
 - **progress.md**: update at the end of every session, or immediately after completing a feature — whichever comes first. Log what shipped, files touched, any deviations from plan.md, and what's next. See `progress.md` for format.
-- **Git**: `git add` + commit automatically after each session/feature, no need to ask. Never push to GitHub without asking first, every time — a prior push approval does not carry to the next one.
+- **Git**: `git add` + commit automatically after each session/feature, no need to ask. Never push to GitHub without asking first, every time — a prior push approval does not carry to the next one. Work on a feature-named branch (`phaseN-<feature>` / `fix-<desc>`), merge into `main` with `--no-ff`; ignore any session-assigned random branch name (e.g. `claude/<random-words>`).
 - **plan.md is the spec.** Follow it as-is. If something needs a tweak or deviation, stop and get explicit user approval + a short plan for the change before implementing — don't silently improvise around it. Log approved deviations in `progress.md`.
 - **Ask, don't guess.** For UI/design/UX work especially: if anything is ambiguous (layout, category set, content source, ordering, styling, copy), ask the user before building. Don't silently pick a default for design decisions.
 

@@ -495,16 +495,27 @@ export type CartLinesRemoveMutation = { cartLinesRemove: { cart: { id: string, c
           | { id: string, quantity: number, merchandise: { title: string, price: { amount: string }, image: { url: string } | null, product: { title: string, featuredImage: { url: string } | null } } }
         > } } | null, userErrors: Array<{ message: string }> } | null };
 
+export type ShopPolicyFieldsFragment = { title: string, body: string };
+
+export type ShopPoliciesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ShopPoliciesQuery = { shop: { privacyPolicy: { title: string, body: string } | null, shippingPolicy: { title: string, body: string } | null, refundPolicy: { title: string, body: string } | null, termsOfService: { title: string, body: string } | null } };
+
 export type ProductCardFragment = { id: string, handle: string, title: string, availableForSale: boolean, featuredImage: { url: string, altText: string | null } | null, variants: { nodes: Array<{ id: string, price: { amount: string }, compareAtPrice: { amount: string } | null }> } };
 
 export type CollectionProductsQueryVariables = Exact<{
   handle: string;
   first: number;
   after?: string | null | undefined;
+  sortKey?: Types.ProductCollectionSortKeys | null | undefined;
+  reverse?: boolean | null | undefined;
+  filters?: Array<Types.ProductFilter> | Types.ProductFilter | null | undefined;
+  withFilters?: boolean | null | undefined;
 }>;
 
 
-export type CollectionProductsQuery = { collection: { title: string, description: string, products: { nodes: Array<{ id: string, handle: string, title: string, availableForSale: boolean, featuredImage: { url: string, altText: string | null } | null, variants: { nodes: Array<{ id: string, price: { amount: string }, compareAtPrice: { amount: string } | null }> } }>, pageInfo: { hasNextPage: boolean, endCursor: string | null } } } | null };
+export type CollectionProductsQuery = { collection: { title: string, description: string, products: { filters?: Array<{ id: string, values: Array<{ input: unknown }> }>, nodes: Array<{ id: string, handle: string, title: string, availableForSale: boolean, featuredImage: { url: string, altText: string | null } | null, variants: { nodes: Array<{ id: string, price: { amount: string }, compareAtPrice: { amount: string } | null }> } }>, pageInfo: { hasNextPage: boolean, endCursor: string | null } } } | null };
 
 export type ProductsQueryVariables = Exact<{
   first: number;

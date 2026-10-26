@@ -34,7 +34,7 @@ export function SiteFooter() {
   };
 
   return (
-    <footer id="footer" className="bg-[#4A1A25] text-[#FAF7F2] pt-14 pb-8 border-t-4 border-[#662A37]">
+    <footer id="footer" data-focus="light" className="bg-[#4A1A25] text-[#FAF7F2] pt-14 pb-8 border-t-4 border-[#662A37]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-stone-800">
           {/* Column 1: Brand Info & Payment Badges */}
@@ -113,22 +113,22 @@ export function SiteFooter() {
             </h4>
             <ul className="space-y-2 text-xs font-medium text-stone-300">
               <li>
-                <Link href="/privacy-policy" className="hover:text-amber-400 transition-colors">
+                <Link href="/policies/privacy-policy" className="hover:text-amber-400 transition-colors">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/shipping-policy" className="hover:text-amber-400 transition-colors">
+                <Link href="/policies/shipping-policy" className="hover:text-amber-400 transition-colors">
                   Shipping Policy
                 </Link>
               </li>
               <li>
-                <Link href="/refund-policy" className="hover:text-amber-400 transition-colors">
+                <Link href="/policies/refund-policy" className="hover:text-amber-400 transition-colors">
                   Return & Refund Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms-of-service" className="hover:text-amber-400 transition-colors">
+                <Link href="/policies/terms-of-service" className="hover:text-amber-400 transition-colors">
                   Terms of Service
                 </Link>
               </li>

@@ -101,15 +101,17 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-[#662A37] hover:text-[#F59E0B] focus:outline-none"
+                className="p-2 text-[#662A37] hover:text-[#F59E0B]"
                 aria-label="Toggle Navigation Menu"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
 
             {/* Left Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-8 text-xs font-black tracking-widest text-[#662A37] uppercase">
+            <nav aria-label="Main" className="hidden md:flex items-center space-x-8 text-xs font-black tracking-widest text-[#662A37] uppercase">
               <Link
                 href="/"
                 className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
@@ -151,9 +153,9 @@ export function SiteHeader() {
                     alt="Sweet Reverie Fine Confections"
                     width={2073}
                     height={1800}
-                    sizes="130px"
+                    sizes="(min-width: 768px) 130px, 72px"
                     className="w-[95%] max-w-none h-auto"
-                    priority
+                    preload
                   />
                 </div>
               </Link>
@@ -185,11 +187,11 @@ export function SiteHeader() {
                 type="button"
                 onClick={openCart}
                 className="p-2 relative hover:text-[#F59E0B] hover:scale-110 transition-transform"
-                aria-label="Shopping Cart"
+                aria-label={totalQuantity > 0 ? `Shopping cart, ${totalQuantity} items` : "Shopping cart"}
               >
                 <CartIcon className="h-5 w-5 md:h-6 md:w-6" />
                 {totalQuantity > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#F59E0B] text-[#4A1A25] text-[11px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-[#FAF7F2] shadow-md animate-pulse">
+                  <span aria-hidden className="absolute -top-1 -right-1 bg-[#F59E0B] text-[#4A1A25] text-[11px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-[#FAF7F2] shadow-md motion-safe:animate-pulse">
                     {totalQuantity}
                   </span>
                 )}
@@ -200,7 +202,7 @@ export function SiteHeader() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-[#FAF7F2] border-t border-[#D4AF7A]/60 px-4 pt-4 pb-6 space-y-3 shadow-2xl">
+          <nav id="mobile-menu" aria-label="Mobile" className="md:hidden bg-[#FAF7F2] border-t border-[#D4AF7A]/60 px-4 pt-4 pb-6 space-y-3 shadow-2xl">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
@@ -235,7 +237,7 @@ export function SiteHeader() {
             >
               MY ACCOUNT
             </a>
-          </div>
+          </nav>
         )}
       </header>
 

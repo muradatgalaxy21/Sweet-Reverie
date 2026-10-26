@@ -282,6 +282,127 @@ Format per entry:
 - Deviations: none from plan.md
 - Next up: rest of Phase 6 — performance + accessibility pass
 
+## 2026-10-18 — Phase 6: Shopify webhook revalidation
+- `src/app/api/revalidate/route.ts` — POST handler for Shopify webhooks. Checks `X-Shopify-Hmac-Sha256` (base64 HMAC-SHA256 of raw body, `timingSafeEqual`) against server-only `SHOPIFY_WEBHOOK_SECRET`; 401 on bad/missing signature, 500 if secret unset. For products/*, collections/* (create/update/delete) and `inventory_levels/update` it calls `revalidateTag("shopify", "max")`; other topics are 200-acked and ignored
+- `src/lib/shopify.ts` — fallback revalidate 60s → 3600s (safety net for missed webhooks only, per plan.md §3 "webhook, not polling"); comments in collection/product pages updated
+- `.env.local.example` — `SHOPIFY_WEBHOOK_SECRET`
+- Verified: `tsc --noEmit`, ESLint (0 errors, pre-existing warning), dev server + curl: valid signature → 200 `revalidated:true`; non-storefront topic → 200 ignored; bad, tampered-body and missing signature → 401. Not verified against the live store (no Shopify creds in this session) or a public URL
+- **Setup needed (user):** Shopify admin → Settings → Notifications → Webhooks → create webhooks (JSON) for the topics above pointing at `<SITE_URL>/api/revalidate`; copy the signing key shown there into `SHOPIFY_WEBHOOK_SECRET` (local `.env` + Vercel). Needs a public URL, so realistically Phase 7 / first Vercel deploy
+- Known: one tag for everything, so any change marks all pages stale (fine at ~130 products). With `"max"`, the first visitor after a change sees the old page once while it regenerates. Price changes in variant-only edits arrive as `products/update`, so they're covered
+- Deviations: fallback interval change (60s → 1h) — implements plan.md §3 rather than deviating from it
+- Next up: Phase 6 performance pass
+
+## 2026-10-18 — Phase 6: performance pass (images)
+- **Hero art direction** (`hero-carousel.tsx`): mobile + desktop hero were two `<Image priority>` toggled by CSS, so every device downloaded both. Now an `ArtDirectedImage` `<picture>` (via `getImageProps`, `md` breakpoint) — browser fetches only the matching source; slide 1 gets `loading="eager"` + `fetchPriority="high"`. Slides without a mobile crop use `<Image fill sizes="100vw" preload>`
+- **`sizes` on every `fill` image** (default is 100vw, so tiles were downloading viewport-width images): product card (all 2/3/5-col grids in `max-w-7xl` → 256px cap), category tiles, brand logos 160px, special offers 224px, hero collage 96/144px, search 48px, cart 64px
+- **Section banners** (best sellers, new arrivals, categories, brands): 2300px intrinsic with no `sizes` → served the 3840w variant into a ≤512px slot. Added `sizes` matching `max-w-xs/md/lg`
+- Removed `priority` from the below-the-fold Shop by Brand banner (was competing with hero for bandwidth); `priority` → `preload` on header logo + PDP main image (`priority` deprecated in Next 16)
+- Verified: `tsc`, ESLint (0 errors). Dev server + Playwright (DPR 2) on a throwaway page rendering hero + category grid (homepage needs Shopify creds, not in this session): mobile 412 → 288KB (-30%), desktop 1043 → 471KB (-55%); each viewport now fetches only its own hero. Before/after screenshots render identically
+- **Not measured:** real LCP (needs live data + a deployed URL; plan target < 2.5s), product-card savings on homepage/PLP/PDP (needs Shopify data). Run Lighthouse/PageSpeed on the Vercel preview
+- **Pre-existing, not changed (design call for user):** desktop hero image is ~2.5:1 but its box is `100svh - 115px` tall, so at 1440×900 `object-cover` crops the headline's left edge ("…QUISITE …OCOLATE")
+- `site-header.tsx` is CRLF — edited preserving line endings
+- Deviations: none
+- Next up: accessibility audit (Phase 6), then Phase 3 leftovers (filters/sort, static pages)
+
+## 2026-10-18 — Phase 6: accessibility audit
+- **Dialogs** — new `src/lib/use-dialog.ts` (Escape closes, focus moves in on open — `data-autofocus` element or the panel — Tab/Shift+Tab trapped, focus returns to the opener). Cart drawer + search modal: `role="dialog"`, `aria-modal`, labelled; search also closes on backdrop click (cart already did), input labelled, `role="status"` "N results" announcement; cart +/−/remove labels name the item
+- **Keyboard/focus** — skip-to-content link (layout; `#main-content` focusable); global `:focus-visible` ring (burgundy, gold inside `data-focus="light"` dark sections: footer, cart header, special offers) in `@layer base` so components with their own focus style keep it; removed `focus:outline-none` from the mobile menu toggle
+- **Header** — mobile menu toggle `aria-expanded`/`aria-controls`, menus are labelled `<nav>`s; cart button label includes item count, badge `aria-hidden` + `motion-safe:animate-pulse`
+- **Broken nav (bug fix)** — header/footer `#best-sellers` / `#special-offers` / `#new-arrivals` / `#categories` links only worked on the homepage; now `/#…`
+- **Product card** — image link removed from tab order (duplicate of title link), image `alt=""` (title is adjacent); "Add to cart"/"Sold out" carry the product title as sr-only text; sr-only "Original price"/"Sale price"
+- **PDP** — same price labels, stock badge `aria-live`, active thumbnail `aria-current`
+- **Hero** — labelled carousel region, decorative collage `alt=""`, dots `aria-current` and 24px hit area (dots look the same; spacing 8px → 14px)
+- **Motion** — marquees stop under `prefers-reduced-motion`; announcement bar's duplicated loop copy `aria-hidden` (screen readers read it once)
+- **Contrast** — strikethrough prices stone-400 → 500/600, cart/search helper text stone-400/500 → 500/600, WhatsApp outline text #128C3E → #0E7A35 (all AA now)
+- Newsletter: input labelled + `autoComplete="email"`, thank-you message in `role="status"`. Special Offers: two `<h2>`s → one heading (same look)
+- Verified: `tsc`, ESLint (0 errors). axe-core (WCAG 2.0/2.1/2.2 A+AA) via Playwright at 390px and 1440px on a throwaway page rendering all sections + product cards + PDP with fixture data, page / search open / cart open: **only remaining violation is the held item below**. Keyboard run: skip link first, search + cart trap Tab, Escape closes, focus returns to opener; mobile menu `aria-expanded` toggles. Screenshots checked. Not run against live Shopify data / `next build` (no creds in session)
+- **HELD — needs user design call:** hero slide 1 "SHOP ALL CHOCOLATES" button, white on `#F2871A` = 2.54:1 (AA needs 4.5:1). Options: black text on the same orange (~8:1, no colour change), or darken to ~`#B45309` with white text
+- **Not done / found:** footer policy links (`/privacy-policy`, `/shipping-policy`, `/refund-policy`, `/terms-of-service`) 404 — Phase 3 static pages. Newsletter form is UI-only (no backend). Variant buttons/qty are fine; no screen-reader (NVDA/VoiceOver) manual pass done
+- Deviations: none from plan.md. Small visible changes: focus rings on keyboard focus, slightly darker grey/green text, search box 40px narrower so it no longer overlaps the close button
+- Next up: Phase 6 remaining → user's call on held hero contrast + hero crop; then Phase 3 leftovers (filters/sort, static pages) / Phase 7
+
+## 2026-10-18 — Phase 6: SEO leftovers + availability review
+- `src/lib/utils.ts` — `OPEN_GRAPH_DEFAULTS` (type/locale/siteName); used by root layout and spread into the PDP `openGraph`, so product pages now carry og:site_name/locale/type again (they were dropped because a page-level `openGraph` replaces the root one)
+- `src/app/sitemap.ts` — drops Shopify's default `frontpage` collection
+- Verified: `tsc`, ESLint (0 errors); dev server: root og:site_name/locale/type still rendered. PDP og not checked live (needs Shopify data)
+- **Held:** dropping empty collections from the sitemap needs a query change → `npm run codegen` needs the Storefront token (not in this session). No default OG image (needs an asset from user)
+- **Availability review (plan.md §3), held for user:** pages are ISR, so a Shopify outage during revalidation keeps serving the last good page — catching errors per section would be worse (it would cache a degraded page for up to 1h). Real gap: no `app/error.tsx` / `app/not-found.tsx`, so a first-ever render that fails, or any 404 (incl. footer policy links), shows Next's unbranded default page. Both are new UI + copy → needs user's design/copy call per CLAUDE.md
+- Deviations: none
+- Next up: user decisions on held items (hero CTA contrast, hero desktop crop, error/404 pages); then Phase 3 leftovers (filters/sort, static pages) and Phase 7 launch
+
+## 2026-10-18 — Phase 6: held items resolved (hero contrast + crop, error/404 pages)
+- User decisions: (1) hero CTA black text, (2)+(3) "choose best" delegated to Claude, (4) empty-collection sitemap filter skipped for now, (5) OG image — asked which type (answered in chat)
+- `hero-carousel.tsx` — slide 1 CTA `text-white` → `text-black` on `#F2871A` (2.54:1 → ~8:1, AA pass, brand orange unchanged). Desktop hero `md:object-left`: the 3264×1312 (~2.5:1) banner was centre-cropped into a ~1.8:1 box, cutting the headline; now crop comes off the right (product edge) only. Kept full-viewport hero height (no per-slide height jump). Checked 1024×768, 1280×720, 1440×900, 1920×1080, 2560×1440; mobile unchanged (portrait image)
+- `src/app/not-found.tsx` — branded 404 (serif heading, Back to home, 6 popular category links), title "Page not found". Covers unknown URLs (incl. the 4 footer policy links until static pages exist) and `notFound()` for missing products/collections
+- `src/app/error.tsx` — branded error boundary (Next 16.3 `retry` prop): Try again, Back to home, WhatsApp order link; logs the error. Only shows when a page has no cached copy (ISR keeps last good page otherwise)
+- Verified: `tsc`, ESLint (0 errors). Dev server + Playwright: `/privacy-policy` → 404 status + branded page; `/products/x` with Shopify unreachable → 500 + branded error page; axe (WCAG 2.2 AA) clean on both at 390/1440; screenshots checked
+- Deviations: none from plan.md
+- Next up: OG image (asset from user); Phase 3 leftovers (filters/sort, static pages); Phase 7 (Vercel project + env vars + Shopify webhooks + domain)
+
+## 2026-10-18 — Phase 3: policy pages (Shopify-managed text)
+- User decisions: build policy pages next; text comes from Shopify admin → Settings → Policies (not hardcoded)
+- `src/lib/policies.ts` — `ShopPolicies` query (all 4 policies, one cached request), `getPolicy(handle)` → null if the policy is empty in Shopify. `src/lib/sanitize.ts` — `sanitizePolicy` (description allowlist + `u`, and `mailto:`/`tel:` links)
+- `src/app/policies/[handle]/page.tsx` — burgundy title strip (same as collection page) + policy body. Handles: `privacy-policy`, `shipping-policy`, `refund-policy`, `terms-of-service`, prerendered at build, `dynamicParams = false` (anything else 404s); empty policy → 404
+- Footer policy links `/privacy-policy` etc. → `/policies/privacy-policy` etc. Matches Shopify's own `/policies/<handle>` URLs, which checkout and emails link to on the primary domain — so those resolve here after Phase 7 domain connection
+- `codegen.ts` documents += `src/lib/policies.ts`. **Generated types (`ShopPolicyFieldsFragment`, `ShopPoliciesQuery`) hand-written** into `src/lib/generated/storefront.ts` in codegen's format (no token in session) — run `npm run codegen` next session with creds to confirm no diff
+- Verified: `tsc`, ESLint (0 errors). Dev server with mocked Storefront response: set policies 200 with correct `<title>`, null/blank policies and unknown handles 404; `<script>`, `javascript:` href, `onerror` stripped, `mailto:` kept; 390px screenshot OK, no horizontal scroll. **Not verified against live Shopify** (no creds) — policies must actually be filled in Shopify admin or the pages 404
+- Known: policy edits don't fire the product/collection webhooks, so changes show within the 1h ISR safety net. Policy pages not in sitemap (low SEO value)
+- Deviations: none from plan.md
+- Next up: fill policies in Shopify admin if empty + run codegen; About/Contact/FAQ (needs copy from user); collection filters/sort; OG image; Phase 7
+
+## 2026-10-18 — Storefront token made server-only (Vercel warning)
+- Vercel flagged `NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN` ("public prefix exposes value to the browser"). Every Storefront call already runs server-side (server components, server actions, route handlers — no client module imports `shopify.ts`), so the prefix only leaked the token into the client bundle for no reason
+- Renamed to `SHOPIFY_STOREFRONT_TOKEN` in `src/lib/shopify.ts`, `codegen.ts`, `.env.local.example`, README. `NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN` stays public (header account link uses it client-side; a domain isn't secret)
+- **Approved deviation (user request, 2026-10-18):** plan.md §3/§6 + CLAUDE.md said the Storefront token is public/client-side with `NEXT_PUBLIC_`; updated both to server-only
+- Verified: `tsc`, ESLint (0 errors); dev server with only `SHOPIFY_STOREFRONT_TOKEN` set: page renders, no client-side errors / "Missing env" throw, search server action runs server-side
+- **User action:** rename the variable in local `.env` and in Vercel (delete the `NEXT_PUBLIC_` one), then redeploy
+
+## 2026-10-18 — fix: mobile homepage LCP (live measurement)
+- Live site (sweet-reverie.vercel.app) measured with Playwright, slow 4G (1.6 Mbps, 150 ms RTT) + 4× CPU, 390px @3x: homepage LCP 5.8s (target < 2.5s); collection 1.5s, PDP 2.1s, desktop all ≈0.6s
+- Cause: bandwidth contention, not server: image optimizer TTFB 60–600 ms, but ~960 KB (25+ images: brand logos, banners, product cards) downloaded alongside the 128 KB mobile hero, which finished only when nearly everything else had
+- `hero-carousel.tsx` — mobile `<source>` + img `sizes="70vw"` → phones get the 828w variant (80 KB vs 128 KB at 1200w)
+- `fetchPriority="low"` on below-the-fold images: 4 section banners, brand logos, category tiles, special-offers montage
+- `site-header.tsx` — logo `sizes` 130px → `(min-width: 768px) 130px, 72px` (preloaded on every page; mobile shows ≤71px)
+- Verified: `tsc`, ESLint (0 errors); re-measure on live after deploy (see next entry / chat)
+- Round 1 result on live (Playwright, DevTools throttling): 5.8s → 5.2s only. DevTools throttling splits bandwidth evenly across requests, ignoring priority, so it overstates contention. Lighthouse 12 (PageSpeed's engine, simulated throttling) on live: homepage LCP 2.4–2.6s (score 89–98), collection 2.1s, PDP 1.8s — homepage borderline
+- Lighthouse LCP breakdown: largest part is resource *load delay* (~780 ms): hero discovered in HTML but requested after CSS/fonts
+- Round 2: `hero-carousel.tsx` — `ReactDOM.preload()` for slide 1 with `media` (`(max-width: 767px)` mobile srcset @70vw, `(min-width: 768px)` desktop @100vw), `fetchPriority="high"` → hero request starts in `<head>`. Verified locally: two media-scoped preload links, 390px fetches only the mobile hero, 1440px only the desktop one
+- **Result (Lighthouse 12 mobile, live, after round 2):** homepage LCP 2.1/2.4/2.4s, score 95–99 (was 2.4–2.6s, 89–98); collection 1.7s (100); PDP 2.2s (98). All pages under the plan.md §3 2.5s target
+- Next up: user — fill shipping/refund/terms policies in Shopify, Shopify webhooks + `SHOPIFY_WEBHOOK_SECRET`, OG image, domain; then Phase 3 leftovers (filters/sort, About/Contact/FAQ)
+
+## 2026-10-19 — Phase 3: collection filters + sort
+- User decisions: price + product type filters; sidebar on desktop, drawer on mobile; type filter driven by Shopify filter data and hidden until a collection has 2+ types (products currently have **no product type** set — collections are tag-based — so it stays hidden everywhere until store-side setup below)
+- `src/lib/collection-query.ts` — URL ↔ query: `?sort=best-selling|newest|price-asc|price-desc` (none = "Featured" = Shopify's collection order), `?type=` (repeatable, OR-ed), `?min=`/`?max=`. Parser drops invalid values (shared with the server action, which gets untrusted input); maps to Storefront `sortKey`/`reverse`/`filters`
+- `src/lib/products.ts` — `CollectionProducts` query takes `sortKey`, `reverse`, `filters` and `filters @include(if: $withFilters)`; `getCollectionPage(handle, { query, after, withFilters })` returns `filterOptions` (types from `filter.p.product_type`, price span from `filter.v.price`). Homepage shelves unchanged (defaults = old behaviour)
+- `src/lib/collection-actions.ts` — `loadMoreProducts` → `loadCollectionProducts(handle, search, after?)` (filtered pages + Load more)
+- `src/components/collection-browser.tsx` (replaces `collection-grid.tsx`) — desktop sidebar (price min/max + Apply, type checkboxes, Clear all), mobile "Filters" button with active-count badge → left drawer (`useDialog`, scroll lock, Show results), Sort select on both; grid 5 → 4 columns at `lg` to fit the sidebar. Filter/sort changes `history.replaceState` the URL and fetch via server action (stale responses dropped); grid dims + `aria-busy` while loading, sr-only status, error alert, "No products match" + Clear filters
+- **Page stays static (ISR):** URL is read client-side (`useSearchParams` in a Suspense boundary whose fallback is the default view), so the static HTML is the unfiltered first page and a shared filtered link fetches its results after load. Reading `searchParams` on the server would have made every collection page dynamic
+- `generateMetadata` passes the same args as the page so both share one Storefront request (was making two after the change)
+- `codegen.ts` unchanged; **generated types for `CollectionProducts` hand-edited** (no token in session) — run `npm run codegen` with creds to confirm no diff
+- Verified: `tsc`, ESLint (0 errors), `next build` (collection route still ● SSG). Mocked Storefront (30 products, 3 types) + Playwright at 1440 and 390@2x, dev and `next start`: type/price/sort update URL + results, sort order correct, Clear all keeps sort and resets inputs, Load more appends with filters, reloaded filtered URL restores checkboxes/select and fetches, invalid params ignored, empty result message, error alert on Storefront failure, type section hidden with no types, drawer focus trap + Escape returns focus, no horizontal scroll, axe WCAG 2.2 AA clean (desktop + open drawer). Static HTML served for filtered URLs is a cache HIT. **Not verified against live Shopify** (no creds) — real filter ids/inputs are from Shopify docs
+- **User action for the type filter to appear:** (1) set Product type on products (Shopify admin bulk editor, or an Admin API script next session), (2) Shopify admin → Apps → Search & Discovery → Filters → add "Product type", (3) publish. Price filter needs nothing (enabled by default)
+- Known: filtered results aren't in the static HTML (fine — filtered URLs aren't canonical/indexed). Filter changes replace (don't push) history, so Back leaves the page
+- Deviations: none from plan.md (plan.md §2.1 checkboxes updated: PLP, plus Search and Customer accounts which were already built)
+- Next up: codegen with creds; product types + Search & Discovery setup; About/Contact/FAQ (needs copy); OG image; Phase 7
+
+## 2026-10-19 — Fonts: logo-style headings (Marcellus) + one body font
+- User decisions: match the logo lettering; user identified it as Friz Quadrata (paid licence) → free lookalike **Marcellus** (Google Fonts); logo font for display headings only, Plus Jakarta Sans (the price font) for everything else
+- `layout.tsx` — Playfair Display → Marcellus (`--font-marcellus`, weight 400 only). `globals.css` — `--font-serif` → Marcellus; dropped the global `h1–h4 → serif` rule, so the display font is opt-in via `font-serif` (page titles: collection/PDP/policy/404/error, PDP "You may also like", Special Offers, footer wordmark). Small headings now render in Jakarta: product card titles, footer column labels, cart drawer title/items, search modal labels, newsletter heading, filter labels. `.font-serif` gets `font-synthesis-weight: none` so `font-black` on a one-weight font doesn't produce a smeared fake bold
+- `collection-browser.tsx` — removed the two `font-sans` overrides that only existed to cancel the old global serif rule
+- Verified: `tsc`, ESLint (0 errors). Mocked Storefront + Playwright before/after at 1440 and 390: home (incl. Special Offers, newsletter, footer), collection, PDP, 404, cart drawer — no page errors, layouts unchanged apart from the type
+- Known: Marcellus has one weight, so the footer "SWEET REVERIE" wordmark is lighter than before (was Playfair Black) and lighter than the logo. No italic either — Special Offers "upto/off" use the browser's slanted version
+- Deviations: none from plan.md
+- Next up: same as previous entry (codegen with creds, product types + Search & Discovery, About/Contact/FAQ copy, OG image, Phase 7)
+
+## 2026-10-19 — Collection sidebar: more filters (no store setup needed)
+- User: live sidebar showed only Price (type filter hidden — no product types in the store); asked for more options so it doesn't look empty
+- `collection-query.ts` — `inStock` (`?stock=1` → Storefront `{ available: true }`, enabled by default in Shopify); `PRICE_PRESETS` (Under 500 / 500–1,000 / 1,000–2,000 / Over 2,000, from the imported catalog's spread: 41/27/11/21 of 100); `countFilters` counts in-stock
+- `collection-browser.tsx` — sidebar/drawer now: Availability ("In stock only"), Price quick-range pills (`aria-pressed`, click again to clear; also fill the min/max inputs) + custom range, Product type (still hidden until 2+ types), Categories (links to all `CATEGORIES`, current one bold + `aria-current`)
+- Verified: `tsc`, ESLint (0 errors). Mocked Storefront + Playwright 1440/390@2x: in-stock hides sold-out, preset sets `min/max` and only returns products in range, preset toggles off, category link navigates, axe WCAG 2.2 AA clean, no horizontal scroll, no page errors
+- Known: category list includes collections that are still empty in Shopify (gifting, bundles, kids-section, baby-care, pet-care-food — same set the homepage tiles link to); preset ranges are hardcoded (adjust in `PRICE_PRESETS` if pricing shifts)
+- Deviations: none from plan.md
+- Next up: brand filter (needs Vendor set per product via Admin API script + "Vendor" enabled in Search & Discovery); rest as previous entry
+
 ## 2026-10-26 — Frontend fixes Phase 1 (`frontend-fixes.md` items 1–6)
 - Header + footer hash links → `/#...` so they work off the homepage (footer "Categories" → `/#categories`, no all-categories page)
 - Branded 404 (`src/app/not-found.tsx`): logo, playful copy, "Continue shopping" CTA

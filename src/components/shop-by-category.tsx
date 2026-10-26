@@ -19,6 +19,8 @@ export function ShopByCategory() {
           alt="Shop by Category"
           width={2323}
           height={730}
+          sizes="(min-width: 768px) 512px, (min-width: 640px) 448px, 320px"
+          fetchPriority="low"
           className="max-w-xs sm:max-w-md md:max-w-lg w-full h-auto object-contain drop-shadow-sm"
         />
       </div>
@@ -36,6 +38,8 @@ export function ShopByCategory() {
                 src={category.imageUrl}
                 alt={category.title}
                 fill
+                sizes="(min-width: 1280px) 256px, (min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, 50vw"
+                fetchPriority="low"
                 className="object-contain p-2 group-hover:scale-110 transition-transform duration-300"
               />
             </div>

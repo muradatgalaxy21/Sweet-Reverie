@@ -24,7 +24,7 @@ export function SpecialOffersBanner() {
   ];
 
   return (
-    <section id="special-offers" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+    <section id="special-offers" data-focus="light" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
       <div className="relative overflow-hidden rounded-3xl bg-[#4A1A25] border-4 border-[#D4AF7A] ring-1 ring-[#D4AF7A]/40 ring-offset-4 ring-offset-[#FAF7F2] shadow-2xl p-8 md:p-14 flex flex-col lg:flex-row items-center justify-between gap-8">
         {/* Subtle decorative background glow */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -32,11 +32,9 @@ export function SpecialOffersBanner() {
         {/* Left Side: Luxury Gold Typography */}
         <div className="lg:w-1/2 text-center lg:text-left space-y-4 z-10">
           <div className="space-y-1">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#D4AF7A] drop-shadow-md tracking-tight">
-              Special
-            </h2>
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#D4AF7A] drop-shadow-md tracking-tight">
-              Offers
+            <h2 className="space-y-1 text-4xl md:text-6xl lg:text-7xl font-serif text-[#D4AF7A] drop-shadow-md tracking-tight">
+              <span className="block">Special</span>
+              <span className="block">Offers</span>
             </h2>
           </div>
 
@@ -86,6 +84,8 @@ export function SpecialOffersBanner() {
                   src={item.src}
                   alt={item.title}
                   fill
+                  sizes="224px"
+                  fetchPriority="low"
                   className="object-contain p-2"
                 />
               </div>

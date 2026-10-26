@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { CATEGORIES } from "@/lib/categories";
 
+export const metadata: Metadata = { title: "Page not found" };
+
+/** Branded 404 for unknown URLs and `notFound()` (missing product/collection). */
 export default function NotFound() {
   return (
-    <section className="max-w-xl mx-auto px-4 py-20 text-center">
+    <section className="max-w-3xl mx-auto px-4 py-16 md:py-20 text-center">
       <Image
         src="/logo/sweet-reverie-no-bg.png"
         alt="Sweet Reverie Fine Confections"
@@ -13,7 +18,7 @@ export default function NotFound() {
         className="w-40 h-auto mx-auto mb-6"
       />
       <p className="text-sm font-black tracking-widest text-amber-600">404</p>
-      <h1 className="mt-2 font-[family-name:var(--font-playfair)] text-3xl md:text-4xl font-bold text-[#662A37]">
+      <h1 className="mt-2 font-serif text-3xl md:text-4xl font-bold text-[#662A37]">
         Oops! This treat doesn&apos;t exist…
       </h1>
       <p className="mt-3 text-stone-600">
@@ -25,6 +30,22 @@ export default function NotFound() {
       >
         Continue shopping
       </Link>
+
+      <h2 className="mt-12 text-xs font-black uppercase tracking-wider text-[#662A37]">
+        Popular categories
+      </h2>
+      <ul className="mt-3 flex flex-wrap justify-center gap-2">
+        {CATEGORIES.slice(0, 6).map((category) => (
+          <li key={category.id}>
+            <Link
+              href={`/collections/${category.handle}`}
+              className="block px-4 py-2 bg-white hover:bg-[#ECA58A]/20 border border-stone-200 rounded-full text-xs font-bold text-[#662A37]"
+            >
+              {category.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

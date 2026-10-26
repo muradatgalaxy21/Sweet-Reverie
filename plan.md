@@ -21,12 +21,12 @@ Shopify hosted checkout (payment processing)
 
 ### 2.1 Storefront
 - [x] Home page — hero, featured collections, featured products
-- [ ] Product Listing Page (PLP) — per collection, built; filtering (price, tags/type) and sorting (price, newest, best-selling) not yet added
+- [x] Product Listing Page (PLP) — per collection, filtering (price, product type) and sorting (price, newest, best-selling)
 - [x] Product Detail Page (PDP) — images, variants (size/flavor/etc.), price, description, add-to-cart, stock status
-- [ ] Search — product search across catalog
+- [x] Search — product search across catalog
 - [x] Cart — drawer, add/update/remove line items, persists across sessions (cookie cart ID)
 - [x] Checkout handoff — redirect to Shopify-hosted checkout via `cart.checkoutUrl`
-- [ ] Customer accounts — login/signup, order history, saved addresses (via Shopify Customer Account API or hosted flow)
+- [x] Customer accounts — login/signup, order history, saved addresses (via Shopify Customer Account API or hosted flow)
 - [ ] Static pages — About, Contact, Shipping/Returns policy, FAQ
 - [x] Collections/category navigation
 
@@ -50,7 +50,7 @@ Shopify hosted checkout (payment processing)
 |---|---|
 | **Performance** | LCP < 2.5s on PDP/PLP; use Next.js SSG/ISR for product pages, revalidate on webhook (product update) rather than polling |
 | **SEO** | Server-rendered product/collection pages, proper meta tags, structured data (Product schema), sitemap.xml |
-| **Security** | Storefront API token (public, read-only scopes) used client-side only; Admin API token (if used for revalidation webhooks) stays server-side only, never exposed to browser |
+| **Security** | Storefront API token (read-only scopes) used server-side only, no `NEXT_PUBLIC_` prefix (all Storefront calls run in server components/actions); Admin API token (if used for revalidation webhooks) stays server-side only, never exposed to browser |
 | **Scalability** | Stateless frontend, deployable to Vercel; cart state lives in Shopify (via cart ID), not in app server memory |
 | **Availability** | Frontend and Shopify backend fail independently — if Storefront API is slow, degrade gracefully (loading states, cached fallback) |
 | **Maintainability** | Typed GraphQL queries (codegen), component-based design system, environment-based config (dev/staging/prod) |
@@ -118,7 +118,7 @@ Shopify hosted checkout (payment processing)
 ### Step 5 — Environment variables (Next.js)
 ```
 NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
-NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN=xxxxxxxx
+SHOPIFY_STOREFRONT_TOKEN=xxxxxxxx   # server-only (renamed 2026-10-18, see progress.md)
 SHOPIFY_ADMIN_TOKEN=xxxxxxxx   # server-only, no NEXT_PUBLIC_ prefix
 ```
 

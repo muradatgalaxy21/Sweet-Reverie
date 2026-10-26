@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Marcellus, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import { AnnouncementBar } from "@/components/announcement-bar";
@@ -7,11 +7,13 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CartDrawer } from "@/components/cart-drawer";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
-import { SITE_URL } from "@/lib/utils";
+import { OPEN_GRAPH_DEFAULTS, SITE_URL } from "@/lib/utils";
 
-const playfair = Playfair_Display({
+// Display headings (font-serif): free lookalike of Friz Quadrata, the closest match to the logo lettering.
+const marcellus = Marcellus({
+  weight: "400",
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-marcellus",
   display: "swap",
 });
 
@@ -39,11 +41,7 @@ export const metadata: Metadata = {
     "Gourmet Hampers",
   ],
   // og:title/description fall back to each page's own title/description.
-  openGraph: {
-    type: "website",
-    locale: "en_PK",
-    siteName: "Sweet Reverie",
-  },
+  openGraph: OPEN_GRAPH_DEFAULTS,
   // Title/description/image are filled from each page's Open Graph tags.
   twitter: { card: "summary_large_image" },
   icons: {
@@ -67,8 +65,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${jakarta.variable}`}>
+    <html lang="en" className={`${marcellus.variable} ${jakarta.variable}`}>
       <body suppressHydrationWarning className="antialiased min-h-screen flex flex-col justify-between selection:bg-[#ECA58A] selection:text-[#662A37]">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-full focus:bg-[#662A37] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-white"
+        >
+          Skip to content
+        </a>
         <CartProvider>
           {/* Top Marquee Announcement */}
           <AnnouncementBar />
@@ -77,7 +81,7 @@ export default function RootLayout({
           <SiteHeader />
 
           {/* Main Content Area */}
-          <main id="main-content" className="flex-1">
+          <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
             {children}
           </main>
 
