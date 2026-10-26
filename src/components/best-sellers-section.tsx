@@ -1,7 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { getBestSellers } from "@/lib/products";
-import { ProductCard } from "./product-card";
+import Link from "next/link";
+import { ProductRail } from "./product-rail";
 
 /**
  * BestSellersSection matching the design mockup layout.
@@ -25,10 +26,15 @@ export async function BestSellersSection() {
         />
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <ProductRail products={products} />
+
+      <div className="mt-6 text-center">
+        <Link
+          href="/collections/best-sellers"
+          className="inline-flex items-center gap-1 text-sm font-extrabold uppercase tracking-wider text-[#662A37] border-b-2 border-[#D4AF7A] hover:text-[#F59E0B] hover:border-[#F59E0B] transition-colors"
+        >
+          View all →
+        </Link>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { HeroCarousel } from "@/components/hero-carousel";
 import { ShopByBrand } from "@/components/shop-by-brand";
 import { NewArrivalsSection } from "@/components/new-arrivals-section";
@@ -7,6 +7,8 @@ import { SpecialOffersBanner } from "@/components/special-offers-banner";
 import { BestSellersSection } from "@/components/best-sellers-section";
 import { NewsletterBar } from "@/components/newsletter-bar";
 import { TrustStrip } from "@/components/trust-strip";
+import { Testimonials } from "@/components/testimonials";
+import { SectionDivider, ProductGridSkeleton } from "@/components/section-extras";
 
 /**
  * Sweet Reverie Homepage.
@@ -29,19 +31,34 @@ export default function HomePage() {
       {/* 2. Shop By Brand */}
       <ShopByBrand />
 
-      {/* 3. New Arrivals */}
-      <NewArrivalsSection />
+      {/* 3. New Arrivals — peach band */}
+      <div className="bg-[#FDF1EA] candy-pattern py-6">
+        <Suspense fallback={<ProductGridSkeleton />}>
+          <NewArrivalsSection />
+        </Suspense>
+      </div>
 
       {/* 4. Shop By Category */}
       <ShopByCategory />
 
+      <SectionDivider />
+
       {/* 5. Special Offers Banner */}
       <SpecialOffersBanner />
 
-      {/* 6. Our Best Sellers */}
-      <BestSellersSection />
+      {/* 6. Our Best Sellers — peach band */}
+      <div className="bg-[#FDF1EA] candy-pattern py-6">
+        <Suspense fallback={<ProductGridSkeleton />}>
+          <BestSellersSection />
+        </Suspense>
+      </div>
 
-      {/* 7. Join Our Email List Bar */}
+      {/* 7. Testimonials */}
+      <Testimonials />
+
+      <SectionDivider />
+
+      {/* 8. Join Our Email List Bar */}
       <NewsletterBar />
     </div>
   );

@@ -12,7 +12,7 @@ Combined from two audits (Claude + Gemini, 2026-10-26). Frontend UI/UX only — 
 - Missing product descriptions
 
 ## Open decisions
-- [ ] Header colour: keep orange `#F59E0B`, or switch to cream bg + burgundy logo/nav (orange only for accents)?
+- [x] Header colour: cream bg + burgundy logo/nav, orange for accents (decided 2026-10-27)
 
 ---
 
@@ -34,13 +34,13 @@ Combined from two audits (Claude + Gemini, 2026-10-26). Frontend UI/UX only — 
 - [x] 13. Product images on a uniform cream backdrop (`object-contain` + padding) so mixed photo backgrounds look consistent
 
 ## Phase 3 — Premium feel
-- [ ] 14. Apply header colour decision (see Open decisions)
-- [ ] 15. Alternate section backgrounds (cream / light peach `#FDF1EA`), faint candy SVG pattern, decorative section dividers
-- [ ] 16. Special Offers: sparkle effect behind "40%", bigger "Shop Now", gold border
-- [ ] 17. Best Sellers as horizontal carousel with #1/#2 rank badges; "View all" links on product sections
-- [ ] 18. Testimonials strip (static copy for now)
-- [ ] 19. Skeleton loading states for product grids
-- [ ] 20. Mobile categories as horizontal swipe row instead of 9-row grid
+- [x] 14. Apply header colour decision (see Open decisions)
+- [x] 15. Alternate section backgrounds (cream / light peach `#FDF1EA`), faint candy SVG pattern, decorative section dividers
+- [x] 16. Special Offers: sparkle effect behind "40%", bigger "Shop Now", gold border
+- [x] 17. Best Sellers as horizontal carousel with #1/#2 rank badges; "View all" links on product sections
+- [x] 18. Testimonials strip (static copy for now)
+- [x] 19. Skeleton loading states for product grids
+- [x] 20. Mobile categories as horizontal swipe row instead of 9-row grid
 
 ## Phase 4 — Custom images (user creates)
 Save as WebP < 300 KB in `public/`.

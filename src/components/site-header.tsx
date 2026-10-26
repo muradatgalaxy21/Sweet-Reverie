@@ -93,7 +93,7 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-[#F59E0B] shadow-md border-b-2 border-amber-600/30">
+      <header className="sticky top-0 z-40 bg-[#FAF7F2] shadow-md border-b-2 border-[#D4AF7A]/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 relative">
             {/* Mobile menu trigger */}
@@ -101,7 +101,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-black hover:text-[#662A37] focus:outline-none"
+                className="p-2 text-[#662A37] hover:text-[#F59E0B] focus:outline-none"
                 aria-label="Toggle Navigation Menu"
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -109,28 +109,28 @@ export function SiteHeader() {
             </div>
 
             {/* Left Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-8 text-xs font-black tracking-widest text-black uppercase">
+            <nav className="hidden md:flex items-center space-x-8 text-xs font-black tracking-widest text-[#662A37] uppercase">
               <Link
                 href="/"
-                className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
+                className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
               >
                 HOME
               </Link>
               <Link
                 href="/#best-sellers"
-                className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
+                className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
               >
                 BEST SELLERS
               </Link>
               <Link
                 href="/#special-offers"
-                className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
+                className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
               >
                 SPECIAL OFFERS
               </Link>
               <Link
                 href="/#footer"
-                className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
+                className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
               >
                 CONTACT
               </Link>
@@ -160,12 +160,12 @@ export function SiteHeader() {
             </div>
 
             {/* Right Action Icons */}
-            <div className="flex items-center space-x-4 md:space-x-6 text-black">
+            <div className="flex items-center space-x-4 md:space-x-6 text-[#662A37]">
               {/* Search Trigger */}
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 hover:text-[#662A37] hover:scale-110 transition-transform"
+                className="p-2 hover:text-[#F59E0B] hover:scale-110 transition-transform"
                 aria-label="Open Search"
               >
                 <SearchIcon className="h-5 w-5 md:h-6 md:w-6" />
@@ -174,7 +174,7 @@ export function SiteHeader() {
               {/* Account Link */}
               <a
                 href={ACCOUNT_URL}
-                className="p-2 hover:text-[#662A37] hover:scale-110 transition-transform"
+                className="p-2 hover:text-[#F59E0B] hover:scale-110 transition-transform"
                 aria-label="My Account"
               >
                 <ProfileIcon className="h-5 w-5 md:h-6 md:w-6" />
@@ -184,12 +184,12 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={openCart}
-                className="p-2 relative hover:text-[#662A37] hover:scale-110 transition-transform"
+                className="p-2 relative hover:text-[#F59E0B] hover:scale-110 transition-transform"
                 aria-label="Shopping Cart"
               >
                 <CartIcon className="h-5 w-5 md:h-6 md:w-6" />
                 {totalQuantity > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#662A37] text-white text-[11px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white shadow-md animate-pulse">
+                  <span className="absolute -top-1 -right-1 bg-[#F59E0B] text-[#4A1A25] text-[11px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-[#FAF7F2] shadow-md animate-pulse">
                     {totalQuantity}
                   </span>
                 )}
@@ -200,7 +200,7 @@ export function SiteHeader() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-[#FAF7F2] border-t border-amber-300 px-4 pt-4 pb-6 space-y-3 shadow-2xl">
+          <div className="md:hidden bg-[#FAF7F2] border-t border-[#D4AF7A]/60 px-4 pt-4 pb-6 space-y-3 shadow-2xl">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}

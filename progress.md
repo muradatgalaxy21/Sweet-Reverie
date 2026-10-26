@@ -303,3 +303,15 @@ Format per entry:
 - Files touched: page.tsx, collections/[handle]/page.tsx, globals.css, product-card.tsx, product-detail.tsx, shop-by-brand.tsx, site-footer.tsx, trust-strip.tsx (new), brand-icons.tsx (new), frontend-fixes.md
 - Deviations: none (TikTok dropped per user; PayPal badge removed, JazzCash/Easypaisa added per user)
 - Next up: Phase 3 — needs header colour decision first
+
+## 2026-10-27 — Frontend fixes Phase 3 (`frontend-fixes.md` items 14–20)
+- Header: cream bg, burgundy nav/icons, orange (#F59E0B) hover + cart count accent (user decision)
+- Homepage: New Arrivals + Best Sellers on peach `#FDF1EA` bands with faint candy SVG pattern (`.candy-pattern`), gold diamond dividers (`section-extras.tsx`)
+- Special Offers: gold border + ring, pulsing sparkles around "40%", bigger Shop Now
+- Best Sellers: horizontal scroll-snap rail with arrows, #1–#3 gold/silver/bronze rank badges (`product-rail.tsx`); "View all" links on New Arrivals / Best Sellers
+- Testimonials strip (`testimonials.tsx`) — MOCK quotes, replace with real reviews before launch
+- Product sections wrapped in Suspense with skeleton fallback
+- Mobile categories: horizontal swipe row below `sm`
+- Files touched: site-header.tsx, page.tsx, globals.css, best-sellers-section.tsx, new-arrivals-section.tsx, shop-by-category.tsx, special-offers-banner.tsx, product-rail.tsx / testimonials.tsx / section-extras.tsx (new), frontend-fixes.md
+- Deviations: none
+- Next up: Phase 4 (custom images, user creates); confirm social URLs; replace mock testimonials

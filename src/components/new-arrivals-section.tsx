@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { getNewArrivals } from "@/lib/products";
+import Link from "next/link";
 import { ProductCard } from "./product-card";
 
 /**
@@ -29,6 +30,15 @@ export async function NewArrivalsSection() {
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
+      </div>
+
+      <div className="mt-6 text-center">
+        <Link
+          href="/collections/new-arrivals"
+          className="inline-flex items-center gap-1 text-sm font-extrabold uppercase tracking-wider text-[#662A37] border-b-2 border-[#D4AF7A] hover:text-[#F59E0B] hover:border-[#F59E0B] transition-colors"
+        >
+          View all →
+        </Link>
       </div>
     </section>
   );

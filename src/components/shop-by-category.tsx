@@ -23,12 +23,12 @@ export function ShopByCategory() {
         />
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+      <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 md:gap-5">
         {CATEGORIES.map((category) => (
           <Link
             key={category.id}
             href={`/collections/${category.handle}`}
-            className="category-card-frame group block"
+            className="category-card-frame group block w-36 flex-shrink-0 snap-start sm:w-auto"
           >
             {/* Image Tile */}
             <div className="relative w-full aspect-square bg-gradient-to-b from-stone-50 to-white rounded-xl overflow-hidden mb-3 p-3 flex items-center justify-center">
