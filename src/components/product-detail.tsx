@@ -2,11 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Minus, Plus, ShoppingBag, MessageCircle } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Link2, Check } from "lucide-react";
 import type { ProductDetail as ProductData } from "@/lib/products";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, SITE_URL } from "@/lib/utils";
 import { useCart } from "@/lib/cart-context";
 import { WHATSAPP_NUMBER } from "./floating-whatsapp";
+import { WhatsAppIcon, FacebookIcon } from "./brand-icons";
+import { TRUST_ITEMS } from "./trust-strip";
 
 interface ProductDetailProps {
   product: ProductData;
@@ -27,6 +29,9 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
     Object.fromEntries(variants[0]?.selectedOptions.map((o) => [o.name, o.value]) ?? [])
   );
   const [activeImage, setActiveImage] = useState(0);
+  // Hover zoom: scale the image around the cursor position.
+  const [zoomOrigin, setZoomOrigin] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
   const findVariant = (choice: Record<string, string>) =>
@@ -66,17 +71,32 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
     `Hello Sweet Reverie, I'd like to order ${quantity} x ${title}.`
   );
 
+  const shareUrl = encodeURIComponent(`${SITE_URL}/products/${product.handle}`);
+  const copyLink = async () => {
+    await navigator.clipboard.writeText(`${SITE_URL}/products/${product.handle}`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="grid gap-8 md:grid-cols-2 md:gap-12">
       {/* Gallery */}
       <div className="flex flex-col gap-3">
-        <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-stone-100 bg-stone-50/80">
+        <div
+          className="relative aspect-square w-full overflow-hidden rounded-2xl border border-stone-100 bg-[#FAF7F2] md:cursor-zoom-in"
+          onMouseMove={(e) => {
+            const box = e.currentTarget.getBoundingClientRect();
+            setZoomOrigin(`${((e.clientX - box.left) / box.width) * 100}% ${((e.clientY - box.top) / box.height) * 100}%`);
+          }}
+          onMouseLeave={() => setZoomOrigin(null)}
+        >
           <Image
             src={images[activeImage].url}
             alt={images[activeImage].altText ?? product.title}
             fill
             sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-contain p-6"
+            className="object-contain p-6 transition-transform duration-200"
+            style={zoomOrigin ? { transform: "scale(2)", transformOrigin: zoomOrigin } : undefined}
             priority
           />
           {onSale && (
@@ -105,7 +125,7 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
       </div>
 
       {/* Info */}
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 self-start rounded-2xl border border-[#ECA58A]/60 bg-white p-5 md:p-8 shadow-sm">
         <h1 className="text-2xl md:text-4xl font-serif text-[#4A1A25] tracking-tight">
           {product.title}
         </h1>
@@ -195,9 +215,48 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 rounded-xl border-2 border-[#25D366] text-[#128C3E] hover:bg-[#25D366] hover:text-white font-bold text-sm uppercase tracking-wider py-3 px-6 transition-colors"
         >
-          <MessageCircle className="w-4 h-4" />
+          <WhatsAppIcon className="w-5 h-5" />
           Order on WhatsApp
         </a>
+
+        <ul className="grid grid-cols-2 gap-3 border-t border-stone-200 pt-5">
+          {TRUST_ITEMS.map(({ icon: Icon, title }) => (
+            <li key={title} className="flex items-center gap-2 text-xs font-bold text-[#4A1A25]">
+              <Icon className="h-4 w-4 flex-shrink-0 text-[#662A37]" />
+              {title}
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-stone-500">
+          <span className="mr-1">Share</span>
+          <a
+            href={`https://wa.me/?text=${shareUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on WhatsApp"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-stone-300 text-stone-600 hover:border-[#662A37] hover:text-[#662A37]"
+          >
+            <WhatsAppIcon className="h-4 w-4" />
+          </a>
+          <a
+            href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Share on Facebook"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-stone-300 text-stone-600 hover:border-[#662A37] hover:text-[#662A37]"
+          >
+            <FacebookIcon className="h-4 w-4" />
+          </a>
+          <button
+            type="button"
+            onClick={copyLink}
+            aria-label="Copy link"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-stone-300 text-stone-600 hover:border-[#662A37] hover:text-[#662A37]"
+          >
+            {copied ? <Check className="h-4 w-4" /> : <Link2 className="h-4 w-4" />}
+          </button>
+        </div>
 
         {product.descriptionHtml.trim() && (
           <div

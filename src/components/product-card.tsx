@@ -48,7 +48,7 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Product Image Area */}
       <Link
         href={`/products/${product.handle}`}
-        className="block relative w-full aspect-square bg-stone-50/80 rounded-xl overflow-hidden mb-3 p-3 flex items-center justify-center border border-stone-100"
+        className="block relative w-full aspect-square bg-[#FAF7F2] rounded-xl overflow-hidden mb-3 p-3 flex items-center justify-center border border-stone-100"
       >
         <Image
           src={product.imageUrl}

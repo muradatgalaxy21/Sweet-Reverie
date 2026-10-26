@@ -3,6 +3,22 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowUp, MapPin, Phone, Mail } from "lucide-react";
+import { InstagramIcon, FacebookIcon } from "./brand-icons";
+
+// TODO: confirm real profile URLs.
+const SOCIAL_LINKS = [
+  { label: "Instagram", href: "https://www.instagram.com/sweetreverie", icon: InstagramIcon },
+  { label: "Facebook", href: "https://www.facebook.com/sweetreverie", icon: FacebookIcon },
+];
+
+function PaymentBadge({ label, bg = "#FFFFFF", children }: { label: string; bg?: string; children: React.ReactNode }) {
+  return (
+    <svg viewBox="0 0 60 24" className="h-7 w-auto rounded shadow" role="img" aria-label={label}>
+      <rect width="60" height="24" rx="4" fill={bg} />
+      {children}
+    </svg>
+  );
+}
 
 /**
  * SiteFooter component matching the 4-column dark footer from the mockup.
@@ -35,19 +51,23 @@ export function SiteFooter() {
               <span className="text-[11px] font-bold text-stone-400 block mb-2 uppercase tracking-wider">
                 Accepted Payment Methods
               </span>
-              <div className="flex items-center space-x-2">
-                <span className="bg-white text-black font-extrabold text-[10px] px-2 py-1 rounded shadow">
-                  VISA
-                </span>
-                <span className="bg-white text-black font-extrabold text-[10px] px-2 py-1 rounded shadow">
-                  MC
-                </span>
-                <span className="bg-white text-black font-extrabold text-[10px] px-2 py-1 rounded shadow">
-                  PAYPAL
-                </span>
-                <span className="bg-amber-400 text-black font-extrabold text-[10px] px-2 py-1 rounded shadow">
-                  COD
-                </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <PaymentBadge label="Visa">
+                  <text x="30" y="17" textAnchor="middle" fontSize="13" fontWeight="900" fontStyle="italic" fill="#1A1F71" fontFamily="Arial, sans-serif">VISA</text>
+                </PaymentBadge>
+                <PaymentBadge label="Mastercard">
+                  <circle cx="25" cy="12" r="7" fill="#EB001B" />
+                  <circle cx="35" cy="12" r="7" fill="#F79E1B" fillOpacity="0.9" />
+                </PaymentBadge>
+                <PaymentBadge label="JazzCash">
+                  <text x="30" y="16" textAnchor="middle" fontSize="10" fontWeight="900" fill="#C8102E" fontFamily="Arial, sans-serif">Jazz<tspan fill="#F2A900">Cash</tspan></text>
+                </PaymentBadge>
+                <PaymentBadge label="Easypaisa">
+                  <text x="30" y="16" textAnchor="middle" fontSize="9.5" fontWeight="900" fill="#1BA548" fontFamily="Arial, sans-serif">easypaisa</text>
+                </PaymentBadge>
+                <PaymentBadge label="Cash on Delivery" bg="#FBBF24">
+                  <text x="30" y="16" textAnchor="middle" fontSize="11" fontWeight="900" fill="#000" fontFamily="Arial, sans-serif">COD</text>
+                </PaymentBadge>
               </div>
             </div>
           </div>
@@ -133,6 +153,20 @@ export function SiteFooter() {
                 <Mail className="w-4 h-4 text-amber-400 flex-shrink-0" />
                 <span>support@sweetreverie.com</span>
               </div>
+            </div>
+            <div className="flex items-center gap-3 pt-2">
+              {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D4AF7A]/50 text-[#D4AF7A] hover:bg-[#D4AF7A] hover:text-[#4A1A25] transition-colors"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
             </div>
           </div>
         </div>

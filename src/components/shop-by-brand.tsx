@@ -30,7 +30,7 @@ export function ShopByBrand() {
       </div>
 
       {/* Brand Logos Marquee */}
-      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen h-56 pt-4 overflow-hidden space-y-4 md:space-y-6">
+      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen h-56 pt-4 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] space-y-4 md:space-y-6">
         <BrandRow brands={topRow} direction="forward" />
         <BrandRow brands={bottomRow} direction="reverse" />
       </div>

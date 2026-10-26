@@ -25,13 +25,13 @@ Combined from two audits (Claude + Gemini, 2026-10-26). Frontend UI/UX only — 
 - [x] 6. Footer "Categories" → `/collections` doesn't exist — build all-categories page or link to `/#categories`
 
 ## Phase 2 — Trust & polish
-- [ ] 7. Trust strip on homepage: Original Imports · Nationwide Delivery · COD · Secure Checkout
-- [ ] 8. PDP: fill empty space under buy box — trust badges, card panel around buy box, WhatsApp icon, share row, image zoom on hover
-- [ ] 9. Brand marquee: soft fade on left/right edges
-- [ ] 10. Footer: SVG payment logos instead of text badges; add social icons (Instagram, Facebook, TikTok)
-- [ ] 11. Collection page: breadcrumb, product count, banner/pattern header instead of flat burgundy
-- [ ] 12. Scroll fade-in for sections; card hover lift + shadow
-- [ ] 13. Product images on a uniform cream backdrop (`object-contain` + padding) so mixed photo backgrounds look consistent
+- [x] 7. Trust strip on homepage: Original Imports · Nationwide Delivery · COD · Secure Checkout
+- [x] 8. PDP: fill empty space under buy box — trust badges, card panel around buy box, WhatsApp icon, share row, image zoom on hover
+- [x] 9. Brand marquee: soft fade on left/right edges
+- [x] 10. Footer: SVG payment logos instead of text badges; add social icons (Instagram, Facebook, TikTok)
+- [x] 11. Collection page: breadcrumb, product count, banner/pattern header instead of flat burgundy
+- [x] 12. Scroll fade-in for sections; card hover lift + shadow
+- [x] 13. Product images on a uniform cream backdrop (`object-contain` + padding) so mixed photo backgrounds look consistent
 
 ## Phase 3 — Premium feel
 - [ ] 14. Apply header colour decision (see Open decisions)

@@ -6,6 +6,7 @@ import { ShopByCategory } from "@/components/shop-by-category";
 import { SpecialOffersBanner } from "@/components/special-offers-banner";
 import { BestSellersSection } from "@/components/best-sellers-section";
 import { NewsletterBar } from "@/components/newsletter-bar";
+import { TrustStrip } from "@/components/trust-strip";
 
 /**
  * Sweet Reverie Homepage.
@@ -19,9 +20,11 @@ import { NewsletterBar } from "@/components/newsletter-bar";
  */
 export default function HomePage() {
   return (
-    <div className="space-y-6 pb-4">
+    <div className="space-y-6 pb-4 reveal-sections">
       {/* 1. Hero Carousel */}
       <HeroCarousel />
+
+      <TrustStrip />
 
       {/* 2. Shop By Brand */}
       <ShopByBrand />

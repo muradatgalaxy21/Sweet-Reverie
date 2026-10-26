@@ -190,3 +190,18 @@
 .animate-hero-fade-out {
   animation: hero-fade-out 0.7s ease-in-out forwards;
 }
+
+/* Homepage sections fade up as they scroll into view (CSS scroll-driven; browsers without support just show them). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-sections > :not(:first-child) {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}

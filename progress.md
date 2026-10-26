@@ -291,3 +291,15 @@ Format per entry:
 - Files touched: site-header.tsx, site-footer.tsx, hero-carousel.tsx, floating-whatsapp.tsx, product-card.tsx, globals.css, app/not-found.tsx, frontend-fixes.md
 - Deviations: none
 - Next up: frontend-fixes Phase 2 (trust & polish)
+
+## 2026-10-27 — Frontend fixes Phase 2 (`frontend-fixes.md` items 7–13)
+- Trust strip under hero (`trust-strip.tsx`, items shared with PDP)
+- PDP: buy box in card panel, trust badges, share row (WhatsApp / Facebook / copy link), cursor-follow hover zoom, real WhatsApp icon
+- Brand marquee: CSS mask fade on edges
+- Footer: inline-SVG payment badges (Visa, Mastercard, JazzCash, Easypaisa, COD), Instagram + Facebook icons (`brand-icons.tsx`) — URLs are guesses, TODO confirm
+- Collection page: breadcrumb + gold dot-pattern header. Product count skipped — Storefront API Collection has no product count field
+- Homepage sections fade up on scroll (CSS `animation-timeline: view()`, no JS; no-op in unsupported browsers / reduced motion). Card hover lift already existed
+- Product card + PDP images on cream `#FAF7F2` backdrop
+- Files touched: page.tsx, collections/[handle]/page.tsx, globals.css, product-card.tsx, product-detail.tsx, shop-by-brand.tsx, site-footer.tsx, trust-strip.tsx (new), brand-icons.tsx (new), frontend-fixes.md
+- Deviations: none (TikTok dropped per user; PayPal badge removed, JazzCash/Easypaisa added per user)
+- Next up: Phase 3 — needs header colour decision first
