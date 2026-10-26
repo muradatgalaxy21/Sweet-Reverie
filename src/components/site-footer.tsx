@@ -64,22 +64,22 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="#new-arrivals" className="hover:text-amber-400 transition-colors">
+                <Link href="/#new-arrivals" className="hover:text-amber-400 transition-colors">
                   New Arrivals
                 </Link>
               </li>
               <li>
-                <Link href="#categories" className="hover:text-amber-400 transition-colors">
+                <Link href="/#categories" className="hover:text-amber-400 transition-colors">
                   Categories
                 </Link>
               </li>
               <li>
-                <Link href="#special-offers" className="hover:text-amber-400 transition-colors">
+                <Link href="/#special-offers" className="hover:text-amber-400 transition-colors">
                   Special Offers
                 </Link>
               </li>
               <li>
-                <Link href="#best-sellers" className="hover:text-amber-400 transition-colors">
+                <Link href="/#best-sellers" className="hover:text-amber-400 transition-colors">
                   Best Sellers
                 </Link>
               </li>

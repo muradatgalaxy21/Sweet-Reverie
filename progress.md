@@ -281,3 +281,13 @@ Format per entry:
 - Known: products have no SKUs/descriptions yet, so those JSON-LD fields are omitted. Product pages set their own `openGraph` (image), which replaces the root one, so og:site_name/locale/type aren't on PDPs. Sitemap includes Shopify's default `frontpage` collection and empty collections. No default OG image yet. Sitemap pagination loop not exercised live (132 < 250)
 - Deviations: none from plan.md
 - Next up: rest of Phase 6 — performance + accessibility pass
+
+## 2026-10-26 — Frontend fixes Phase 1 (`frontend-fixes.md` items 1–6)
+- Header + footer hash links → `/#...` so they work off the homepage (footer "Categories" → `/#categories`, no all-categories page)
+- Branded 404 (`src/app/not-found.tsx`): logo, playful copy, "Continue shopping" CTA
+- Hero carousel: auto-rotate 6s, pauses on hover, 0.7s cross-fade (outgoing slide overlaid and faded out)
+- Floating WhatsApp hidden on mobile PDP (PDP already has "Order on WhatsApp")
+- Product card button: "Add" below `sm`, "Add to cart" above
+- Files touched: site-header.tsx, site-footer.tsx, hero-carousel.tsx, floating-whatsapp.tsx, product-card.tsx, globals.css, app/not-found.tsx, frontend-fixes.md
+- Deviations: none
+- Next up: frontend-fixes Phase 2 (trust & polish)

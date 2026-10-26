@@ -88,7 +88,8 @@ export function ProductCard({ product }: ProductCardProps) {
           className="disabled:opacity-50 disabled:pointer-events-none w-full bg-[#4A1A25] hover:bg-[#662A37] active:scale-95 text-white font-extrabold text-xs uppercase tracking-wider py-2.5 px-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2"
         >
           <ShoppingBag className="w-4 h-4 stroke-[2.5]" />
-          <span>{product.availableForSale ? "Add to cart" : "Sold out"}</span>
+          <span className="sm:hidden">{product.availableForSale ? "Add" : "Sold out"}</span>
+          <span className="hidden sm:inline">{product.availableForSale ? "Add to cart" : "Sold out"}</span>
         </button>
       </div>
     </div>

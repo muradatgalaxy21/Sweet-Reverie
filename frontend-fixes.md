@@ -17,12 +17,12 @@ Combined from two audits (Claude + Gemini, 2026-10-26). Frontend UI/UX only — 
 ---
 
 ## Phase 1 — Fixes
-- [ ] 1. Header nav links: `#best-sellers` / `#special-offers` / `#footer` → `/#...` so they work off the homepage (`site-header.tsx`, desktop + mobile menu)
-- [ ] 2. Branded 404 page (`src/app/not-found.tsx`): logo, playful copy ("Oops! This treat doesn't exist…"), "Continue shopping" CTA
-- [ ] 3. Hero carousel: auto-rotate ~6s, pause on hover, cross-fade transition (`hero-carousel.tsx`)
-- [ ] 4. Mobile PDP: floating WhatsApp button overlaps qty stepper — raise it or hide on PDP
-- [ ] 5. Mobile grids: "ADD TO CART" wraps to 2 lines — icon + "Add" on small screens
-- [ ] 6. Footer "Categories" → `/collections` doesn't exist — build all-categories page or link to `/#categories`
+- [x] 1. Header nav links: `#best-sellers` / `#special-offers` / `#footer` → `/#...` so they work off the homepage (`site-header.tsx`, desktop + mobile menu)
+- [x] 2. Branded 404 page (`src/app/not-found.tsx`): logo, playful copy ("Oops! This treat doesn't exist…"), "Continue shopping" CTA
+- [x] 3. Hero carousel: auto-rotate ~6s, pause on hover, cross-fade transition (`hero-carousel.tsx`)
+- [x] 4. Mobile PDP: floating WhatsApp button overlaps qty stepper — raise it or hide on PDP
+- [x] 5. Mobile grids: "ADD TO CART" wraps to 2 lines — icon + "Add" on small screens
+- [x] 6. Footer "Categories" → `/collections` doesn't exist — build all-categories page or link to `/#categories`
 
 ## Phase 2 — Trust & polish
 - [ ] 7. Trust strip on homepage: Original Imports · Nationwide Delivery · COD · Secure Checkout

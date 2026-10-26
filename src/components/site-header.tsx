@@ -117,19 +117,19 @@ export function SiteHeader() {
                 HOME
               </Link>
               <Link
-                href="#best-sellers"
+                href="/#best-sellers"
                 className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
               >
                 BEST SELLERS
               </Link>
               <Link
-                href="#special-offers"
+                href="/#special-offers"
                 className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
               >
                 SPECIAL OFFERS
               </Link>
               <Link
-                href="#footer"
+                href="/#footer"
                 className="hover:text-[#662A37] transition-colors py-1 border-b-2 border-transparent hover:border-black"
               >
                 CONTACT
@@ -209,21 +209,21 @@ export function SiteHeader() {
               HOME
             </Link>
             <Link
-              href="#best-sellers"
+              href="/#best-sellers"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
             >
               BEST SELLERS
             </Link>
             <Link
-              href="#special-offers"
+              href="/#special-offers"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
             >
               SPECIAL OFFERS
             </Link>
             <Link
-              href="#footer"
+              href="/#footer"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
             >
