@@ -439,3 +439,5 @@ Format per entry:
 
 ### 2026-10-27 — Collection banners
 - Banner image behind collection page title for candies-jellies, chewing-gums, chips-snacks, chocolate-bars, chocolate-boxes (`bannerUrl` on `Category`, `categories.ts`, `collections/[handle]/page.tsx`). Other collections keep the burgundy strip.
+
+- 2026-10-27: 404 page uses `public/404-not-found/not-found-chocolate.svg` instead of logo (`src/app/not-found.tsx`).
