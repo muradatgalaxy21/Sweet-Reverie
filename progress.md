@@ -448,3 +448,4 @@ Format per entry:
 - 2026-10-27: Hero banner 1 replaced — `exquisite-chocolate-reverie-v5.webp` (2400x984, regenerated: right margin, slab edge, fanned bars). Removed v4.
 - 2026-10-27: Hero mobile CTA raised to bottom-[10%] (was overlapping slide dots); slide 1 button burgundy.
 - 2026-10-27: Category pills equal height (flex:1 + centered label) — 1-line labels no longer shorter than 2-line on mobile. File: globals.css.
+- 2026-10-27: Header hamburger on all viewports opens left drawer — main links, Collections (best-sellers, new-arrivals), categories grouped Sweets/Snacks & Drinks/Gifts/Essentials, My Account. Account icon removed from header bar (fixed mobile logo crowding). Esc/overlay closes, body scroll locked. File: site-header.tsx.
