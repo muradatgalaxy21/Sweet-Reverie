@@ -441,3 +441,5 @@ Format per entry:
 - Banner image behind collection page title for candies-jellies, chewing-gums, chips-snacks, chocolate-bars, chocolate-boxes (`bannerUrl` on `Category`, `categories.ts`, `collections/[handle]/page.tsx`). Other collections keep the burgundy strip.
 
 - 2026-10-27: 404 page uses `public/404-not-found/not-found-chocolate.svg` instead of logo (`src/app/not-found.tsx`).
+
+- 2026-10-27: Image perf — referenced local images converted to WebP (hero 7MB->80KB, collection ~4MB->~120KB), AVIF+WebP output in next.config, shimmer `placeholder={SHIMMER}` (utils.ts) on product card/PDP/category tiles. Removed unused hero PNGs.
