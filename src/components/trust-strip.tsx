@@ -11,9 +11,10 @@ export const TRUST_ITEMS = [
 
 /** Homepage reassurance strip shown under the hero: slim, full-bleed band. */
 export function TrustStrip() {
+  // -mt-6 cancels the page's space-y-6 so the strip sits flush under the hero; z-10 covers the hero shadow.
   return (
-    <section className="w-full border-y border-[#ECA58A]/60 bg-[#FAF7F2]">
-      <ul className="flex items-center justify-between gap-6 overflow-x-auto px-4 py-2.5 sm:px-6 lg:px-10 [scrollbar-width:none]">
+    <section className="relative z-10 -mt-6 w-full border-b border-[#ECA58A]/60 bg-[#FAF7F2]">
+      <ul className="flex items-center justify-between gap-6 overflow-x-auto px-4 py-4 md:py-5 sm:px-6 lg:px-10 [scrollbar-width:none]">
         {TRUST_ITEMS.map(({ icon: Icon, title, text }) => (
           <li key={title} className="flex flex-shrink-0 items-center gap-2.5">
             <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#662A37] text-[#D4AF7A]">
