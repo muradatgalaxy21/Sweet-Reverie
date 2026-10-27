@@ -178,12 +178,12 @@ export function HeroCarousel() {
               />
             )}
             {active.tagline && (
-              <div className="hidden md:block absolute left-[6%] top-[10%] max-w-[34%] text-[#5A1A25]">
-                <h2 className="uppercase font-medium leading-[1.05] text-[clamp(2rem,min(4.5vw,7svh),6rem)]">
+              <div className="hidden md:block absolute left-[6%] top-[10%] max-w-[38%] text-[#5A1A25]">
+                <h2 className="uppercase font-medium leading-[1.05] text-[clamp(2rem,min(5vw,8.5svh),6rem)]">
                   {active.headline}
                 </h2>
-                <p className="mt-[0.6em] text-[clamp(1rem,min(1.7vw,3svh),2.25rem)] leading-snug">{active.subheadline}.</p>
-                <p className="mt-[1em] uppercase tracking-wide text-[clamp(0.75rem,min(1vw,1.8svh),1.25rem)]">
+                <p className="mt-[0.6em] text-[clamp(1rem,min(2vw,3.8svh),2.25rem)] leading-snug">{active.subheadline}.</p>
+                <p className="mt-[1em] uppercase tracking-wide text-[clamp(0.75rem,min(1.2vw,2.2svh),1.25rem)]">
                   {active.tagline}
                 </p>
               </div>
