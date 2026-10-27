@@ -114,7 +114,7 @@ export function HeroCarousel() {
       // Next.js image optimizer rejects query strings on local images unless allow-listed in
       // next.config.ts, so bump the filename suffix (-v3, -v4, ...) instead of overwriting in place —
       // that's what actually busts the Next cache and the browser cache.
-      bgImage: "/hero/exquisite-chocolate-reverie-v4.webp",
+      bgImage: "/hero/exquisite-chocolate-reverie-v5.webp",
       bgImageMobile: "/hero/hero-carousel-image-1-mobile.webp",
     },
     {
