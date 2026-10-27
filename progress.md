@@ -436,3 +436,6 @@ Format per entry:
 - Files touched: site-header.tsx, page.tsx, globals.css, best-sellers-section.tsx, new-arrivals-section.tsx, shop-by-category.tsx, special-offers-banner.tsx, product-rail.tsx / testimonials.tsx / section-extras.tsx (new), frontend-fixes.md
 - Deviations: none
 - Next up: Phase 4 (custom images, user creates); confirm social URLs; replace mock testimonials
+
+### 2026-10-27 — Collection banners
+- Banner image behind collection page title for candies-jellies, chewing-gums, chips-snacks, chocolate-bars, chocolate-boxes (`bannerUrl` on `Category`, `categories.ts`, `collections/[handle]/page.tsx`). Other collections keep the burgundy strip.
