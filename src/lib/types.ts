@@ -19,6 +19,8 @@ export interface Category {
   title: string;
   imageUrl: string;
   itemCount?: number;
+  /** Text-free banner behind the collection page title. */
+  bannerUrl?: string;
 }
 
 export interface Brand {
