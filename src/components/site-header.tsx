@@ -214,13 +214,16 @@ export function SiteHeader() {
       </header>
 
       {/* Navigation Drawer */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-[60]">
-          <div aria-hidden className="absolute inset-0 bg-black/40" onClick={closeMenu} />
+      <div className={`fixed inset-0 z-[60] ${menuOpen ? "" : "pointer-events-none invisible delay-300"} transition-[visibility]`} aria-hidden={!menuOpen}>
+          <div
+            aria-hidden
+            className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${menuOpen ? "opacity-100" : "opacity-0"}`}
+            onClick={closeMenu}
+          />
           <nav
             id="site-menu"
             aria-label="Site menu"
-            className="absolute inset-y-0 left-0 w-80 max-w-[85vw] overflow-y-auto bg-[#FAF7F2] border-r-2 border-[#D4AF7A]/60 px-4 pb-8 shadow-2xl"
+            className={`absolute inset-y-0 left-0 w-80 max-w-[85vw] overflow-y-auto bg-[#FAF7F2] border-r-2 border-[#D4AF7A]/60 px-4 pb-8 shadow-2xl transition-transform duration-300 ease-out ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
           >
             <div className="sticky top-0 flex items-center justify-between bg-[#FAF7F2] py-4">
               <span className="px-3 text-xs font-black tracking-widest text-[#662A37]">MENU</span>
@@ -261,7 +264,6 @@ export function SiteHeader() {
             </div>
           </nav>
         </div>
-      )}
 
       {/* Instant Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
