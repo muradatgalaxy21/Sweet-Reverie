@@ -20,7 +20,7 @@ export function ShopByBrand() {
       <div className="flex justify-center my-4 md:my-6">
         <h2 className="sr-only">Shop by Brand</h2>
         <Image
-          src="/banners/shop-by-brand-banner-v4.png"
+          src="/banners/shop-by-brand-banner-v4.webp"
           alt="Shop by Brand"
           width={2268}
           height={641}

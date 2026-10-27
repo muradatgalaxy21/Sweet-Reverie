@@ -18,7 +18,7 @@ export async function BestSellersSection() {
       <div className="flex justify-center my-4 md:my-6">
         <h2 className="sr-only">Our Best Sellers</h2>
         <Image
-          src="/banners/our-best-sellers-banner-v2.png"
+          src="/banners/our-best-sellers-banner-v2.webp"
           alt="Our Best Sellers"
           width={2323}
           height={730}

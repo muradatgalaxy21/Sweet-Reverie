@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Minus, Plus, ShoppingBag, Link2, Check } from "lucide-react";
 import type { ProductDetail as ProductData } from "@/lib/products";
-import { formatPrice, SITE_URL } from "@/lib/utils";
+import { formatPrice, SHIMMER, SITE_URL } from "@/lib/utils";
 import { useCart } from "@/lib/cart-context";
 import { WHATSAPP_NUMBER } from "./floating-whatsapp";
 import { WhatsAppIcon, FacebookIcon } from "./brand-icons";
@@ -94,6 +94,7 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
             src={images[activeImage].url}
             alt={images[activeImage].altText ?? product.title}
             fill
+            placeholder={SHIMMER}
             sizes="(min-width: 768px) 50vw, 100vw"
             className="object-contain p-6 transition-transform duration-200"
             style={zoomOrigin ? { transform: "scale(2)", transformOrigin: zoomOrigin } : undefined}

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
 import { Product } from "@/lib/types";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, SHIMMER } from "@/lib/utils";
 import { useCart } from "@/lib/cart-context";
 
 interface ProductCardProps {
@@ -56,6 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
           src={product.imageUrl}
           alt=""
           fill
+          placeholder={SHIMMER}
           sizes="(min-width: 1280px) 256px, (min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
           className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
         />

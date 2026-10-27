@@ -17,10 +17,10 @@ const SPARKLES = [
 
 export function SpecialOffersBanner() {
   const showcaseProducts = [
-    { title: "Ferrero Rocher Box", src: "/products/1768309497-Ferrero-Rocher-T16-200g.jpeg" },
-    { title: "Biscoff Spread", src: "/products/1752363437-Lotus-Biscoff-Spread-400g.jpeg" },
-    { title: "Toblerone Deluxe", src: "/products/1750127147-Toblerone-Crunchy-Almond-Chocolate-Bar-100g.jpeg" },
-    { title: "Milka Wafer Treat", src: "/products/1764068771-Redondo-Wafers-Sticks-Choco-Hazelnut-100g.jpeg" },
+    { title: "Ferrero Rocher Box", src: "/products/1768309497-Ferrero-Rocher-T16-200g.webp" },
+    { title: "Biscoff Spread", src: "/products/1752363437-Lotus-Biscoff-Spread-400g.webp" },
+    { title: "Toblerone Deluxe", src: "/products/1750127147-Toblerone-Crunchy-Almond-Chocolate-Bar-100g.webp" },
+    { title: "Milka Wafer Treat", src: "/products/1764068771-Redondo-Wafers-Sticks-Choco-Hazelnut-100g.webp" },
   ];
 
   return (

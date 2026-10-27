@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { SHIMMER } from "@/lib/utils";
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/categories";
 
@@ -15,7 +16,7 @@ export function ShopByCategory() {
       <div className="flex justify-center my-4 md:my-6">
         <h2 className="sr-only">Shop by Category</h2>
         <Image
-          src="/banners/shop-by-category-banner-v1.png"
+          src="/banners/shop-by-category-banner-v1.webp"
           alt="Shop by Category"
           width={2323}
           height={730}
@@ -38,6 +39,7 @@ export function ShopByCategory() {
                 src={category.imageUrl}
                 alt={category.title}
                 fill
+                placeholder={SHIMMER}
                 sizes="(min-width: 1280px) 256px, (min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, 50vw"
                 fetchPriority="low"
                 className="object-cover group-hover:scale-110 transition-transform duration-300"
