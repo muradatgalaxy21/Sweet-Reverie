@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="A sad melted chocolate bar">
+  <!-- soft backdrop -->
+  <circle cx="300" cy="300" r="230" fill="#FDF1EA"/>
+
+  <!-- puddle -->
+  <path d="M165 478 Q165 452 225 450 L378 450 Q445 453 445 479 Q445 503 385 503 Q345 507 322 498 Q292 512 248 503 Q165 502 165 478 Z" fill="#8A5741"/>
+  <path d="M200 468 Q215 458 262 458" fill="none" stroke="#FAF7F2" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+  <ellipse cx="282" cy="459" rx="5" ry="3" fill="#FAF7F2" opacity="0.55"/>
+  <path d="M372 488 Q395 488 410 480" fill="none" stroke="#FAF7F2" stroke-width="4" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- exposed chocolate (melting top) -->
+  <path d="M212 335 L212 195 Q212 150 252 148 Q278 147 291 162 Q301 172 313 160 Q331 143 352 148 Q388 155 388 198 L388 335 Z" fill="#7A4A35"/>
+  <path d="M228 320 L228 200 Q228 168 254 165" fill="none" stroke="#9A6449" stroke-width="9" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- gold foil edge -->
+  <path d="M204 303 L226 287 L247 302 L269 287 L291 302 L312 287 L334 302 L356 287 L378 302 L398 289 L398 330 L204 330 Z" fill="#D4AF7A"/>
+  <path d="M204 303 L226 287 L247 302 L269 287 L291 302 L312 287 L334 302 L356 287 L378 302 L398 289" fill="none" stroke="#FAF7F2" stroke-width="2" opacity="0.6" stroke-linejoin="round"/>
+
+  <!-- wrapper -->
+  <path d="M200 314 L221 301 L242 315 L264 301 L286 315 L308 301 L330 315 L352 301 L374 315 L400 303 L400 432 Q400 452 380 452 L220 452 Q200 452 200 432 Z" fill="#662A37"/>
+  <rect x="383" y="322" width="9" height="118" rx="7" fill="#FAF7F2" opacity="0.1"/>
+  <line x1="200" y1="420" x2="400" y2="420" stroke="#D4AF7A" stroke-width="4"/>
+  <circle cx="300" cy="372" r="24" fill="none" stroke="#D4AF7A" stroke-width="4"/>
+  <path d="M300 384 Q284 372 288 363 Q293 355 300 363 Q307 355 312 363 Q316 372 300 384 Z" fill="#ECA58A"/>
+
+  <!-- peeled foil corner hanging down -->
+  <path d="M398 290 Q414 300 420 352 Q407 338 398 328 Z" fill="#B88F5A"/>
+  <path d="M398 290 Q414 300 420 352" fill="none" stroke="#D4AF7A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M402 302 Q410 314 413 334" fill="none" stroke="#FAF7F2" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- drips over wrapper -->
+  <path d="M220 292 L220 374 Q220 387 231 387 Q242 387 242 374 L242 292 Z" fill="#7A4A35"/>
+  <path d="M356 292 L356 350 Q356 361 365 361 Q374 361 374 350 L374 292 Z" fill="#7A4A35"/>
+  <path d="M266 292 L266 334 Q266 342 273 342 Q280 342 280 334 L280 292 Z" fill="#7A4A35"/>
+
+  <!-- face -->
+  <path d="M255 209 L279 200" stroke="#2E1712" stroke-width="5" stroke-linecap="round"/>
+  <path d="M345 209 L321 200" stroke="#2E1712" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="268" cy="230" r="12" fill="#2E1712"/>
+  <circle cx="332" cy="230" r="12" fill="#2E1712"/>
+  <circle cx="264" cy="225" r="4.5" fill="#FAF7F2"/>
+  <circle cx="328" cy="225" r="4.5" fill="#FAF7F2"/>
+  <circle cx="272" cy="235" r="2" fill="#FAF7F2"/>
+  <circle cx="336" cy="235" r="2" fill="#FAF7F2"/>
+  <ellipse cx="250" cy="254" rx="12" ry="7" fill="#ECA58A" opacity="0.85"/>
+  <ellipse cx="350" cy="254" rx="12" ry="7" fill="#ECA58A" opacity="0.85"/>
+  <path d="M286 268 Q300 255 314 268" fill="none" stroke="#2E1712" stroke-width="5" stroke-linecap="round"/>
+  <path d="M343 244 Q350 256 350 261 Q350 268 343 268 Q336 268 336 261 Q336 256 343 244 Z" fill="#FAF7F2" opacity="0.92"/>
+
+  <!-- sprinkles -->
+  <rect x="140" y="432" width="20" height="7" rx="3.5" fill="#ECA58A" transform="rotate(-30 150 435)"/>
+  <rect x="455" y="425" width="20" height="7" rx="3.5" fill="#D4AF7A" transform="rotate(25 465 428)"/>
+  <rect x="160" y="240" width="20" height="7" rx="3.5" fill="#D4AF7A" transform="rotate(40 170 243)"/>
+  <rect x="425" y="235" width="20" height="7" rx="3.5" fill="#662A37" transform="rotate(-20 435 238)"/>
+  <rect x="440" y="160" width="20" height="7" rx="3.5" fill="#ECA58A" transform="rotate(60 450 163)"/>
+  <rect x="150" y="150" width="20" height="7" rx="3.5" fill="#662A37" transform="rotate(-50 160 153)"/>
+  <rect x="110" y="330" width="20" height="7" rx="3.5" fill="#662A37" transform="rotate(-15 120 333)"/>
+  <rect x="468" y="330" width="20" height="7" rx="3.5" fill="#ECA58A" transform="rotate(30 478 333)"/>
+</svg>

@@ -10,12 +10,11 @@ export default function NotFound() {
   return (
     <section className="max-w-3xl mx-auto px-4 py-16 md:py-20 text-center">
       <Image
-        src="/logo/sweet-reverie-no-bg.png"
-        alt="Sweet Reverie Fine Confections"
-        width={2073}
-        height={1800}
-        sizes="160px"
-        className="w-40 h-auto mx-auto mb-6"
+        src="/404-not-found/not-found-chocolate.svg"
+        alt="A sad melted chocolate bar"
+        width={600}
+        height={600}
+        className="w-56 md:w-64 h-auto mx-auto mb-4"
       />
       <p className="text-sm font-black tracking-widest text-amber-600">404</p>
       <h1 className="mt-2 font-serif text-3xl md:text-4xl font-bold text-[#662A37]">
