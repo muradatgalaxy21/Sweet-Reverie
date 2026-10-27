@@ -445,3 +445,4 @@ Format per entry:
 - 2026-10-27: Image perf — referenced local images converted to WebP (hero 7MB->80KB, collection ~4MB->~120KB), AVIF+WebP output in next.config, shimmer `placeholder={SHIMMER}` (utils.ts) on product card/PDP/category tiles. Removed unused hero PNGs.
 
 - 2026-10-27: Hero mobile banners — text-free portrait WebPs for all 3 slides (`hero-carousel-image-{1,2,3}-mobile.webp`); HTML headline/sub/tagline now shown on mobile in the image's empty top zone (previously baked into image). Removed old baked-text `exquisite-chocolate-reverie-mobile-view.webp`. File: hero-carousel.tsx. Next: new desktop banner 1 (fix right margin/slab edge).
+- 2026-10-27: Hero banner 1 replaced — `exquisite-chocolate-reverie-v5.webp` (2400x984, regenerated: right margin, slab edge, fanned bars). Removed v4.
