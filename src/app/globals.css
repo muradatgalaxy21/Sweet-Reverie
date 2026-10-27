@@ -83,7 +83,7 @@
   background: #FFFFFF;
   border: 2px solid #ECA58A;
   border-radius: 1.25rem;
-  padding: 0.75rem;
+  padding: 4px;
   box-shadow: 0 6px 16px rgba(102, 42, 55, 0.08);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;

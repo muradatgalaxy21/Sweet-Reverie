@@ -33,14 +33,14 @@ export function ShopByCategory() {
             className="category-card-frame group block w-36 flex-shrink-0 snap-start sm:w-auto"
           >
             {/* Image Tile */}
-            <div className="relative w-full aspect-square bg-gradient-to-b from-stone-50 to-white rounded-xl overflow-hidden mb-3 p-3 flex items-center justify-center">
+            <div className="relative w-full aspect-square rounded-2xl overflow-hidden mb-3">
               <Image
                 src={category.imageUrl}
                 alt={category.title}
                 fill
                 sizes="(min-width: 1280px) 256px, (min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, 50vw"
                 fetchPriority="low"
-                className="object-contain p-2 group-hover:scale-110 transition-transform duration-300"
+                className="object-cover group-hover:scale-110 transition-transform duration-300"
               />
             </div>
 
