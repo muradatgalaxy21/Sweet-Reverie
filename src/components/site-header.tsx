@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { SearchModal } from "./search-modal";
+import { CATEGORIES } from "@/lib/categories";
 
 function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -38,6 +39,28 @@ function CartIcon(props: React.SVGProps<SVGSVGElement>) {
 // Shopify-hosted customer account (plan.md §8); the store redirects to its account login/order pages.
 const ACCOUNT_URL = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/account`;
 
+const MAIN_LINKS = [
+  { href: "/", label: "HOME" },
+  { href: "/#best-sellers", label: "BEST SELLERS" },
+  { href: "/#special-offers", label: "SPECIAL OFFERS" },
+  { href: "/#footer", label: "CONTACT" },
+];
+
+const COLLECTION_LINKS = [
+  { href: "/collections/best-sellers", label: "BEST SELLERS" },
+  { href: "/collections/new-arrivals", label: "NEW ARRIVALS" },
+];
+
+const CATEGORY_GROUPS = [
+  { title: "Sweets", handles: ["candies-jellies", "chewing-gums", "chocolate-bars", "chocolate-boxes", "chocolate-pouches", "cookies-biscuits"] },
+  { title: "Snacks & Drinks", handles: ["chips-snacks", "noodles", "beverages", "coffee-tea"] },
+  { title: "Gifts", handles: ["gifting", "bundles", "kids-section"] },
+  { title: "Essentials", handles: ["baby-care", "grocery", "health-beauty", "pet-care-food"] },
+].map((g) => ({ ...g, items: CATEGORIES.filter((c) => g.handles.includes(c.handle)) }));
+
+const DRAWER_LINK = "block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md";
+const DRAWER_HEADING = "px-3 pt-4 pb-1 text-[11px] font-black tracking-[0.2em] uppercase text-[#B08A3E]";
+
 const LOGO_MAX_DESKTOP = 130;
 const LOGO_MAX_MOBILE = 71;
 const LOGO_MIN = 56;
@@ -50,15 +73,27 @@ const MOBILE_BREAKPOINT = 768;
  * 2. Center: Prominent circular brand logo badge that shrinks into the navbar
  *    as the hero section scrolls out of view, fully docked once the hero is cleared.
  * 3. Right: Search modal trigger, customer account icon, and cart drawer toggle.
- * 4. Responsive mobile menu drawer for smaller viewports.
+ * 4. Hamburger (all viewports) opens a left drawer: main links, collections, grouped categories, account.
  */
 export function SiteHeader() {
   const { cart, openCart } = useCart();
   const totalQuantity = cart?.totalQuantity ?? 0;
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = () => setMenuOpen(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [logoMax, setLogoMax] = useState(LOGO_MAX_DESKTOP);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     let rafId: number | null = null;
@@ -96,47 +131,32 @@ export function SiteHeader() {
       <header className="sticky top-0 z-40 bg-[#FAF7F2] shadow-md border-b-2 border-[#D4AF7A]/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 relative">
-            {/* Mobile menu trigger */}
-            <div className="flex items-center md:hidden">
+            <div className="flex items-center gap-4 md:gap-6">
+              {/* Menu trigger (all viewports) */}
               <button
                 type="button"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                onClick={() => setMenuOpen(true)}
                 className="p-2 text-[#662A37] hover:text-[#F59E0B]"
-                aria-label="Toggle Navigation Menu"
-                aria-expanded={mobileMenuOpen}
-                aria-controls="mobile-menu"
+                aria-label="Open Navigation Menu"
+                aria-expanded={menuOpen}
+                aria-controls="site-menu"
               >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                <Menu className="h-6 w-6" />
               </button>
-            </div>
 
-            {/* Left Desktop Navigation Links */}
-            <nav aria-label="Main" className="hidden md:flex items-center space-x-8 text-xs font-black tracking-widest text-[#662A37] uppercase">
-              <Link
-                href="/"
-                className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
-              >
-                HOME
-              </Link>
-              <Link
-                href="/#best-sellers"
-                className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
-              >
-                BEST SELLERS
-              </Link>
-              <Link
-                href="/#special-offers"
-                className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
-              >
-                SPECIAL OFFERS
-              </Link>
-              <Link
-                href="/#footer"
-                className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
-              >
-                CONTACT
-              </Link>
-            </nav>
+              {/* Desktop Navigation Links */}
+              <nav aria-label="Main" className="hidden md:flex items-center space-x-8 text-xs font-black tracking-widest text-[#662A37] uppercase">
+                {MAIN_LINKS.map((l) => (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    className="hover:text-[#F59E0B] transition-colors py-1 border-b-2 border-transparent hover:border-[#F59E0B]"
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
 
             {/* Center Brand Logo with Circular Badge — shrinks into navbar on scroll */}
             <div
@@ -173,15 +193,6 @@ export function SiteHeader() {
                 <SearchIcon className="h-5 w-5 md:h-6 md:w-6" />
               </button>
 
-              {/* Account Link */}
-              <a
-                href={ACCOUNT_URL}
-                className="p-2 hover:text-[#F59E0B] hover:scale-110 transition-transform"
-                aria-label="My Account"
-              >
-                <ProfileIcon className="h-5 w-5 md:h-6 md:w-6" />
-              </a>
-
               {/* Cart Drawer Trigger */}
               <button
                 type="button"
@@ -200,46 +211,57 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <nav id="mobile-menu" aria-label="Mobile" className="md:hidden bg-[#FAF7F2] border-t border-[#D4AF7A]/60 px-4 pt-4 pb-6 space-y-3 shadow-2xl">
-            <Link
-              href="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
-            >
-              HOME
-            </Link>
-            <Link
-              href="/#best-sellers"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
-            >
-              BEST SELLERS
-            </Link>
-            <Link
-              href="/#special-offers"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
-            >
-              SPECIAL OFFERS
-            </Link>
-            <Link
-              href="/#footer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
-            >
-              CONTACT
-            </Link>
-            <a
-              href={ACCOUNT_URL}
-              className="block px-3 py-2 text-sm font-bold text-[#662A37] hover:bg-amber-100 rounded-md"
-            >
-              MY ACCOUNT
-            </a>
-          </nav>
-        )}
       </header>
+
+      {/* Navigation Drawer */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-[60]">
+          <div aria-hidden className="absolute inset-0 bg-black/40" onClick={closeMenu} />
+          <nav
+            id="site-menu"
+            aria-label="Site menu"
+            className="absolute inset-y-0 left-0 w-80 max-w-[85vw] overflow-y-auto bg-[#FAF7F2] border-r-2 border-[#D4AF7A]/60 px-4 pb-8 shadow-2xl"
+          >
+            <div className="sticky top-0 flex items-center justify-between bg-[#FAF7F2] py-4">
+              <span className="px-3 text-xs font-black tracking-widest text-[#662A37]">MENU</span>
+              <button type="button" onClick={closeMenu} className="p-2 text-[#662A37] hover:text-[#F59E0B]" aria-label="Close Navigation Menu">
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+
+            {MAIN_LINKS.map((l) => (
+              <Link key={l.href} href={l.href} onClick={closeMenu} className={DRAWER_LINK}>
+                {l.label}
+              </Link>
+            ))}
+
+            <p className={DRAWER_HEADING}>Collections</p>
+            {COLLECTION_LINKS.map((l) => (
+              <Link key={l.href} href={l.href} onClick={closeMenu} className={DRAWER_LINK}>
+                {l.label}
+              </Link>
+            ))}
+
+            {CATEGORY_GROUPS.map((g) => (
+              <div key={g.title}>
+                <p className={DRAWER_HEADING}>{g.title}</p>
+                {g.items.map((c) => (
+                  <Link key={c.handle} href={`/collections/${c.handle}`} onClick={closeMenu} className={DRAWER_LINK}>
+                    {c.title}
+                  </Link>
+                ))}
+              </div>
+            ))}
+
+            <div className="mt-4 border-t border-[#D4AF7A]/60 pt-4">
+              <a href={ACCOUNT_URL} className={`${DRAWER_LINK} flex items-center gap-2`}>
+                <ProfileIcon className="h-5 w-5" />
+                MY ACCOUNT
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
 
       {/* Instant Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
