@@ -447,3 +447,4 @@ Format per entry:
 - 2026-10-27: Hero mobile banners — text-free portrait WebPs for all 3 slides (`hero-carousel-image-{1,2,3}-mobile.webp`); HTML headline/sub/tagline now shown on mobile in the image's empty top zone (previously baked into image). Removed old baked-text `exquisite-chocolate-reverie-mobile-view.webp`. File: hero-carousel.tsx. Next: new desktop banner 1 (fix right margin/slab edge).
 - 2026-10-27: Hero banner 1 replaced — `exquisite-chocolate-reverie-v5.webp` (2400x984, regenerated: right margin, slab edge, fanned bars). Removed v4.
 - 2026-10-27: Hero mobile CTA raised to bottom-[10%] (was overlapping slide dots); slide 1 button burgundy.
+- 2026-10-27: Category pills equal height (flex:1 + centered label) — 1-line labels no longer shorter than 2-line on mobile. File: globals.css.
