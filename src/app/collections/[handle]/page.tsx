@@ -41,11 +41,11 @@ export default async function CollectionPage(props: PageProps<"/collections/[han
 
   return (
     <div className="pb-10">
-      <section className="relative bg-[#4A1A25] border-b-2 border-amber-500/40 bg-[radial-gradient(circle_at_center,rgba(212,175,122,0.18)_1.5px,transparent_1.5px)] bg-[length:22px_22px]">
+      <section className={`relative ${banner ? "md:aspect-[1600/397] md:flex md:items-center" : ""} bg-[#4A1A25] border-b-2 border-amber-500/40 bg-[radial-gradient(circle_at_center,rgba(212,175,122,0.18)_1.5px,transparent_1.5px)] bg-[length:22px_22px]`}>
         {banner && (
           <Image src={banner} alt="" fill priority sizes="100vw" className="object-cover" />
         )}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14 text-center">
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14 text-center">
           <nav aria-label="Breadcrumb" className="mb-4 text-xs font-bold uppercase tracking-widest text-amber-100/70">
             <Link href="/" className="hover:text-[#D4AF7A]">Home</Link>
             <span className="mx-2">/</span>

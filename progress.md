@@ -449,3 +449,4 @@ Format per entry:
 - 2026-10-27: Hero mobile CTA raised to bottom-[10%] (was overlapping slide dots); slide 1 button burgundy.
 - 2026-10-27: Category pills equal height (flex:1 + centered label) — 1-line labels no longer shorter than 2-line on mobile. File: globals.css.
 - 2026-10-27: Header hamburger on all viewports opens left drawer — main links, Collections (best-sellers, new-arrivals), categories grouped Sweets/Snacks & Drinks/Gifts/Essentials, My Account. Account icon removed from header bar (fixed mobile logo crowding). Esc/overlay closes, body scroll locked. File: site-header.tsx.
+- 2026-10-27: Collection banner section uses image aspect (1600/397) on md+, text vertically centred — was cropping top/bottom gold borders. File: collections/[handle]/page.tsx.
