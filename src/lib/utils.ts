@@ -38,3 +38,11 @@ export const OPEN_GRAPH_DEFAULTS = {
   locale: "en_PK",
   siteName: "Sweet Reverie",
 } as const;
+
+/**
+ * Animated shimmer SVG for `<Image placeholder={SHIMMER}>`: shows a skeleton sweep in the
+ * image's box until it loads, instead of empty space or a spinner.
+ */
+export const SHIMMER: `data:image/${string}` = `data:image/svg+xml;base64,${btoa(
+  `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" preserveAspectRatio="none"><defs><linearGradient id="g"><stop stop-color="#F5EDE4" offset="20%"/><stop stop-color="#FDF8F3" offset="50%"/><stop stop-color="#F5EDE4" offset="80%"/></linearGradient></defs><rect width="400" height="400" fill="#F5EDE4"/><rect width="400" height="400" fill="url(#g)"><animate attributeName="x" from="-400" to="400" dur="1.2s" repeatCount="indefinite"/></rect></svg>`,
+)}`;

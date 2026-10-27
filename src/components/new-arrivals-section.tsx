@@ -18,7 +18,7 @@ export async function NewArrivalsSection() {
       <div className="flex justify-center my-4 md:my-6">
         <h2 className="sr-only">New Arrivals</h2>
         <Image
-          src="/banners/new-arrivals-banner-v1.png"
+          src="/banners/new-arrivals-banner-v1.webp"
           alt="New Arrivals"
           width={2323}
           height={730}

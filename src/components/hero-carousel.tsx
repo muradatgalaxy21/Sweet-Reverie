@@ -114,8 +114,8 @@ export function HeroCarousel() {
       // Next.js image optimizer rejects query strings on local images unless allow-listed in
       // next.config.ts, so bump the filename suffix (-v3, -v4, ...) instead of overwriting in place —
       // that's what actually busts the Next cache and the browser cache.
-      bgImage: "/hero/exquisite-chocolate-reverie-v4.png",
-      bgImageMobile: "/hero/exquisite-chocolate-reverie-mobile-view.jpeg",
+      bgImage: "/hero/exquisite-chocolate-reverie-v4.webp",
+      bgImageMobile: "/hero/exquisite-chocolate-reverie-mobile-view.webp",
     },
     {
       id: "slide-1",
@@ -125,7 +125,7 @@ export function HeroCarousel() {
       buttonText: "ORDER NOW",
       buttonLink: "#best-sellers",
       theme: "fire",
-      bgImage: "/hero/hero-carousel-image-2.jpeg",
+      bgImage: "/hero/hero-carousel-image-2.webp",
     },
     {
       id: "slide-2",
@@ -135,7 +135,7 @@ export function HeroCarousel() {
       buttonText: "SHOP HAMPERS",
       buttonLink: "#new-arrivals",
       theme: "gift",
-      bgImage: "/hero/hero-carousel-image-3.jpeg",
+      bgImage: "/hero/hero-carousel-image-3.webp",
     },
   ];
 
