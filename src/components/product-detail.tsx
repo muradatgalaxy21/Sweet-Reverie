@@ -224,7 +224,7 @@ export function ProductDetail({ product, images }: ProductDetailProps) {
         </a>
 
         <ul className="grid grid-cols-2 gap-3 border-t border-stone-200 pt-5">
-          {TRUST_ITEMS.map(({ icon: Icon, title }) => (
+          {TRUST_ITEMS.slice(0, 4).map(({ icon: Icon, title }) => (
             <li key={title} className="flex items-center gap-2 text-xs font-bold text-[#4A1A25]">
               <Icon className="h-4 w-4 flex-shrink-0 text-[#662A37]" />
               {title}
