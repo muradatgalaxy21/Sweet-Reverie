@@ -8,26 +8,50 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface HeroSlide {
   id: string;
-  badge?: string;
-  headline: string;
+  /** Desktop headline lines; joined for alt text. */
+  headline: string[];
   subheadline: string;
+  tagline: string;
   buttonText: string;
   buttonLink: string;
-  bgGradient: string;
-  featuredImages: string[];
-  /** Full-bleed background image with text/CTA baked in (skips the text/collage overlay below). */
-  bgImage?: string;
-  /** Portrait crop of bgImage shown below md breakpoint, if different from the desktop image. */
+  theme: keyof typeof THEMES;
+  /** Text-free full-bleed background; headline/subheadline/tagline are HTML over it. */
+  bgImage: string;
+  /** Portrait crop shown below md, with text baked in (HTML text then hides on mobile). */
   bgImageMobile?: string;
-  /** Desktop bgImage has no baked-in text: render headline/subheadline/tagline over it (md+ only). */
-  tagline?: string;
 }
+
+const BTN =
+  "inline-flex items-center justify-center whitespace-nowrap text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95";
+
+/** Per-slide text design, matched to the reference banners. */
+const THEMES = {
+  chocolate: {
+    box: "md:left-[6%] md:top-[10%] md:max-w-[38%] text-left text-[#5A1A25]",
+    sub: "",
+    tagline: "",
+    divider: false,
+    btn: "bg-[#F2871A] hover:bg-[#d9740f] text-black",
+  },
+  fire: {
+    box: "md:left-[12%] md:top-[13%] md:w-[28%] text-center text-white",
+    sub: "text-white/90",
+    tagline: "font-bold text-[#D4A35A]",
+    divider: true,
+    btn: "bg-[#F2871A] hover:bg-[#d9740f] text-black",
+  },
+  gift: {
+    box: "md:left-[8%] md:top-[12%] md:w-[36%] text-center text-[#6B1A2C]",
+    sub: "text-[#3A2A2A]",
+    tagline: "font-bold text-[#B08A3E]",
+    divider: true,
+    btn: "bg-[#6B1A2C] hover:bg-[#4A1A25] text-white",
+  },
+} as const;
 
 /**
  * Hero carousel component replicating the dynamic banners from the design mockup.
- * 1. Slide 1: Full-bleed "Exquisite Chocolate Reverie" brand banner (desktop text rendered as HTML over image).
- * 2. Slide 2: Feel The Fire / Spicy Snacks showcase with purple/amber backdrop.
- * 3. Slide 3: Colorful imported confections & treats explosion.
+ * 1-3. Full-bleed text-free banners (chocolate / spicy snacks / gifting) with themed HTML text + CTA.
  * 4. Left/Right circular arrows and indicator pills.
  * 5. Automatic slide rotation every 6 seconds.
  */
@@ -81,47 +105,37 @@ export function HeroCarousel() {
   const slides: HeroSlide[] = [
     {
       id: "slide-0",
-      headline: "Exquisite Chocolate Reverie",
-      subheadline: "A curated collection for every sweet desire",
+      headline: ["Exquisite Chocolate Reverie"],
+      subheadline: "A curated collection for every sweet desire.",
+      tagline: "Fine confections • Since 2024",
       buttonText: "SHOP ALL CHOCOLATES",
       buttonLink: "#new-arrivals",
-      bgGradient: "",
-      featuredImages: [],
+      theme: "chocolate",
       // Next.js image optimizer rejects query strings on local images unless allow-listed in
       // next.config.ts, so bump the filename suffix (-v3, -v4, ...) instead of overwriting in place —
       // that's what actually busts the Next cache and the browser cache.
       bgImage: "/hero/exquisite-chocolate-reverie-v4.png",
-      tagline: "Fine confections • Since 2024",
       bgImageMobile: "/hero/exquisite-chocolate-reverie-mobile-view.jpeg",
     },
     {
       id: "slide-1",
-      badge: "EXTREME CRUNCH",
-      headline: "FEEL THE FIRE",
-      subheadline: "Explore intense crunch & spicy flavor explosions from around the world",
+      headline: ["Feel the", "Fire"],
+      subheadline: "Bold crunch & fiery flavours from around the world.",
+      tagline: "Extreme crunch • Imported heat",
       buttonText: "ORDER NOW",
       buttonLink: "#best-sellers",
-      bgGradient: "from-[#2A0845] via-[#4B1248] to-[#1F0429]",
-      featuredImages: [
-        "/products/1731906239-Takis.jpeg",
-        "/products/1764072900-Samyang-3x-Hot-Chicken-Ramen-140g.jpeg",
-        "/products/1784186392-WarheadsSuperSourTongueSplash.jpeg",
-      ],
+      theme: "fire",
+      bgImage: "/hero/hero-carousel-image-2.jpeg",
     },
     {
       id: "slide-2",
-      badge: "SWEET REVERIE EXCLUSIVES",
-      headline: "WORLD OF SWEET WONDERS",
-      subheadline: "Hand-picked chocolates, gummies, crispy wafers & imported luxury hampers",
-      buttonText: "ORDER NOW",
+      headline: ["The Art", "of Gifting"],
+      subheadline: "Curated hampers for Eid, birthdays & every celebration.",
+      tagline: "Hand-packed • Nationwide delivery",
+      buttonText: "SHOP HAMPERS",
       buttonLink: "#new-arrivals",
-      bgGradient: "from-[#FBBF24] via-[#F472B6] to-[#60A5FA]",
-      featuredImages: [
-        "/products/1768309497-Ferrero-Rocher-T16-200g.jpeg",
-        "/products/1750122477-Lotus-Biscoff-250g.jpeg",
-        "/products/1746690032-jelly.jpeg",
-        "/products/1750127147-Toblerone-Crunchy-Almond-Chocolate-Bar-100g.jpeg",
-      ],
+      theme: "gift",
+      bgImage: "/hero/hero-carousel-image-3.jpeg",
     },
   ];
 
@@ -147,116 +161,89 @@ export function HeroCarousel() {
     return () => clearTimeout(id);
   }, [currentSlide, paused, slides.length]);
 
-  const renderSlide = (active: HeroSlide, index: number, overlay: boolean) => (
+  const renderSlide = (active: HeroSlide, index: number, overlay: boolean) => {
+    const t = THEMES[active.theme];
+    const alt = active.headline.join(" ");
+    return (
       <div
-        className={`relative overflow-hidden ${active.bgImage ? "" : `bg-gradient-to-r ${active.bgGradient}`} ${
+        className={`relative overflow-hidden ${
           overlay
             ? "h-full"
-            : active.bgImage && active.bgImageMobile
+            : active.bgImageMobile
               ? "aspect-[1536/2752] md:aspect-auto md:min-h-[max(380px,calc(100svh-115px))]"
               : "min-h-[max(380px,calc(100svh-115px))]"
-        } shadow-2xl flex flex-col justify-between p-6 md:p-12 text-white`}
+        } shadow-2xl`}
       >
-        {active.bgImage ? (
-          /* Full-bleed banner: image carries headline/subheadline; CTA is a real button overlaid at the same spot. */
-          <div className="absolute inset-0 z-10">
-            {active.bgImageMobile ? (
-              <ArtDirectedImage
-                desktopSrc={active.bgImage}
-                mobileSrc={active.bgImageMobile}
-                alt={active.headline}
-                eager={index === 0 && !overlay}
-              />
-            ) : (
-              <Image
-                src={active.bgImage}
-                alt={active.headline}
-                fill
-                sizes="100vw"
-                preload={index === 0 && !overlay}
-                className="object-cover"
-              />
-            )}
-            {active.tagline ? (
-              /* Desktop: CTA flows right under the HTML text. Mobile: text is baked into the image, CTA pinned bottom. */
-              <div className="absolute inset-0 md:inset-auto md:left-[6%] md:top-[10%] md:max-w-[38%] text-[#5A1A25]">
-                <div className="hidden md:block">
-                  <h2 className="uppercase font-medium leading-[1.05] text-[clamp(2rem,min(5vw,8.5svh),6rem)]">
-                    {active.headline}
-                  </h2>
-                  <p className="mt-[0.6em] text-[clamp(1rem,min(2vw,3.8svh),2.25rem)] leading-snug">{active.subheadline}.</p>
-                  <p className="mt-[1em] uppercase tracking-wide text-[clamp(0.75rem,min(1.2vw,2.2svh),1.25rem)]">
-                    {active.tagline}
-                  </p>
+        <div className="absolute inset-0 z-10">
+          {active.bgImageMobile ? (
+            <ArtDirectedImage
+              desktopSrc={active.bgImage}
+              mobileSrc={active.bgImageMobile}
+              alt={alt}
+              eager={index === 0 && !overlay}
+            />
+          ) : (
+            <Image
+              src={active.bgImage}
+              alt={alt}
+              fill
+              sizes="100vw"
+              preload={index === 0 && !overlay}
+              className="object-cover object-[78%_center] md:object-left"
+            />
+          )}
+          {/* Desktop: text block with the CTA right under it. Mobile with a portrait image: text is baked
+              in, so only the CTA shows, pinned bottom. Mobile without one: text centred on top. */}
+          <div
+            className={`absolute inset-0 md:inset-auto ${t.box} ${active.bgImageMobile ? "" : "flex flex-col items-center pt-[12%] px-6 md:block md:p-0"}`}
+          >
+            <div className={active.bgImageMobile ? "hidden md:block" : "max-md:text-center"}>
+              {active.theme === "gift" && (
+                <div aria-hidden className="mx-auto mb-[0.8em] flex w-[40%] items-center gap-2 text-[#B08A3E]">
+                  <span className="h-px flex-1 bg-current" />
+                  <span className="size-2 rotate-45 bg-current" />
+                  <span className="h-px flex-1 bg-current" />
                 </div>
-                <Link
-                  href={active.buttonLink}
-                  className="absolute left-1/2 -translate-x-1/2 bottom-[4%] md:static md:translate-x-0 md:mt-[min(2.5vw,4svh)] whitespace-nowrap inline-flex items-center justify-center bg-[#F2871A] hover:bg-[#d9740f] text-black text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95"
-                >
-                  {active.buttonText}
-                </Link>
-              </div>
-            ) : (
-              <Link
-                href={active.buttonLink}
-                className="absolute left-1/2 -translate-x-1/2 bottom-[4%] md:left-[6%] md:bottom-[14%] md:translate-x-0 inline-flex items-center justify-center bg-[#F2871A] hover:bg-[#d9740f] text-black text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95"
-              >
-                {active.buttonText}
-              </Link>
-            )}
-          </div>
-        ) : (
-          <>
-            {/* Decorative background flare */}
-            <div className="absolute inset-0 bg-radial-gradient from-white/10 via-transparent to-black/40 pointer-events-none" />
-
-            {/* Top Text Showcase */}
-            <div className="relative z-10 text-center space-y-2 max-w-3xl mx-auto pt-2">
-              {active.badge && (
-                <span className="inline-block bg-amber-400 text-black text-[11px] md:text-xs font-black tracking-widest uppercase px-3 py-1 rounded-full shadow-md">
-                  {active.badge}
-                </span>
               )}
-              <h2 className="text-3xl md:text-6xl font-black tracking-tight text-yellow-300 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] font-sans">
-                {active.headline}
+              <h2
+                className={`uppercase leading-[1.05] text-[clamp(2rem,min(5vw,8.5svh),6rem)] ${active.theme === "fire" ? "font-extrabold" : "font-medium"}`}
+              >
+                {active.theme === "fire" ? (
+                  <>
+                    <span className="block bg-gradient-to-b from-[#FFF4E0] to-[#E8CFA8] bg-clip-text text-transparent">
+                      {active.headline[0]}
+                    </span>
+                    <span className="block text-[1.75em] leading-none text-[#FFC2C2] [text-shadow:0_0_18px_rgba(255,40,40,0.85),0_0_40px_rgba(255,0,0,0.5),4px_4px_0_#B3141B]">
+                      {active.headline[1]}
+                    </span>
+                  </>
+                ) : (
+                  active.headline.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))
+                )}
               </h2>
-              <p className="text-xs md:text-sm text-white/90 font-medium max-w-xl mx-auto drop-shadow-md">
+              <p className={`mt-[0.6em] text-[clamp(1rem,min(2vw,3.8svh),2.25rem)] leading-snug ${t.sub}`}>
                 {active.subheadline}
               </p>
+              {t.divider && <div aria-hidden className="mt-[1em] h-px bg-[#C9A35C]" />}
+              <p className={`mt-[1em] uppercase tracking-wide text-[clamp(0.75rem,min(1.2vw,2.2svh),1.25rem)] ${t.tagline}`}>
+                {active.tagline}
+              </p>
             </div>
-
-            {/* Center Product Showcase Collage */}
-            <div className="relative z-10 my-4 flex items-center justify-center space-x-3 md:space-x-6">
-              {active.featuredImages.map((src, idx) => (
-                <div
-                  key={idx}
-                  className="relative w-24 h-24 md:w-36 md:h-36 bg-white/95 rounded-2xl p-2 shadow-2xl border-2 border-white/60 transform hover:scale-110 transition-transform duration-300 flex-shrink-0"
-                >
-                  <Image
-                    src={src}
-                    alt=""
-                    fill
-                    sizes="(min-width: 768px) 144px, 96px"
-                    className="object-contain p-1 rounded-xl"
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Bottom CTA Button */}
-            <div className="relative z-10 text-center pb-2">
-              <Link
-                href={active.buttonLink}
-                className="inline-flex items-center justify-center bg-black hover:bg-[#662A37] text-white hover:text-amber-300 text-xs md:text-sm font-extrabold tracking-widest uppercase px-8 py-3 rounded-full border-2 border-amber-400/80 shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
-              >
-                {active.buttonText}
-              </Link>
-            </div>
-          </>
-        )}
-
+            <Link
+              href={active.buttonLink}
+              className={`${active.bgImageMobile ? "absolute left-1/2 -translate-x-1/2 bottom-[4%]" : "mt-6"} md:static md:translate-x-0 md:mt-[min(2.5vw,4svh)] ${BTN} ${t.btn}`}
+            >
+              {active.buttonText}
+            </Link>
+          </div>
+        </div>
       </div>
-  );
+    );
+  };
 
   return (
     <section
