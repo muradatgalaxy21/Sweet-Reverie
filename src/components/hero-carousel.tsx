@@ -17,7 +17,7 @@ interface HeroSlide {
   theme: keyof typeof THEMES;
   /** Text-free full-bleed background; headline/subheadline/tagline are HTML over it. */
   bgImage: string;
-  /** Portrait crop shown below md, with text baked in (HTML text then hides on mobile). */
+  /** Text-free portrait image shown below md; HTML text sits in its empty top zone. */
   bgImageMobile?: string;
 }
 
@@ -115,7 +115,7 @@ export function HeroCarousel() {
       // next.config.ts, so bump the filename suffix (-v3, -v4, ...) instead of overwriting in place —
       // that's what actually busts the Next cache and the browser cache.
       bgImage: "/hero/exquisite-chocolate-reverie-v4.webp",
-      bgImageMobile: "/hero/exquisite-chocolate-reverie-mobile-view.webp",
+      bgImageMobile: "/hero/hero-carousel-image-1-mobile.webp",
     },
     {
       id: "slide-1",
@@ -126,6 +126,7 @@ export function HeroCarousel() {
       buttonLink: "#best-sellers",
       theme: "fire",
       bgImage: "/hero/hero-carousel-image-2.webp",
+      bgImageMobile: "/hero/hero-carousel-image-2-mobile.webp",
     },
     {
       id: "slide-2",
@@ -136,6 +137,7 @@ export function HeroCarousel() {
       buttonLink: "#new-arrivals",
       theme: "gift",
       bgImage: "/hero/hero-carousel-image-3.webp",
+      bgImageMobile: "/hero/hero-carousel-image-3-mobile.webp",
     },
   ];
 
@@ -192,12 +194,12 @@ export function HeroCarousel() {
               className="object-cover object-[78%_center] md:object-left"
             />
           )}
-          {/* Desktop: text block with the CTA right under it. Mobile with a portrait image: text is baked
-              in, so only the CTA shows, pinned bottom. Mobile without one: text centred on top. */}
+          {/* Desktop: text block with the CTA right under it. Mobile: text centred in the image's empty
+              top zone; with a portrait image the CTA is pinned bottom. */}
           <div
-            className={`absolute inset-0 md:inset-auto ${t.box} ${active.bgImageMobile ? "" : "flex flex-col items-center pt-[12%] px-6 md:block md:p-0"}`}
+            className={`absolute inset-0 md:inset-auto ${t.box} flex flex-col items-center ${active.bgImageMobile ? "pt-[10%]" : "pt-[12%]"} px-6 md:block md:p-0`}
           >
-            <div className={active.bgImageMobile ? "hidden md:block" : "max-md:text-center"}>
+            <div className="max-md:text-center">
               {active.theme === "gift" && (
                 <div aria-hidden className="mx-auto mb-[0.8em] flex w-[40%] items-center gap-2 text-[#B08A3E]">
                   <span className="h-px flex-1 bg-current" />
