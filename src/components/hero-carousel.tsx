@@ -19,11 +19,13 @@ interface HeroSlide {
   bgImage?: string;
   /** Portrait crop of bgImage shown below md breakpoint, if different from the desktop image. */
   bgImageMobile?: string;
+  /** Desktop bgImage has no baked-in text: render headline/subheadline/tagline over it (md+ only). */
+  tagline?: string;
 }
 
 /**
  * Hero carousel component replicating the dynamic banners from the design mockup.
- * 1. Slide 1: Full-bleed "Exquisite Chocolate Reverie" brand banner (text baked into image).
+ * 1. Slide 1: Full-bleed "Exquisite Chocolate Reverie" brand banner (desktop text rendered as HTML over image).
  * 2. Slide 2: Feel The Fire / Spicy Snacks showcase with purple/amber backdrop.
  * 3. Slide 3: Colorful imported confections & treats explosion.
  * 4. Left/Right circular arrows and indicator pills.
@@ -88,7 +90,8 @@ export function HeroCarousel() {
       // Next.js image optimizer rejects query strings on local images unless allow-listed in
       // next.config.ts, so bump the filename suffix (-v3, -v4, ...) instead of overwriting in place —
       // that's what actually busts the Next cache and the browser cache.
-      bgImage: "/hero/exquisite-chocolate-reverie-v3.jpeg",
+      bgImage: "/hero/exquisite-chocolate-reverie-v4.png",
+      tagline: "Fine confections • Since 2024",
       bgImageMobile: "/hero/exquisite-chocolate-reverie-mobile-view.jpeg",
     },
     {
@@ -173,6 +176,17 @@ export function HeroCarousel() {
                 preload={index === 0 && !overlay}
                 className="object-cover"
               />
+            )}
+            {active.tagline && (
+              <div className="hidden md:block absolute left-[6%] top-[18%] max-w-[32%] text-[#5A1A25]">
+                <h2 className="uppercase font-medium leading-[1.05] text-[clamp(2.5rem,5.2vw,6rem)]">
+                  {active.headline}
+                </h2>
+                <p className="mt-[0.6em] text-[clamp(1rem,1.9vw,2.25rem)] leading-snug">{active.subheadline}.</p>
+                <p className="mt-[1.5em] uppercase tracking-wide text-[clamp(0.75rem,1.1vw,1.25rem)]">
+                  {active.tagline}
+                </p>
+              </div>
             )}
             <Link
               href={active.buttonLink}
