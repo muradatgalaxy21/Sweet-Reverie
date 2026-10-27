@@ -177,23 +177,33 @@ export function HeroCarousel() {
                 className="object-cover"
               />
             )}
-            {active.tagline && (
-              <div className="hidden md:block absolute left-[6%] top-[10%] max-w-[38%] text-[#5A1A25]">
-                <h2 className="uppercase font-medium leading-[1.05] text-[clamp(2rem,min(5vw,8.5svh),6rem)]">
-                  {active.headline}
-                </h2>
-                <p className="mt-[0.6em] text-[clamp(1rem,min(2vw,3.8svh),2.25rem)] leading-snug">{active.subheadline}.</p>
-                <p className="mt-[1em] uppercase tracking-wide text-[clamp(0.75rem,min(1.2vw,2.2svh),1.25rem)]">
-                  {active.tagline}
-                </p>
+            {active.tagline ? (
+              /* Desktop: CTA flows right under the HTML text. Mobile: text is baked into the image, CTA pinned bottom. */
+              <div className="absolute inset-0 md:inset-auto md:left-[6%] md:top-[10%] md:max-w-[38%] text-[#5A1A25]">
+                <div className="hidden md:block">
+                  <h2 className="uppercase font-medium leading-[1.05] text-[clamp(2rem,min(5vw,8.5svh),6rem)]">
+                    {active.headline}
+                  </h2>
+                  <p className="mt-[0.6em] text-[clamp(1rem,min(2vw,3.8svh),2.25rem)] leading-snug">{active.subheadline}.</p>
+                  <p className="mt-[1em] uppercase tracking-wide text-[clamp(0.75rem,min(1.2vw,2.2svh),1.25rem)]">
+                    {active.tagline}
+                  </p>
+                </div>
+                <Link
+                  href={active.buttonLink}
+                  className="absolute left-1/2 -translate-x-1/2 bottom-[4%] md:static md:translate-x-0 md:mt-[min(2.5vw,4svh)] whitespace-nowrap inline-flex items-center justify-center bg-[#F2871A] hover:bg-[#d9740f] text-black text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95"
+                >
+                  {active.buttonText}
+                </Link>
               </div>
+            ) : (
+              <Link
+                href={active.buttonLink}
+                className="absolute left-1/2 -translate-x-1/2 bottom-[4%] md:left-[6%] md:bottom-[14%] md:translate-x-0 inline-flex items-center justify-center bg-[#F2871A] hover:bg-[#d9740f] text-black text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95"
+              >
+                {active.buttonText}
+              </Link>
             )}
-            <Link
-              href={active.buttonLink}
-              className="absolute left-1/2 -translate-x-1/2 bottom-[4%] md:left-[6%] md:bottom-[14%] md:translate-x-0 inline-flex items-center justify-center bg-[#F2871A] hover:bg-[#d9740f] text-black text-xs md:text-sm font-extrabold tracking-widest uppercase px-6 md:px-8 py-3 md:py-4 rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] ring-1 ring-black/10 transition-all hover:scale-105 hover:shadow-[0_10px_24px_rgba(0,0,0,0.55)] active:scale-95"
-            >
-              {active.buttonText}
-            </Link>
           </div>
         ) : (
           <>
