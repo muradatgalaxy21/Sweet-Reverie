@@ -45,6 +45,8 @@ Combined from two audits (Claude + Gemini, 2026-10-26). Frontend UI/UX only — 
 ## Phase 4 — Custom images (user creates)
 Save as WebP < 300 KB in `public/`.
 
+**Status (2026-10-28):** hero slides done; 5 of 17 category photos + 5 matching collection banners made as a client design preview. Remaining 12 + banners after client approval.
+
 | Image | Size | How |
 |---|---|---|
 | Hero slides 2 & 3 (full designed banners) | 2400×1000 desktop, 1080×1350 mobile | Product shoot on cream/burgundy fabric with gold props, soft light — or Canva / Gemini prompt: *"luxury chocolate assortment on cream silk, burgundy and gold accents, soft window light, empty space on left for text, 16:9"*. Keep left 40% empty for headline. |
@@ -58,3 +60,4 @@ Save as WebP < 300 KB in `public/`.
 - Instagram feed — needs external embed service
 - Page transition animations — complexity for little gain
 - Countdown timer — needs real offer end dates
+- Occasion tiles (Eid / birthday / corporate) — on hold, not needed yet (2026-10-27)
