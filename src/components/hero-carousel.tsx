@@ -237,7 +237,7 @@ export function HeroCarousel() {
             </div>
             <Link
               href={active.buttonLink}
-              className={`${active.bgImageMobile ? "absolute left-1/2 -translate-x-1/2 bottom-[10%]" : "mt-6"} md:static md:translate-x-0 md:mt-[min(2.5vw,4svh)] ${BTN} ${t.btn}`}
+              className={`${active.bgImageMobile ? "absolute left-1/2 -translate-x-1/2 bottom-[calc(10%+6rem)]" : "mt-6"} md:static md:translate-x-0 md:mt-[min(2.5vw,4svh)] ${BTN} ${t.btn}`}
             >
               {active.buttonText}
             </Link>
