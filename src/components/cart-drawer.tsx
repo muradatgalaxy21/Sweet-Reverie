@@ -30,15 +30,13 @@ export function CartDrawer() {
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <div className={`fixed inset-0 z-50 overflow-hidden ${isOpen ? "" : "pointer-events-none invisible delay-300"} transition-[visibility]`} aria-hidden={!isOpen}>
       {/* Dimmed backdrop */}
       <div
         onClick={closeCart}
         aria-hidden
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}
       />
 
       {/* Slide-over Container */}
@@ -49,7 +47,7 @@ export function CartDrawer() {
           aria-modal="true"
           aria-labelledby="cart-title"
           tabIndex={-1}
-          className="w-screen max-w-md bg-[#FAF7F2] focus:outline-none shadow-2xl flex flex-col justify-between border-l-2 border-[#ECA58A] animate-in slide-in-from-right duration-300">
+          className={`w-screen max-w-md bg-[#FAF7F2] focus:outline-none shadow-2xl flex flex-col justify-between border-l-2 border-[#ECA58A] transition-transform duration-300 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
           {/* Header */}
           <div data-focus="light" className="p-6 bg-[#662A37] text-white flex items-center justify-between border-b border-amber-500/20">
             <div className="flex items-center space-x-2">
